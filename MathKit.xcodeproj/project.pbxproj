@@ -11,13 +11,9 @@
 		8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
 		8933E8B219E9A73500ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
-		8933E8B319E9A73500ECFF3F /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
 		8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
 		8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
-		8933E8DC19E9A75100ECFF3F /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
-		8933E8E619E9AF6400ECFF3F /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
-		8933E8E819E9AF8100ECFF3F /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
 		8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */; };
 /* End PBXBuildFile section */
@@ -224,7 +220,6 @@
 				8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */,
 				8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */,
 				8933E8B219E9A73500ECFF3F /* SimplePolynomial.swift in Sources */,
-				8933E8B319E9A73500ECFF3F /* Polynomial.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,13 +228,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */,
-				8933E8E619E9AF6400ECFF3F /* PolynomialTests.swift in Sources */,
 				8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */,
 				8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */,
-				8933E8E819E9AF8100ECFF3F /* VectorTests.swift in Sources */,
 				8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */,
 				8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */,
-				8933E8DC19E9A75100ECFF3F /* Polynomial.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +405,7 @@
 				8933E8A819E9A71300ECFF3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8933E8A919E9A71300ECFF3F /* Build configuration list for PBXNativeTarget "MathKitTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +414,7 @@
 				8933E8AB19E9A71300ECFF3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

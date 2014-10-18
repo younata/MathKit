@@ -9,7 +9,7 @@
 import Foundation
 
 public class Vector: NSObject, Equatable, Printable {
-    public var variables : [String: Polynomial] = [:]
+    public var variables : [String: SimplePolynomial] = [:]
     
     public init(scalars: [String: Double]) {
         /*
@@ -20,7 +20,7 @@ public class Vector: NSObject, Equatable, Printable {
         }*/
     }
     
-    public init(polynomials: [String: Polynomial]) {
+    public init(polynomials: [String: SimplePolynomial]) {
         self.variables = polynomials
     }
     
@@ -44,7 +44,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func scalarAddition(s : Double) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]! + s
         }
@@ -56,7 +56,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func scalarMultiplication(s : Double) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]! * s
         }
@@ -68,14 +68,14 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func addScalar(s: Double, to variable: String) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
         if let c = iables[variable] {
             iables[variable] = c + s
         } else {
-            iables[variable] = Polynomial(scalar: s)
+            iables[variable] = SimplePolynomial(scalar: s)
         }
         return Vector(polynomials: iables)
     }
@@ -85,7 +85,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func multiplyScalar(s: Double, on variable: String) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
@@ -100,7 +100,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func vectorAddition(vector : Vector) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
@@ -117,7 +117,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func vectorSubtraction(vector: Vector) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
@@ -134,7 +134,7 @@ public class Vector: NSObject, Equatable, Printable {
     }
     
     public func vectorMultiplication(vector: Vector) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
@@ -149,26 +149,27 @@ public class Vector: NSObject, Equatable, Printable {
         
         return Vector(polynomials: iables)
     }
-    
+    /*
     public func vectorDivision(vector: Vector) -> Vector {
-        var iables : [String : Polynomial] = [:]
+        var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
         }
         for key in vector.variables.keys {
             let p = vector.variables[key]!
             if let c = iables[key] {
-                iables[key] = iables[key]! / p
+                let cp = c / p
+                iables[key] = cp
             } else {
                 iables[key] = p
             }
         }
         
         return Vector(polynomials: iables)
-    }
+    }*/
     
-    public func dotProduct(vector: Vector) -> Polynomial {
-        var ret = Polynomial()
+    public func dotProduct(vector: Vector) -> SimplePolynomial {
+        var ret = SimplePolynomial()
         for key in variables.keys {
             if vector.variables[key] != nil {
                 ret = ret + variables[key]! + vector.variables[key]!
@@ -230,13 +231,14 @@ public func *= (inout a : Vector, b : Double) {
     a = a * b
 }
 
+/*
 public func / (a : Vector, b : Vector) -> Vector {
     return a.vectorDivision(b)
 }
 
 public func /= (inout a : Vector, b : Vector) {
     a = a / b
-}
+}*/
 
 public func / (a : Vector, b : Double) -> Vector {
     return a.scalarDivision(b)

@@ -370,7 +370,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
     public func gradient() -> Vector {
         if self.dimensions() == 1 {
             let name = self.variables()[0]
-            return Vector(polynomials: [name: Polynomial(simplePolynomial: self.differentiate(name))])
+            return Vector(polynomials: [name: self.differentiate(name)])
         }
         
         var ret = Vector(scalars: [:])

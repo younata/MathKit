@@ -25,11 +25,8 @@ public class Polynomial : SimplePolynomial {
         }
     }
     
-    // want to represent f(x) = (x^2 + 1) / x
-    // a stack or tree structure would work best...
-    
-    var tree : (left: Polynomial, op: Operations, right: Polynomial)? = nil
-    
+    var stack : [(polynomial: SimplePolynomial?, op: Operations?)]? = nil
+        
     public override init() {
         super.init()
     }
@@ -44,14 +41,13 @@ public class Polynomial : SimplePolynomial {
     
     public init(polynomial : Polynomial) {
         super.init()
-        tree = polynomial.tree
+        stack = polynomial.stack
     }
     
-    public init(tree: (left: Polynomial, op: Operations, right: Polynomial)) {
+    public init(stack: [(polynomial: SimplePolynomial?, op: Operations?)]) {
         super.init()
-        self.tree = tree
+        self.stack = stack
     }
-    
     
     public required init(string: String) {
         super.init(string: string) // meh, will do it later.
@@ -62,10 +58,9 @@ public class Polynomial : SimplePolynomial {
     }
     
     public override func copy() -> AnyObject {
-        if let tree = self.tree {
-            let l = tree.left.copy() as Polynomial
-            let r = tree.right.copy() as Polynomial
-            return Polynomial(tree: (left: l, op: tree.op, right: r))
+        if self.stack != nil {
+            let s = self.stack!
+            return Polynomial(stack: s)
         } else {
             return Polynomial(simplePolynomial: self)
         }
@@ -86,8 +81,16 @@ public class Polynomial : SimplePolynomial {
     
     public override var toString : String {
         var str = ""
-        if let p = tree {
-            str += "(\(p.left.toString)) \(p.op.toRaw()) (\(p.right.toString))"
+        if var s = stack {
+            let a = s.removeAtIndex(0).polynomial!
+            str += "(\(a.toString))"
+            
+            while s.count > 0 {
+                let b = s.removeAtIndex(0).polynomial!
+                let op = s.removeAtIndex(0).op!
+                
+                str += "\(op.toRaw()) + (\(b.toString))"
+            }
         } else {
             return super.toString
         }
@@ -95,84 +98,98 @@ public class Polynomial : SimplePolynomial {
     }
     
     public override func variables() -> [String] {
-        let set = NSMutableSet()
-        if let p = tree {
-            set.addObjectsFromArray(p.left.variables())
-            set.addObjectsFromArray(p.right.variables())
+        if let s = stack {
+            var prototype: [SimplePolynomial] = []
+            let filtered = s.filter {return $0.polynomial != nil}
+            let reduced1 : [SimplePolynomial] = filtered.reduce(prototype) {return $0 + [$1.polynomial!]}
+            let reduced2 = reduced1.reduce(NSSet()) {
+                let set = NSSet(array: $1.variables())
+                return $0.setByAddingObjectsFromSet(set)
+            }
+            return (reduced2.allObjects as [String])
         } else {
             return super.variables()
         }
-        return set.allObjects as [String]
     }
     
     public override func degree() -> Double {
-        var ret = 0.0
-        if let p = tree {
-            ret = max(ret, max(p.left.degree(), p.right.degree()))
+        if let s = stack {
+            return (s.filter {
+                return $0.polynomial != nil
+            }.reduce([]) {
+                return $0 + [$1.polynomial!]
+            } as [SimplePolynomial]).reduce(0) {
+                return max($0, $1.degree())
+            }
         } else {
             return super.degree()
         }
-        return ret
     }
     
     public override func valueAt(x: [String : Double]) -> Double {
-        //TODO: Replace this with a Vector
-        if let tree = self.tree {
-            switch (tree.op) {
-            case .Add:
-                return tree.left.valueAt(x) + tree.right.valueAt(x)
-            case .Subtract:
-                return tree.left.valueAt(x) - tree.right.valueAt(x)
-            case .Multiply:
-                return tree.left.valueAt(x) * tree.right.valueAt(x)
-            case .Divide:
-                return tree.left.valueAt(x) / tree.right.valueAt(x)
-            case .Exponentiate:
-                return pow(tree.left.valueAt(x), tree.right.valueAt(x))
+        if var stack = self.stack {
+            while (stack.count > 1) {
+                var a = stack.removeAtIndex(0).polynomial!
+                var b = stack.removeAtIndex(0).polynomial!
+                assert(stack.count != 0, "stack underflow")
+                let c = stack.removeAtIndex(0).op!
+                var res : SimplePolynomial? = nil
+                switch (c) {
+                case .Add:
+                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
+                case .Subtract:
+                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
+                case .Multiply:
+                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
+                case .Divide:
+                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
+                case .Exponentiate:
+                    res = SimplePolynomial(scalar: pow(a.valueAt(x), b.valueAt(x)))
+                }
+                if let r = res {
+                    stack.insert((res, nil), atIndex: 0)
+                } else {
+                    fatalError("res should not be nil")
+                }
+                assert(stack.count != self.stack!.count, "expected stack to be a mutable copy of self.stack, not to actually refer to it")
             }
+            return stack.first!.polynomial!.valueAt(x)
         } else {
             return super.valueAt(x)
         }
     }
     
-    public var hasTree : Bool {
-        return tree != nil
+    public var hasStack : Bool {
+        return stack != nil
     }
     
     public func depth() -> Int {
-        var r = 0
-        if let t = tree {
-            r += max(t.right.depth(), t.left.depth())
+        if let s = stack {
+            return ((s.count - 1) / 2) + 1
         }
-        return r
+        return 0
     }
     
     private func performOp(op: Operations, on: Polynomial) -> Polynomial {
-        let ret = self.copy() as Polynomial
-        var ops : [String] = []
-        if let tree = ret.tree {
-            var rightMost = tree.right
-            ops.append(tree.op.toRaw())
-            while rightMost.tree != nil {
-                ops.append(rightMost.tree!.op.toRaw())
-                rightMost = rightMost.tree!.right
-            }
-            rightMost.tree = (left: Polynomial(simplePolynomial: rightMost), op: op, right: on)
-            rightMost.terms = []
-        } else {
-            var rightMost = self
-            ret.tree = (left: self, op: op, right: on)
+        var ret = self.copy() as Polynomial
+        var stackToAdd : [(polynomial: SimplePolynomial?, op: Operations?)] = []
+        stackToAdd = [(on, nil), (nil, op)]
+        if let os = on.stack {
+            let a = os.first?.polynomial!
+            let rest = os.filter { return $0.polynomial! != a }
+            stackToAdd = [(a, nil), (nil, op)] + rest
         }
-        
-        // TODO: See if "balancing" the tree would increase performance.
-        // It won't. The only times we ever traverse the tree are to get information about ALL of the polynomials in it.
-        // Might as well just replace the entire structure with a list
+        if ret.stack != nil {
+            ret.stack! += stackToAdd
+        } else {
+            ret = Polynomial(stack: [((self.copy() as Polynomial), nil)] + stackToAdd)
+        }
         
         return ret
     }
     
     public func addPolynomial(p : Polynomial) -> Polynomial {
-        if p.tree == nil && self.tree == nil && super.canAdd(p) {
+        if p.stack == nil && self.stack == nil && super.canAdd(p) {
             return Polynomial(simplePolynomial: super.add(SimplePolynomial(terms: p.terms)))
         }
         
@@ -180,7 +197,7 @@ public class Polynomial : SimplePolynomial {
     }
     
     public func subtractPolynomial(p: Polynomial) -> Polynomial {
-        if p.tree == nil && self.tree == nil && super.canSubtract(p) {
+        if p.stack == nil && self.stack == nil && super.canSubtract(p) {
             return Polynomial(simplePolynomial: super.subtract(SimplePolynomial(terms: p.terms)))
         }
         
@@ -188,7 +205,7 @@ public class Polynomial : SimplePolynomial {
     }
 
     public func multiplyPolynomial(p: Polynomial) -> Polynomial {
-        if p.tree == nil && self.tree == nil && super.canMultiply(p) {
+        if p.stack == nil && self.stack == nil && super.canMultiply(p) {
             return Polynomial(simplePolynomial: super.multiply(SimplePolynomial(terms: p.terms)))
         }
         
@@ -204,24 +221,30 @@ public class Polynomial : SimplePolynomial {
     }
     
     public override func differentiate(respectTo: String) -> Polynomial {
-        // and this is where things get annoying.
-        var ret = Polynomial()
-        if let t = tree {
-            switch (t.op) {
-            case .Add, .Subtract:
-                if t.op == .Add {
-                    ret = t.left.differentiate(respectTo) + t.right.differentiate(respectTo)
-                } else {
-                    ret = t.left.differentiate(respectTo) - t.right.differentiate(respectTo)
+        if var stack = self.stack {
+            while (stack.count > 2) {
+                let a = stack.removeAtIndex(0).polynomial!
+                let b = stack.removeAtIndex(0).polynomial!
+                let op = stack.removeAtIndex(0).op!
+                var ret: Polynomial? = nil
+                switch (op) {
+                case .Add, .Subtract:
+                    if (op == .Add) {
+                        ret = Polynomial(simplePolynomial: a.differentiate(respectTo) + b.differentiate(respectTo))
+                    } else {
+                        ret = Polynomial(simplePolynomial: a.differentiate(respectTo) - b.differentiate(respectTo))
+                    }
+                    stack.insert((ret!, nil), atIndex: 0)
+                    break
+                case .Multiply, .Divide:
+                    // I have no idea how to do this
+                    break
+                case .Exponentiate:
+                    // I have no idea how to do this
+                    break
                 }
-                break
-            case .Multiply, .Divide:
-                // oh. gods...
-                break
-            case .Exponentiate:
-                // fuck.
-                break
             }
+            assert(stack.count == 1, "")
         } else {
             return Polynomial(simplePolynomial: super.differentiate(respectTo))
         }

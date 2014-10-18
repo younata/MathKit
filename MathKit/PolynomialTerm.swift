@@ -276,7 +276,7 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
             }
             unitVector[v] = 1.0
             
-            ret += Polynomial(simplePolynomial: SimplePolynomial(terms: [self.differentiate(v)]) * SimplePolynomial(terms: [PolynomialTerm(coefficient: 1.0, variables: [v: 1.0])]))
+            ret += SimplePolynomial(terms: [self.differentiate(v)]) * SimplePolynomial(terms: [PolynomialTerm(coefficient: 1.0, variables: [v: 1.0])])
         }
         
         return Vector(scalars: [:])
