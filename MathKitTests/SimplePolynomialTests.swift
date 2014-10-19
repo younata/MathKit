@@ -59,8 +59,9 @@ class SimplePolynomialTests: XCTestCase {
         XCTAssertEqual(SimplePolynomial(string: "1"), p1, "from string")
         XCTAssertEqual(SimplePolynomial(string: "2x + 1"), p2, "from string")
         XCTAssertEqual(SimplePolynomial(string: "(x)(y) + 3y^2"), p3, "from string")
-        XCTAssertEqual(SimplePolynomial(string: "x^1y^1 + 3y^2"), p4, "from string")
-        XCTAssertEqual(SimplePolynomial(string: "2x + x^1y^1 + 3y^2"), p5, "from string")
+        XCTAssertEqual(SimplePolynomial(string: "x^1y^1 + 3y^2"), p3, "from string")
+        XCTAssertEqual(SimplePolynomial(string: "2x + x^1y^1 + 3y^2"), p4, "from string")
+        XCTAssertEqual(SimplePolynomial(string: "3x^2 + 3y^2"), p5, "from string")
     }
     
     func testInterpolation() {
@@ -106,8 +107,9 @@ class SimplePolynomialTests: XCTestCase {
     // Mark: - Basic Operations
 
     func testEquatable() {
-        XCTAssert(p1.equals(p1), "identity")
-        XCTAssert(p1.equals(p2), "equatable")
+        XCTAssertEqual(p1, p1, "identity")
+        XCTAssertEqual(p1, SimplePolynomial(terms: [t0]), "equatable")
+        XCTAssertEqual(SimplePolynomial(string: "3x^2 + 3y^2"), SimplePolynomial(string: "3y^2 + 3x^2"), "commutative")
         XCTAssert(p1 == p1, "identity, overloaded operator")
     }
 
@@ -253,7 +255,7 @@ class SimplePolynomialTests: XCTestCase {
         }
         for p in [p1, p2, p3, p4, p5] {
             for var i = 0.0; i < 100; i++ {
-                XCTAssertEqual(p - 1, subtractScalar(p, i), "scalar subtraction")
+                XCTAssertEqual(p - i, subtractScalar(p, i), "scalar subtraction")
             }
         }
     }
@@ -303,7 +305,7 @@ class SimplePolynomialTests: XCTestCase {
     }
 
     func testDifferentiation() {
-        XCTAssertEqual(p1.differentiate("x"), SimplePolynomial(), "differentation")
+        XCTAssertEqual(p1.differentiate("x"), SimplePolynomial(string: "1"), "differentation")
         XCTAssertEqual(p2.differentiate("x"), SimplePolynomial(string: "2"), "differentation")
 
         XCTAssertEqual(p3.differentiate("x"), SimplePolynomial(string: "y"), "differentation")

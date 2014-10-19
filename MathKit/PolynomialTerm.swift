@@ -85,6 +85,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         }
         
         PolynomialTerm(coefficient: coefficient, variables: variables)
+        
+        self.coefficient = coefficient
+        self.variables = variables
     }
     
     public override var description : String {

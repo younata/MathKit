@@ -178,16 +178,15 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
             return false
         }
         
-        let t1 = self.terms.sorted({ $0 < $1 })
-        let t2 = a.terms.sorted({ $0 < $1 })
+        let t1 = self.terms
+        let t2 = a.terms
         
-        for (var i = 0; i < t1.count; i++) {
-            let term1 = t1[i];
-            if (t2.count <= i) {
-                return false
-            }
-            let term2 = t2[i]
-            if (term1 != term2) {
+        if t1.count != t2.count {
+            return false
+        }
+        
+        for term in t1 {
+            if (!contains(t2, term)) {
                 return false
             }
         }
@@ -359,6 +358,10 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
     
     public func differentiate(respectTo : String) -> SimplePolynomial { // partial derivative!
         var terms : [PolynomialTerm] = []
+        
+        if (!contains(variables(), respectTo)) {
+            return self
+        }
         
         for term in self.terms {
             terms.append(term.differentiate(respectTo))

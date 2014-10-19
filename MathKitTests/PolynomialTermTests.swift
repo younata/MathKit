@@ -35,6 +35,11 @@ class PolynomialTermTests: XCTestCase {
         XCTAssertEqualWithAccuracy(p.coefficient, c, 1e-12, "coefficient should be correctly assigned")
         XCTAssertEqual(p.variables, v, "variables should be correctly assigned")
         
+        XCTAssertEqual(p1, PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0]), "")
+        XCTAssertEqual(p2, PolynomialTerm(coefficient: 2.0, variables: ["x": 1.0]), "")
+        XCTAssertEqual(p3, PolynomialTerm(coefficient: 3.0, variables: ["x": 2.0]), "")
+        XCTAssertEqual(p4, PolynomialTerm(coefficient: 4.0, variables: ["x": 2.0, "y": 1.0]), "")
+        
         let p5 = PolynomialTerm(coefficient: 1.0, variables: ["x": 0.0])
         XCTAssertEqual(p5, PolynomialTerm(coefficient: 1.0, variables: [:]), "")
         let p6 = PolynomialTerm(coefficient: 0.0, variables: ["x": 1.0])
@@ -45,7 +50,7 @@ class PolynomialTermTests: XCTestCase {
         XCTAssertEqual(p1, PolynomialTerm(string: "x"), "initialize from string")
         XCTAssertEqual(p2, PolynomialTerm(string: "2x"), "initialize from string")
         XCTAssertEqual(p3, PolynomialTerm(string: "3x^2"), "initialize from string")
-        //XCTAssertEqual(p4, PolynomialTerm(string, "4x^2y"), "initialize from string")
+        XCTAssertEqual(p4, PolynomialTerm(string: "4x^2y"), "initialize from string")
         XCTAssertEqual(PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0, "y": 1.0]), PolynomialTerm(string: "(x)(y)"), "initialize from string")
         XCTAssertEqual(PolynomialTerm(coefficient: 4.0, variables: ["str": 2.0]), PolynomialTerm(string: "4str^2"), "initialize from string")
         XCTAssertEqual(PolynomialTerm(string: ""), PolynomialTerm(), "initialize from string")
@@ -77,10 +82,10 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testSubtract() {
-        XCTAssertEqual(p1.subtract(p2), PolynomialTerm(coefficient: 3.0, variables: ["x": 1.0]), "subtraction")
-        XCTAssertEqual(p2.subtract(p1), PolynomialTerm(coefficient: 3.0, variables: ["x": 1.0]), "subtraction")
+        XCTAssertEqual(p1.subtract(p2), PolynomialTerm(coefficient: -1.0, variables: ["x": 1.0]), "subtraction")
+        XCTAssertEqual(p2.subtract(p1), PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0]), "subtraction")
         
-        XCTAssertEqual(p2 - p1, PolynomialTerm(coefficient: 3.0, variables: ["x": 1.0]), "subtraction")
+        XCTAssertEqual(p2 - p1, PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0]), "subtraction")
     }
     
     func testMultiplyTerms() {
@@ -153,7 +158,6 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testIntegration() {
-        XCTAssertEqual(p1.integrate("x"), p1, "integration")
         XCTAssertEqual(p1.integrate("x"), PolynomialTerm(string: "0.5x^2"), "integration")
         XCTAssertEqual(p2.integrate("x"), PolynomialTerm(string: "x^2"), "integration")
         XCTAssertEqual(p3.integrate("x"), PolynomialTerm(string: "x^3"), "integration")
