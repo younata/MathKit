@@ -1,3 +1,4 @@
+
 //
 //  SimplePolynomialTests.swift
 //  MathKit
@@ -6,12 +7,10 @@
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
 
 class SimplePolynomialTests: XCTestCase {
-    
-    
     
     let t0 = PolynomialTerm(coefficient: 1.0, variables: [:])
     let t1 = PolynomialTerm(coefficient: 2.0, variables: ["x": 1.0])
@@ -67,7 +66,9 @@ class SimplePolynomialTests: XCTestCase {
     func testInterpolation() {
         let x2 = (x: [-1.0, 0.0, 1.0], y: [1.0, 0.0, 1.0])
         
-        XCTAssertEqual(SimplePolynomial.interpolate([x2.x], output: x2.y), SimplePolynomial(string: "x^2"), "interpolation")
+        let interpolated = SimplePolynomial.interpolate([x2.x], output: x2.y)
+        
+        XCTAssertEqual(interpolated, SimplePolynomial(string: "x^2"), "interpolation")
     }
 
     // Mark: Info
@@ -326,10 +327,46 @@ class SimplePolynomialTests: XCTestCase {
     }
 
     func testGradient() {
-        XCTFail("implement gradient")
+        let p1r = Vector(polynomials: [:])
+        let p2r = Vector(polynomials: ["x": SimplePolynomial(scalar: 2.0)])
+        let p3r = Vector(polynomials: ["x": SimplePolynomial(string: "y"), "y": SimplePolynomial(string: "x + 6y")])
+        let p4r = Vector(polynomials: ["x": SimplePolynomial(string: "y + 2"), "y": SimplePolynomial(string: "x + 6y")])
+        let p5r = Vector(polynomials: ["x": SimplePolynomial(string: "6x"), "y": SimplePolynomial(string: "6y")])
+        XCTAssertEqual(p1.gradient(), p1r, "gradient")
+        XCTAssertEqual(p2.gradient(), p2r, "gradient")
+        XCTAssertEqual(p3.gradient(), p3r, "gradient")
+        XCTAssertEqual(p4.gradient(), p4r, "gradient")
+        XCTAssertEqual(p5.gradient(), p5r, "gradient")
     }
 
     func testFindRoots() {
-        XCTFail("implement find roots")
+        let p2r = Vector(polynomials: ["x": SimplePolynomial(scalar: -0.5)])
+        let res = p2.solve()
+        XCTAssertGreaterThan(res.count, 0, "solve should return at least 1 result for this query")
+        XCTAssertEqual(res.first!.root, p2r, "linear solve")
+        XCTAssertGreaterThanOrEqual(1e-12, res.first!.error, "linear solve")
+        
+        let q1 = SimplePolynomial(string: "x^2 - 1")
+        let q1r = q1.solve()
+        XCTAssertEqual(q1r.count, 2, "quadratic solve")
+        var roots : [Vector] = q1r.map { return $0.root }
+        let solutions1 = [Vector(polynomials: ["x": SimplePolynomial(scalar: -1)]), Vector(polynomials: ["x": SimplePolynomial(scalar: 1)])]
+        for r in solutions1 {
+            XCTAssert(contains(roots, r), "quadratic solve")
+        }
+        
+        let q2 = SimplePolynomial(string: "x^2 + 1")
+        let q2r = q2.solve()
+        XCTAssertEqual(q2r.count, 0, "quadratic solve")
+        
+        let q3 = SimplePolynomial(string: "quadratic x^2")
+        let q3r = q3.solve()
+        XCTAssertEqual(q3r.count, 1, "solve")
+        XCTAssertEqual(q3r.first!.root, Vector(polynomials: ["x": SimplePolynomial(scalar: 0)]), "quadratic solve")
+        
+        let p = SimplePolynomial(string: "x^3 + 1")
+        let pr = p.solve()
+        XCTAssertEqual(pr.count, 1, "single dimension solve")
+        XCTAssertEqual(pr.first!.root, Vector(polynomials: ["x": SimplePolynomial(scalar: -1)]), "single dimension solve")
     }
 }

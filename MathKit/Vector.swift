@@ -12,12 +12,11 @@ public class Vector: NSObject, Equatable, Printable {
     public var variables : [String: SimplePolynomial] = [:]
     
     public init(scalars: [String: Double]) {
-        /*
         for key in scalars.keys {
-            if let p : Polynomial = scalars[key] {
-                self.variables[key] = p
+            if let s = scalars[key] {
+                self.variables[key] = SimplePolynomial(scalar: s)
             }
-        }*/
+        }
     }
     
     public init(polynomials: [String: SimplePolynomial]) {
@@ -177,6 +176,21 @@ public class Vector: NSObject, Equatable, Printable {
         }
         return ret
     }
+}
+
+public func gradient(field: [Vector], dimensions: Vector) -> [Vector] {
+    return []
+}
+
+public func divergence(field: [Vector], dimensions: Vector) -> [Vector] {
+    return []
+}
+
+public func curl(field: [Vector], dimensions: Vector) -> [Vector] {
+    if dimensions.variables.count != 3 {
+        return []
+    }
+    return []
 }
 
 public func == (a : Vector, b : Vector) -> Bool {

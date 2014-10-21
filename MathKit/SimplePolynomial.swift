@@ -9,19 +9,16 @@
 import Accelerate
 import Foundation
 
-public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, IntegerLiteralConvertible, FloatLiteralConvertible, StringLiteralConvertible {
+public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
     public var terms : [PolynomialTerm] = []
     
     public override init() {
         
     }
     
+    /*
     public class func convertFromFloatLiteral(value: FloatLiteralType) -> Self {
         return self(scalar: value)
-    }
-    
-    public class func convertFromIntegerLiteral(value: IntegerLiteralType) -> Self {
-        return self(scalar: Double(value))
     }
     
     public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
@@ -31,7 +28,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
     
     public class func convertFromStringLiteral(value: StringLiteralType) -> Self {
         return self(string: value)
-    }
+    }*/
     
     required public init(scalar : Double) {
         self.terms = [PolynomialTerm(scalar: scalar)]
@@ -155,7 +152,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
                 }
             }
         }
-        return ret
+        return ret.sorted { return $0 < $1 }
     }
     
     public func degree() -> Double {
@@ -370,18 +367,13 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
         return SimplePolynomial(terms: terms)
     }
     
-    public func gradient() -> Vector {
-        if self.dimensions() == 1 {
-            let name = self.variables()[0]
-            return Vector(polynomials: [name: self.differentiate(name)])
-        }
+    public func gradient() -> Vector {      
+        var vars: [String: SimplePolynomial] = [:]
         
-        var ret = Vector(scalars: [:])
-        
-        for term in self.terms {
-            //ret = ret + term.gradient()
+        for term in variables() {
+            vars[term] = self.differentiate(term)
         }
-        return ret
+        return Vector(polynomials: vars)
     }
     
     public func solve() -> [(root: Vector, error: Double)] {
@@ -390,16 +382,22 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
     
     public func solve(epsilon: Double) -> [(root: Vector, error: Double)] {
         if self.dimensions() == 1 {
-            var isLinear = true
-            var isQuadratic = true
-            for term in self.terms {
-                let lin = term.degree != 0.0 || term.degree != 1.0
-                if lin {
-                    isLinear = false
+            var isLinear = false
+            var isQuadratic = false
+            let degrees = self.terms.map({$0.degree}).sorted({$0 < $1})
+            let seq = [0.0, 1.0]
+            let isSubset : ([Double], [Double]) -> (Bool) = {(subset: [Double], superset: [Double]) in
+                for item in subset {
+                    if !contains(superset, item) {
+                        return false
+                    }
                 }
-                if lin || term.degree != 2.0 {
-                    isQuadratic = false
-                }
+                return true
+            }
+            if isSubset(degrees, seq) {
+                isLinear = true
+            } else if isSubset(degrees, seq + [2.0]) {
+                isQuadratic = true
             }
             if isQuadratic {
                 let v = solveQuadratic()
@@ -428,7 +426,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
         for term in self.variables() {
             for var n = -100.0; n <= 100.0; n+=1.0 {
                 i[term] = n
-                let value = abs(self.valueAt(x))
+                let value = abs(self.valueAt(i))
                 if value < min {
                     min = value
                     x = i
@@ -478,7 +476,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
             return []
         }
         
-        return [Vector(scalars: [varname: solution])]
+        return [Vector(polynomials: [varname: SimplePolynomial(scalar: solution)])]
     }
     
     public func solveQuadratic() -> [Vector] {
@@ -501,7 +499,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable, Integ
         
         let first = (-b + sqrt(pow(b, 2.0) - 4 * a * c)) / 2*a
         let second = (-b - sqrt(pow(b, 2.0) - 4 * a * c)) / 2*a
-        
+                
         if first.isNaN && second.isNaN {
             return []
         } else if first.isNaN {

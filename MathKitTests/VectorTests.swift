@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
 
 class VectorTests: XCTestCase {

@@ -48,7 +48,7 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
             PolynomialTerm()
         }
         
-        let scanner = NSScanner.scannerWithString(string)
+        let scanner = NSScanner(string: string)
         let set = NSMutableCharacterSet.letterCharacterSet()
         var coefficient = 0.0
         scanner.scanDouble(&coefficient)
@@ -92,18 +92,23 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     
     public override var description : String {
         var str = ""
-            if (self.coefficient != 1.0 || self.variables.count == 0) {
-                str += "\(self.coefficient)"
+        if (self.coefficient != 1.0 || self.variables.count == 0) {
+            str += "\(self.coefficient)"
+        }
+        var keysArray: [String] = []
+        for key in self.variables.keys {
+            keysArray.append(key)
+        }
+        let keys = keysArray.sorted { return $0 < $1 }
+        for key in keys {
+            let v = self.variables[key]!
+            str += "(\(key)"
+            if (v != 1.0) {
+                str += "^" + "\(v)"
             }
-            for key in self.variables.keys {
-                let v = self.variables[key]!
-                str += "(\(key)"
-                if (v != 1.0) {
-                    str += "^" + "\(v)"
-                }
-                str += ")"
-            }
-            return str
+            str += ")"
+        }
+        return str
     }
     
     public var degree : Double {
@@ -270,19 +275,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         // gradient is the sum of the partial derivatives times the unit vectors
         let vars = self.variables.keys
         
-        var ret = SimplePolynomial()
+        let sp = SimplePolynomial(terms: [self])
         
-        for v in vars {
-            var unitVector : [String: Double] = [:]
-            for y in vars {
-                unitVector[y] = 0.0
-            }
-            unitVector[v] = 1.0
-            
-            ret += SimplePolynomial(terms: [self.differentiate(v)]) * SimplePolynomial(terms: [PolynomialTerm(coefficient: 1.0, variables: [v: 1.0])])
-        }
-        
-        return Vector(scalars: [:])
+        return sp.gradient()
     }
     
     public func integrate(respectTo: String) -> PolynomialTerm {
