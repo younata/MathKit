@@ -42,7 +42,7 @@ public class Vector: NSObject, Equatable, Printable {
         return self.variables.count
     }
     
-    public func scalarAddition(s : Double) -> Vector {
+    public func scalarAddition(s : SimplePolynomial) -> Vector {
         var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]! + s
@@ -50,11 +50,12 @@ public class Vector: NSObject, Equatable, Printable {
         return Vector(polynomials: iables)
     }
     
-    public func scalarSubtraction(s : Double) -> Vector {
-        return scalarAddition(-s)
+    public func scalarSubtraction(s : SimplePolynomial) -> Vector {
+        let p = s * -1
+        return scalarAddition(p)
     }
     
-    public func scalarMultiplication(s : Double) -> Vector {
+    public func scalarMultiplication(s : SimplePolynomial) -> Vector {
         var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]! * s
@@ -62,11 +63,12 @@ public class Vector: NSObject, Equatable, Printable {
         return Vector(polynomials: iables)
     }
     
+    /*
     public func scalarDivision(s : Double) -> Vector {
         return scalarMultiplication(1.0 / s)
-    }
+    }*/
     
-    public func addScalar(s: Double, to variable: String) -> Vector {
+    public func addScalar(s: SimplePolynomial, to variable: String) -> Vector {
         var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
@@ -74,16 +76,17 @@ public class Vector: NSObject, Equatable, Printable {
         if let c = iables[variable] {
             iables[variable] = c + s
         } else {
-            iables[variable] = SimplePolynomial(scalar: s)
+            iables[variable] = s
         }
         return Vector(polynomials: iables)
     }
     
-    public func subtractScalar(s: Double, from variable: String) -> Vector {
-        return addScalar(-s, to: variable)
+    public func subtractScalar(s: SimplePolynomial, from variable: String) -> Vector {
+        let p = s * -1
+        return addScalar(p, to: variable)
     }
     
-    public func multiplyScalar(s: Double, on variable: String) -> Vector {
+    public func multiplyScalar(s: SimplePolynomial, on variable: String) -> Vector {
         var iables : [String : SimplePolynomial] = [:]
         for key in variables.keys {
             iables[key] = variables[key]!
@@ -94,9 +97,10 @@ public class Vector: NSObject, Equatable, Printable {
         return Vector(polynomials: iables)
     }
     
+    /*
     public func divideScalar(s: Double, on variable: String) -> Vector {
         return multiplyScalar(1.0 / s, on: variable)
-    }
+    }*/
     
     public func vectorAddition(vector : Vector) -> Vector {
         var iables : [String : SimplePolynomial] = [:]
@@ -205,11 +209,11 @@ public func += (inout a : Vector, b : Vector) {
     a = a + b
 }
 
-public func + (a : Vector, b : Double) -> Vector {
+public func + (a : Vector, b : SimplePolynomial) -> Vector {
     return a.scalarAddition(b)
 }
 
-public func += (inout a : Vector, b : Double) {
+public func += (inout a : Vector, b : SimplePolynomial) {
     a = a + b
 }
 
@@ -221,11 +225,11 @@ public func -= (inout a : Vector, b : Vector) {
     a = a - b
 }
 
-public func - (a : Vector, b : Double) -> Vector {
+public func - (a : Vector, b : SimplePolynomial) -> Vector {
     return a.scalarSubtraction(b)
 }
 
-public func -= (inout a : Vector, b : Double) {
+public func -= (inout a : Vector, b : SimplePolynomial) {
     a = a - b
 }
 
@@ -237,11 +241,11 @@ public func *= (inout a : Vector, b : Vector) {
     a = a * b
 }
 
-public func * (a : Vector, b : Double) -> Vector {
+public func * (a : Vector, b : SimplePolynomial) -> Vector {
     return a.scalarMultiplication(b)
 }
 
-public func *= (inout a : Vector, b : Double) {
+public func *= (inout a : Vector, b : SimplePolynomial) {
     a = a * b
 }
 
@@ -252,12 +256,12 @@ public func / (a : Vector, b : Vector) -> Vector {
 
 public func /= (inout a : Vector, b : Vector) {
     a = a / b
-}*/
+}
 
-public func / (a : Vector, b : Double) -> Vector {
+public func / (a : Vector, b : SimplePolynomial) -> Vector {
     return a.scalarDivision(b)
 }
 
-public func /= (inout a : Vector, b : Double) {
+public func /= (inout a : Vector, b : SimplePolynomial) {
     a = a / b
-}
+}*/

@@ -16,6 +16,15 @@
 		8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */; };
+		89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
+		89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */; };
+		89CCD8B719F8021100C65A6C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
+		89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
+		89CCD8B919F8021100C65A6C /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
+		89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */; };
+		89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
+		89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
+		89CCD8BF19F816FB00C65A6C /* VectorPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BE19F816FB00C65A6C /* VectorPerformance.swift */; };
 		89D5556719F601F500D987D7 /* MathKit-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 89D5556619F601F500D987D7 /* MathKit-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89D5556D19F601F600D987D7 /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
 		89D5557B19F6023200D987D7 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
@@ -29,6 +38,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		89CCD8AD19F801A700C65A6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8933E88A19E9A71200ECFF3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89D5556119F601F500D987D7;
+			remoteInfo = MathKitOSX;
+		};
 		89D5556E19F601F600D987D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8933E88A19E9A71200ECFF3F /* Project object */;
@@ -52,10 +68,15 @@
 		8933E8E719E9AF8100ECFF3F /* VectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorTests.swift; sourceTree = "<group>"; };
 		8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTermTests.swift; sourceTree = "<group>"; };
 		8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomialTests.swift; sourceTree = "<group>"; };
+		89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MathKitOSX Performance.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89CCD8A919F801A700C65A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomialPerformance.swift; sourceTree = "<group>"; };
+		89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTermPerformance.swift; sourceTree = "<group>"; };
+		89CCD8BE19F816FB00C65A6C /* VectorPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorPerformance.swift; sourceTree = "<group>"; };
 		89D5556219F601F500D987D7 /* MathKitOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathKitOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D5556519F601F500D987D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89D5556619F601F500D987D7 /* MathKit-OSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MathKit-OSX.h"; sourceTree = "<group>"; };
-		89D5556C19F601F600D987D7 /* MathKit-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MathKit-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89D5556C19F601F600D987D7 /* MathKitOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MathKitOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D5557219F601F600D987D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +92,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89CCD8A319F801A700C65A6C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +128,7 @@
 				8933E89F19E9A71300ECFF3F /* MathKitTests */,
 				89D5556319F601F500D987D7 /* MathKit-OSX */,
 				89D5557019F601F600D987D7 /* MathKit-OSXTests */,
+				89CCD8A719F801A700C65A6C /* MathKitOSX Performance */,
 				8933E89419E9A71200ECFF3F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,7 +139,8 @@
 				8933E89319E9A71200ECFF3F /* MathKit.framework */,
 				8933E89E19E9A71300ECFF3F /* MathKitTests.xctest */,
 				89D5556219F601F500D987D7 /* MathKitOSX.framework */,
-				89D5556C19F601F600D987D7 /* MathKit-OSXTests.xctest */,
+				89D5556C19F601F600D987D7 /* MathKitOSXTests.xctest */,
+				89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +182,25 @@
 			isa = PBXGroup;
 			children = (
 				8933E8A119E9A71300ECFF3F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		89CCD8A719F801A700C65A6C /* MathKitOSX Performance */ = {
+			isa = PBXGroup;
+			children = (
+				89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */,
+				89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */,
+				89CCD8BE19F816FB00C65A6C /* VectorPerformance.swift */,
+				89CCD8A819F801A700C65A6C /* Supporting Files */,
+			);
+			path = "MathKitOSX Performance";
+			sourceTree = "<group>";
+		};
+		89CCD8A819F801A700C65A6C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				89CCD8A919F801A700C65A6C /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -245,6 +295,24 @@
 			productReference = 8933E89E19E9A71300ECFF3F /* MathKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		89CCD8A519F801A700C65A6C /* MathKitOSX Performance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89CCD8AF19F801A700C65A6C /* Build configuration list for PBXNativeTarget "MathKitOSX Performance" */;
+			buildPhases = (
+				89CCD8A219F801A700C65A6C /* Sources */,
+				89CCD8A319F801A700C65A6C /* Frameworks */,
+				89CCD8A419F801A700C65A6C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89CCD8AE19F801A700C65A6C /* PBXTargetDependency */,
+			);
+			name = "MathKitOSX Performance";
+			productName = "MathKitOSX Performance";
+			productReference = 89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		89D5556119F601F500D987D7 /* MathKitOSX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89D5557919F601F600D987D7 /* Build configuration list for PBXNativeTarget "MathKitOSX" */;
@@ -278,7 +346,7 @@
 			);
 			name = MathKitOSXTests;
 			productName = "MathKit-OSXTests";
-			productReference = 89D5556C19F601F600D987D7 /* MathKit-OSXTests.xctest */;
+			productReference = 89D5556C19F601F600D987D7 /* MathKitOSXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -295,6 +363,9 @@
 					};
 					8933E89D19E9A71300ECFF3F = {
 						CreatedOnToolsVersion = 6.0.1;
+					};
+					89CCD8A519F801A700C65A6C = {
+						CreatedOnToolsVersion = 6.1;
 					};
 					89D5556119F601F500D987D7 = {
 						CreatedOnToolsVersion = 6.1;
@@ -320,6 +391,7 @@
 				8933E89D19E9A71300ECFF3F /* MathKitTests */,
 				89D5556119F601F500D987D7 /* MathKitOSX */,
 				89D5556B19F601F600D987D7 /* MathKitOSXTests */,
+				89CCD8A519F801A700C65A6C /* MathKitOSX Performance */,
 			);
 		};
 /* End PBXProject section */
@@ -333,6 +405,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8933E89C19E9A71300ECFF3F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89CCD8A419F801A700C65A6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -372,9 +451,23 @@
 			files = (
 				8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */,
 				8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */,
+				89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */,
 				8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */,
 				8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */,
 				8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89CCD8A219F801A700C65A6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */,
+				89CCD8B719F8021100C65A6C /* Vector.swift in Sources */,
+				89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */,
+				89CCD8BF19F816FB00C65A6C /* VectorPerformance.swift in Sources */,
+				89CCD8B919F8021100C65A6C /* SimplePolynomial.swift in Sources */,
+				89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +487,7 @@
 			files = (
 				89D5557E19F6023300D987D7 /* Vector.swift in Sources */,
 				89D5558119F6023C00D987D7 /* SimplePolynomialTests.swift in Sources */,
+				89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */,
 				89D5557F19F6023300D987D7 /* PolynomialTerm.swift in Sources */,
 				89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */,
 				89D5558019F6023300D987D7 /* SimplePolynomial.swift in Sources */,
@@ -403,6 +497,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		89CCD8AE19F801A700C65A6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89D5556119F601F500D987D7 /* MathKitOSX */;
+			targetProxy = 89CCD8AD19F801A700C65A6C /* PBXContainerItemProxy */;
+		};
 		89D5556F19F601F600D987D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 89D5556119F601F500D987D7 /* MathKitOSX */;
@@ -559,6 +658,44 @@
 			};
 			name = Release;
 		};
+		89CCD8B019F801A700C65A6C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MathKitOSX Performance/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Debug;
+		};
+		89CCD8B119F801A700C65A6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MathKitOSX Performance/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		89D5557519F601F600D987D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -669,6 +806,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		89CCD8AF19F801A700C65A6C /* Build configuration list for PBXNativeTarget "MathKitOSX Performance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89CCD8B019F801A700C65A6C /* Debug */,
+				89CCD8B119F801A700C65A6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		89D5557919F601F600D987D7 /* Build configuration list for PBXNativeTarget "MathKitOSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -676,6 +821,7 @@
 				89D5557619F601F600D987D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89D5557A19F601F600D987D7 /* Build configuration list for PBXNativeTarget "MathKitOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -684,6 +830,7 @@
 				89D5557819F601F600D987D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

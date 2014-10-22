@@ -16,11 +16,6 @@ class PolynomialTermTests: XCTestCase {
     
     let p3 = PolynomialTerm(coefficient: 3.0, variables: ["x": 2.0])
     let p4 = PolynomialTerm(coefficient: 4.0, variables: ["x": 2.0, "y": 1.0])
-
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
     
     func testInitNothing() {
         let p = PolynomialTerm()
@@ -166,7 +161,7 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testIntegrationOverRange() {
-        let r = [1.0, 2.0]
+        let r = (1.0, 2.0)
         for term in [p1, p2, p3, p4] {
             XCTAssertEqualWithAccuracy(term.integrate("a", over: r), 0.0, 1e-12, "integration")
         }
@@ -176,5 +171,9 @@ class PolynomialTermTests: XCTestCase {
         XCTAssertEqualWithAccuracy(p3.integrate("x", over: r), 7.0, 1e-3, "integration")
         XCTAssertEqualWithAccuracy(p4.integrate("x", over: r), 9.333, 1e-3, "integration")
         XCTAssertEqualWithAccuracy(p4.integrate("y", over: r), 6.0, 1e-3, "integration")
+    }
+    
+    func testComposition() {
+        XCTAssertEqual(p1.of(SimplePolynomial(terms: [p1]), at: "x"), SimplePolynomial(), "composition")
     }
 }

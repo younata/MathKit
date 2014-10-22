@@ -376,6 +376,14 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return Vector(polynomials: vars)
     }
     
+    public func integrate(respectTo: String) -> SimplePolynomial {
+        return SimplePolynomial()
+    }
+    
+    public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {
+        return 0
+    }
+    
     public func solve() -> [(root: Vector, error: Double)] {
         return solve(1e-6)
     }
@@ -513,8 +521,8 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         }
     }
     
-    public func of(polynomial: SimplePolynomial) { // returns f(g), where g is a polynomial
-        
+    public func of(polynomial: SimplePolynomial, at: String) -> SimplePolynomial { // returns f(g), where g is a polynomial
+        return SimplePolynomial()
     }
 }
 

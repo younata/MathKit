@@ -272,7 +272,6 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     }
     
     public func gradient() -> Vector {
-        // gradient is the sum of the partial derivatives times the unit vectors
         let vars = self.variables.keys
         
         let sp = SimplePolynomial(terms: [self])
@@ -286,19 +285,14 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
             let c = self.coefficient / (exponent + 1)
             var v = self.variables
             v[respectTo] = exponent + 1
-            println("\(c), \(v)")
             return PolynomialTerm(coefficient: c, variables: v)
         }
         return self
     }
     
-    public func integrate(respectTo: String, over: [Double]) -> Double {
-        let start = over[0]
-        let end = over[1]
-        var spacing = 0.01
-        if (over.count > 2) {
-            spacing = over[2]
-        }
+    public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {
+        let start = over.start
+        let end = over.end
         
         var d = 0.0
         

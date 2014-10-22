@@ -338,6 +338,38 @@ class SimplePolynomialTests: XCTestCase {
         XCTAssertEqual(p4.gradient(), p4r, "gradient")
         XCTAssertEqual(p5.gradient(), p5r, "gradient")
     }
+    
+    func testIntegration() {
+        XCTAssertEqual(p1.integrate("x"), SimplePolynomial(string: "x"), "integration")
+        
+        XCTAssertEqual(p2.integrate("x"), SimplePolynomial(string: "x^2 + x"), "integration")
+        
+        XCTAssertEqual(p3.integrate("x"), SimplePolynomial(string: "3y^2x + 0.5x^2y"), "integration")
+        XCTAssertEqual(p3.integrate("y"), SimplePolynomial(string: "y^3 + 0.5y^2x"), "integration")
+        
+        XCTAssertEqual(p4.integrate("x"), SimplePolynomial(string: "3y^2x + x^2 + 0.5x^2y"), "integration")
+        XCTAssertEqual(p4.integrate("y"), SimplePolynomial(string: "y^3 + 2(x)(y) + 0.5y^2x"), "integration")
+        
+        XCTAssertEqual(p5.integrate("x"), SimplePolynomial(string: "x^3 + 3y^2x"), "integration")
+        XCTAssertEqual(p5.integrate("y"), SimplePolynomial(string: "3x^2y + y^3"), "integration")
+    }
+    
+    func testIntegrationOverRange() {
+        let r = (1.0, 2.0)
+        
+        XCTAssertEqual(p1.integrate("x", over: r), 1, "integration")
+        
+        XCTAssertEqual(p2.integrate("x", over: r), 4, "integration")
+        
+        XCTAssertEqual(p3.integrate("x", over: r), 0, "integration")
+        XCTAssertEqual(p3.integrate("y", over: r), 0, "integration")
+        
+        XCTAssertEqual(p4.integrate("x", over: r), 0, "integration")
+        XCTAssertEqual(p4.integrate("y", over: r), 0, "integration")
+        
+        XCTAssertEqual(p5.integrate("x", over: r), 0, "integration")
+        XCTAssertEqual(p5.integrate("y", over: r), 0, "integration")
+    }
 
     func testFindRoots() {
         let p2r = Vector(polynomials: ["x": SimplePolynomial(scalar: -0.5)])
@@ -359,7 +391,7 @@ class SimplePolynomialTests: XCTestCase {
         let q2r = q2.solve()
         XCTAssertEqual(q2r.count, 0, "quadratic solve")
         
-        let q3 = SimplePolynomial(string: "quadratic x^2")
+        let q3 = SimplePolynomial(string: "x^2")
         let q3r = q3.solve()
         XCTAssertEqual(q3r.count, 1, "solve")
         XCTAssertEqual(q3r.first!.root, Vector(polynomials: ["x": SimplePolynomial(scalar: 0)]), "quadratic solve")
@@ -368,5 +400,9 @@ class SimplePolynomialTests: XCTestCase {
         let pr = p.solve()
         XCTAssertEqual(pr.count, 1, "single dimension solve")
         XCTAssertEqual(pr.first!.root, Vector(polynomials: ["x": SimplePolynomial(scalar: -1)]), "single dimension solve")
+    }
+    
+    func testFunctionComposition() {
+        XCTAssertEqual(p1.of(SimplePolynomial(string: ""), at: "x"), SimplePolynomial(), "composition")
     }
 }
