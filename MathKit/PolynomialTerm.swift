@@ -286,8 +286,11 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
             var v = self.variables
             v[respectTo] = exponent + 1
             return PolynomialTerm(coefficient: c, variables: v)
+        } else {
+            var vars = self.variables
+            vars[respectTo] = 1.0
+            return PolynomialTerm(coefficient: self.coefficient, variables: vars)
         }
-        return self
     }
     
     public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {

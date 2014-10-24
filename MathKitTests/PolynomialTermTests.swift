@@ -153,6 +153,8 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testIntegration() {
+        XCTAssertEqual(PolynomialTerm(string: "1").integrate("x"), PolynomialTerm(string: "x"), "integration")
+        XCTAssertEqual(PolynomialTerm(string: "y").integrate("x"), PolynomialTerm(string: "(y)(x)"), "integration")
         XCTAssertEqual(p1.integrate("x"), PolynomialTerm(string: "0.5x^2"), "integration")
         XCTAssertEqual(p2.integrate("x"), PolynomialTerm(string: "x^2"), "integration")
         XCTAssertEqual(p3.integrate("x"), PolynomialTerm(string: "x^3"), "integration")

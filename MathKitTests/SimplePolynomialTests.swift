@@ -203,6 +203,14 @@ class SimplePolynomialTests: XCTestCase {
         XCTAssertEqual(p3 - p3, z, "identity")
         XCTAssertEqual(p4 - p4, z, "identity")
         XCTAssertEqual(p5 - p5, z, "identity")
+        
+        let py = SimplePolynomial(string: "2x + y")
+        let px = SimplePolynomial(string: "2x + 1")
+        
+        XCTAssertEqual(px - py, SimplePolynomial(string: "1 - y"), "subtraction")
+        XCTAssertEqual(py - px, SimplePolynomial(string: "y - 1"), "subtraction")
+        XCTAssertEqual(px + (py * -1), px - py, "subtraction")
+        XCTAssertEqual(py + (px * -1), py - px, "subtraction")
 
         let p12 = SimplePolynomial(string: "-2x")
         let p13 = SimplePolynomial(string: "1 - (x)(y) - 3y^2")

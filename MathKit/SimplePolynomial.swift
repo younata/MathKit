@@ -215,7 +215,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         assert(canAdd(p), "")
         var c : [PolynomialTerm] = []
         
-        var variables : [String] = []
+        var variables : [[String: Double]] = []
         
         for term1 in self.terms {
             let v1 = term1.variables
@@ -227,26 +227,16 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             
             var v = term1
-            if (term2 != nil) {
-                v = term1 + term2!
+            if let t2 = term2 {
+                v = term1 + t2
+                variables.append(t2.variables)
             }
             c.append(v)
-            
-            var s = ""
-            for key in v.variables.keys {
-                s += "\(key)^\(v.variables[key])"
-            }
-            variables.append(s)
         }
         for term2 in p.terms {
-            var s = ""
-            for key in term2.variables.keys {
-                s += "\(key)^\(term2.variables[key])"
-            }
-            
-            if (!contains(variables, s)) {
+            if (!cont(variables, term2.variables)) {
                 c.append(term2)
-                variables.append(s)
+                variables.append(term2.variables)
             }
         }
         
@@ -267,7 +257,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         
         var c : [PolynomialTerm] = []
         
-        var variables : [String] = []
+        var variables : [[String: Double]] = []
         
         for term1 in self.terms {
             let v1 = term1.variables
@@ -279,25 +269,16 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             
             var v = term1
-            if (term2 != nil) {
-                v = term1 - term2!
+            if let t2 = term2 {
+                v = term1 - t2
+                variables.append(t2.variables)
             }
             c.append(v)
-            var s = ""
-            for key in v1.keys {
-                s += "\(key)^\(v1[key])"
-            }
-            variables.append(s)
         }
         for term2 in p.terms {
-            var s = ""
-            for key in term2.variables.keys {
-                s += "\(key)^\(term2.variables[key])"
-            }
-            
-            if (!contains(variables, s)) {
+            if (!cont(variables, term2.variables)) {
                 c.append(PolynomialTerm(coefficient: term2.coefficient * -1, variables: term2.variables))
-                variables.append(s)
+                variables.append(term2.variables)
             }
         }
         
@@ -377,11 +358,22 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     }
     
     public func integrate(respectTo: String) -> SimplePolynomial {
-        return SimplePolynomial()
+        var t: [PolynomialTerm] = []
+        for term in self.terms {
+            let integrated = term.integrate(respectTo)
+            t.append(integrated)
+        }
+        return SimplePolynomial(terms: t)
     }
     
     public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {
-        return 0
+        return 0/*
+        let integrated = self.integrate(respectTo)
+        var ret: Double = 0.0
+        for (var i = over.start; i <= over.end; i += spacing) {
+            ret += integrated.valueAt([respectTo: i])
+        }
+        return ret*/
     }
     
     public func solve() -> [(root: Vector, error: Double)] {
@@ -556,6 +548,10 @@ public func + (a : SimplePolynomial, b : Double) -> SimplePolynomial {
     return a.addDouble(b)
 }
 
+public func + (a : Double, b : SimplePolynomial) -> SimplePolynomial {
+    return b.addDouble(a)
+}
+
 public func += (inout a : SimplePolynomial, b : Double) {
     a = a + b
 }
@@ -572,6 +568,10 @@ public func - (a : SimplePolynomial, b : Double) -> SimplePolynomial {
     return a.subtractDouble(b)
 }
 
+public func - (a : Double, b : SimplePolynomial) -> SimplePolynomial {
+    return SimplePolynomial(scalar: a).subtract(b)
+}
+
 public func -= (inout a : SimplePolynomial, b : Double) {
     a = a - b
 }
@@ -586,6 +586,10 @@ public func *= (inout a : SimplePolynomial, b : SimplePolynomial) {
 
 public func * (a : SimplePolynomial, b : Double) -> SimplePolynomial {
     return a.multiplyDouble(b)
+}
+
+public func * (a : Double, b : SimplePolynomial) -> SimplePolynomial {
+    return b.multiplyDouble(a)
 }
 
 public func *= (inout a : SimplePolynomial, b : Double) {

@@ -105,11 +105,11 @@ class PolynomialTermPerformance: XCTestCase {
             }
         }
     }
-    
+
     func testIntegrationOverRangePerformance() {
         self.measureBlock {
             for i in 0..<1000 {
-                self.p4.integrate("x", over: [1.0, 2.0])
+                self.p4.integrate("x", over: (1.0, 2.0), spacing: 0.01)
             }
         }
     }

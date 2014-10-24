@@ -32,10 +32,15 @@ public class Vector: NSObject, Equatable, Printable {
     
     public override var description : String {
         var ret = ""
-            for t in variables.keys {
-                ret += "\(t): \(variables[t])\n"
-            }
-            return ret
+        var keys : [String] = []
+        for key in variables.keys {
+            keys.append(key)
+        }
+        keys.sort { return $0 < $1 }
+        for t in keys {
+            ret += "\(t): \(variables[t]!)\n"
+        }
+        return ret
     }
     
     public var dimensions : Int {
@@ -182,16 +187,16 @@ public class Vector: NSObject, Equatable, Printable {
     }
 }
 
-public func gradient(field: [Vector], dimensions: Vector) -> [Vector] {
+public func gradient(field: [Vector], dimensions: [String: Int], order: [String]) -> [Vector] {
     return []
 }
 
-public func divergence(field: [Vector], dimensions: Vector) -> [Vector] {
+public func divergence(field: [Vector], dimensions: [String: Int], order: [String]) -> [Vector] {
     return []
 }
 
-public func curl(field: [Vector], dimensions: Vector) -> [Vector] {
-    if dimensions.variables.count != 3 {
+public func curl(field: [Vector], dimensions: [String: Int], order: [String]) -> [Vector] {
+    if order.count != 3 {
         return []
     }
     return []
