@@ -30,21 +30,35 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return self(string: value)
     }*/
     
-    required public init(scalar : Double) {
-        self.terms = [PolynomialTerm(scalar: scalar)]
+    convenience public init(scalar : Double) {
+        self.init(terms: [PolynomialTerm(scalar: scalar)])
     }
     
     required public init(terms: [PolynomialTerm]) {
-        for term in terms {
-            if (term.coefficient != 0.0) {
-                self.terms.append(term)
+        self.terms = terms.reduce([]) {(list: [PolynomialTerm], term: PolynomialTerm) in
+            if term.coefficient != 0.0 {
+                let inverted = term.invert()
+                var lst = list
+                for (i, x) in enumerate(lst) {
+                    if x.variables == term.variables {
+                        lst[i] = x + term
+                        return lst
+                    } else if x.variables == inverted.variables {
+                        lst[i] = x - term
+                        return lst
+                    }
+                }
+                return lst + [term]
             }
+            return list
         }
+        super.init()
     }
     
-    required public init(string: String) {
+    convenience public init(string: String) {
         let components : [String] = string.componentsSeparatedByString(" ")
         var previousArgument = ""
+        var termList: [PolynomialTerm] = []
         for comp in components {
             if (comp == "+" || comp == "-") {
                 previousArgument = comp
@@ -54,8 +68,9 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             if (previousArgument == "-") {
                 t.coefficient *= -1
             }
-            terms.append(t)
+            termList.append(t)
         }
+        self.init(terms: termList)
     }
     
     public class func interpolate1Dimension(x : [Double], output : [Double]) -> SimplePolynomial {
@@ -76,6 +91,8 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         let r = la_solve(v, o)
         var ret = Array(count: Int(len), repeatedValue: 0.0)
         la_vector_to_double_buffer(&ret, 1, r)
+        
+        println("\(ret)")
         
         var terms : [PolynomialTerm] = []
         for (var i = 0; i < Int(len); i++) {
@@ -198,13 +215,19 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     public func valueAt(x : [String: Double]) -> Double {
         assert(x.count == self.dimensions(), "SimplePolynomial - valueAt:, expected input.count to equal number of different variables in polygon")
         
+        return self.terms.reduce(0.0) { return $0 + $1.valueAt(x) }
+        /*
         var ret = 0.0
         
         for term in self.terms {
             ret += term.valueAt(x)
         }
         
-        return ret;
+        return ret;*/
+    }
+    
+    public func polynomialAt(x : [String: Double]) -> SimplePolynomial {
+        return SimplePolynomial(terms: self.terms.map {return $0.termAt(x)})
     }
     
     public func canAdd(p : SimplePolynomial) -> Bool {
@@ -233,11 +256,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             c.append(v)
         }
-        for term2 in p.terms {
-            if (!cont(variables, term2.variables)) {
-                c.append(term2)
-                variables.append(term2.variables)
-            }
+        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
+            return !cont(variables, term.variables)
+        }
+        for term in otherTerms {
+            c.append(term)
         }
         
         return SimplePolynomial(terms: c)
@@ -275,11 +298,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             c.append(v)
         }
-        for term2 in p.terms {
-            if (!cont(variables, term2.variables)) {
-                c.append(PolynomialTerm(coefficient: term2.coefficient * -1, variables: term2.variables))
-                variables.append(term2.variables)
-            }
+        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
+            return !cont(variables, term.variables)
+        }
+        for term in otherTerms {
+            c.append((term * -1))
         }
         
         return SimplePolynomial(terms: c)
@@ -366,14 +389,9 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return SimplePolynomial(terms: t)
     }
     
-    public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {
-        return 0/*
+    public func integrate(respectTo: String, over: (start: Double, end: Double)) -> SimplePolynomial {
         let integrated = self.integrate(respectTo)
-        var ret: Double = 0.0
-        for (var i = over.start; i <= over.end; i += spacing) {
-            ret += integrated.valueAt([respectTo: i])
-        }
-        return ret*/
+        return integrated.polynomialAt([respectTo: over.end]) - integrated.polynomialAt([respectTo: over.start])
     }
     
     public func solve() -> [(root: Vector, error: Double)] {
@@ -514,7 +532,9 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     }
     
     public func of(polynomial: SimplePolynomial, at: String) -> SimplePolynomial { // returns f(g), where g is a polynomial
-        return SimplePolynomial()
+        return SimplePolynomial(terms: self.terms.reduce([]) {(list: [PolynomialTerm], term: PolynomialTerm) in
+            return list + term.of(polynomial.terms, at: at)
+        })
     }
 }
 

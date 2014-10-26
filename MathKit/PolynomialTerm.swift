@@ -132,6 +132,14 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         return ret
     }
     
+    /**
+    Equals - Tests for equality
+    
+    @parameter t - The PolynomialTerm this is being compared to
+    @returns A boolean based on whether or not t and self are equivalent
+    
+    This scales at O(n^2) (n is length of each term being compared)
+    */
     public func equals(t : PolynomialTerm) -> Bool {
         let epsilon = 1e-6
         if (fabs(self.coefficient - t.coefficient) > epsilon) {
@@ -165,6 +173,19 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
             }
         }
         return self.coefficient * r
+    }
+    
+    public func termAt(x: [String: Double]) -> PolynomialTerm {
+        var vars = self.variables
+        var c = self.coefficient
+        for key in x.keys {
+            let d = x[key]!
+            if let val = vars[key] {
+                vars.removeValueForKey(key)
+                c *= pow(d, val)
+            }
+        }
+        return PolynomialTerm(coefficient: c, variables: vars)
     }
     
     public func add(t : PolynomialTerm) -> PolynomialTerm {
@@ -293,30 +314,24 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         }
     }
     
-    public func integrate(respectTo: String, over: (start: Double, end: Double), spacing: Double = 0.01) -> Double {
-        let start = over.start
-        let end = over.end
-        
-        var d = 0.0
-        
-        for (var i = start; i <= end; i += spacing) {
-            if let exponent = self.variables[respectTo] {
-                let a = self.coefficient * pow(i, exponent)
-                let b = self.coefficient * pow(i+spacing, exponent)
-                let c = (a + b) / 2.0
-                d += c * spacing
-            }
-        }
-        
-        return d
+    public func integrate(respectTo: String, over: (start: Double, end: Double)) -> PolynomialTerm {
+        let integrated = integrate(respectTo)
+        return integrated.termAt([respectTo: over.end]) - integrated.termAt([respectTo: over.start])
     }
     
-    public func of(polynomial: SimplePolynomial, at : String) -> SimplePolynomial {
-        if let exp = self.variables[at] {
-            assert(exp % 1.0 == 0.0, "Can't exponentiate by floating point values")
+    public func of(terms: [PolynomialTerm], at : String) -> [PolynomialTerm] {
+        if let power = self.variables[at] {
+            return terms.map {(term: PolynomialTerm) in
+                let c = pow(term.coefficient, power) * self.coefficient
+                var vars = term.variables
+                for key in vars.keys {
+                    let normalPower = vars[key]!
+                    vars[key] = normalPower * power
+                }
+                return PolynomialTerm(coefficient: c, variables: vars)
+            }
         }
-        
-        return SimplePolynomial()
+        return [self]
     }
 }
 

@@ -71,6 +71,14 @@ class PolynomialTermTests: XCTestCase {
         XCTAssertEqualWithAccuracy(p5.valueAt(["x": 2.45]), 55.244943, 1e-6, "value at")
     }
     
+    func testTermAt() {
+        XCTAssertEqual(p1.termAt(["x": 1]), PolynomialTerm(scalar: 1), "term at")
+        XCTAssertEqual(p2.termAt(["x": 1]), PolynomialTerm(scalar: 2), "term at")
+        XCTAssertEqual(p3.termAt(["x": 1]), PolynomialTerm(scalar: 3), "term at")
+        XCTAssertEqual(p4.termAt(["x": 2]), PolynomialTerm(string: "16y"), "term at")
+        XCTAssertEqual(p4.termAt(["y": 2]), PolynomialTerm(string: "8x^2"), "term at")
+    }
+    
     func testAdd() {
         XCTAssertEqual(p1.add(p2), PolynomialTerm(coefficient: 3.0, variables: ["x": 1.0]), "addition")
         XCTAssertEqual(p1 + p2, PolynomialTerm(coefficient: 3.0, variables: ["x": 1.0]), "addition")
@@ -165,17 +173,21 @@ class PolynomialTermTests: XCTestCase {
     func testIntegrationOverRange() {
         let r = (1.0, 2.0)
         for term in [p1, p2, p3, p4] {
-            XCTAssertEqualWithAccuracy(term.integrate("a", over: r), 0.0, 1e-12, "integration")
+            XCTAssertEqual(term.integrate("a", over: r), term, "integration")
         }
         
-        XCTAssertEqualWithAccuracy(p1.integrate("x", over: r), 1.5, 1e-12, "integration")
-        XCTAssertEqualWithAccuracy(p2.integrate("x", over: r), 3.0, 1e-12, "integration")
-        XCTAssertEqualWithAccuracy(p3.integrate("x", over: r), 7.0, 1e-3, "integration")
-        XCTAssertEqualWithAccuracy(p4.integrate("x", over: r), 9.333, 1e-3, "integration")
-        XCTAssertEqualWithAccuracy(p4.integrate("y", over: r), 6.0, 1e-3, "integration")
+        XCTAssertEqual(p1.integrate("x", over: r), PolynomialTerm(scalar: 1.5), "integration")
+        XCTAssertEqual(p2.integrate("x", over: r), PolynomialTerm(scalar: 3.0), "integration")
+        XCTAssertEqual(p3.integrate("x", over: r), PolynomialTerm(scalar: 7.0), "integration")
+        XCTAssertEqual(p4.integrate("x", over: r), PolynomialTerm(string: "\(28.0 / 3.0)y"), "integration")
+        XCTAssertEqual(p4.integrate("y", over: r), PolynomialTerm(string: "6.0x^2"), "integration")
+        
+        let p = PolynomialTerm(string: "x^3")
+        let range = (-1.0, 2.0)
+        XCTAssertEqual(p.integrate("x", over: range), PolynomialTerm(scalar: 3.75), "integration")
     }
     
     func testComposition() {
-        XCTAssertEqual(p1.of(SimplePolynomial(terms: [p1]), at: "x"), SimplePolynomial(), "composition")
+        XCTAssertEqual(SimplePolynomial(terms: p1.of([p1], at: "x")), SimplePolynomial(terms: []), "composition")
     }
 }
