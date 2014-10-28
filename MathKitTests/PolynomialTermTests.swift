@@ -188,6 +188,6 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testComposition() {
-        XCTAssertEqual(SimplePolynomial(terms: p1.of([p1], at: "x")), SimplePolynomial(terms: []), "composition")
+        XCTAssertEqual(SimplePolynomial(terms: p1.of([p1], at: "x")), SimplePolynomial(terms: [p1]), "composition")
     }
 }

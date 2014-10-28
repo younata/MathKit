@@ -448,7 +448,7 @@ class SimplePolynomialTests: XCTestCase {
         f(x, y) = 3.0(x^2.0) + 3.0(y^2.0)
         */
         XCTAssertEqual(p2.of(p2, at: "x"), SimplePolynomial(string: "4x + 3"), "composition")
-        XCTAssertEqual(p2.of(p3, at: "x"), SimplePolynomial(string: "6y^2 + 2xy + 1"), "composition")
+        XCTAssertEqual(p2.of(p3, at: "x"), SimplePolynomial(string: "6y^2 + 2(x)y + 1"), "composition")
         XCTAssertEqual(p2.of(p4, at: "x"), SimplePolynomial(string: "6y^2 + 4x + 2(x)(y) + 1"), "composition")
         XCTAssertEqual(p2.of(p5, at: "x"), SimplePolynomial(string: "6x^2 + 6y^2 + 1"), "composition")
         

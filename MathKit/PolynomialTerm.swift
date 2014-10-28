@@ -133,21 +133,22 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     }
     
     /**
-    Equals - Tests for equality
+    Tests for equality
     
-    @parameter t - The PolynomialTerm this is being compared to
-    @returns A boolean based on whether or not t and self are equivalent
+    This scales at O(n^2) worst case (n is number of variables in each term)
     
-    This scales at O(n^2) (n is length of each term being compared)
+    :param: term The PolynomialTerm this is being compared to
+    
+    :returns: A boolean based on whether or not t and self are equivalent
     */
-    public func equals(t : PolynomialTerm) -> Bool {
+    public func equals(term : PolynomialTerm) -> Bool {
         let epsilon = 1e-6
-        if (fabs(self.coefficient - t.coefficient) > epsilon) {
+        if (fabs(self.coefficient - term.coefficient) > epsilon) {
             return false
         }
         for key in self.variables.keys {
             let x = self.variables[key]!
-            if let y = t.variables[key] {
+            if let y = term.variables[key] {
                 if (fabs(x - y) > epsilon) {
                     return false
                 }
@@ -155,7 +156,7 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
                 return false
             }
         }
-        for key in t.variables.keys {
+        for key in term.variables.keys {
             if (self.variables[key] == nil) {
                 return false
             }
@@ -163,6 +164,19 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         return true
     }
     
+    // MARK: - Evaluating
+    
+    /**
+    Evaluates the term at a given point
+    
+    Note that all variables in the term must be supplied for this to work. Else, use termAt:
+    
+    Scales at O(n), where n is the number of terms.
+    
+    :param: x A dictionary of variables to (double) values to plug in.
+    
+    :returns: The value of the term at the given point.
+    */
     public func valueAt(x : [String : Double]) -> Double {
         var r = 1.0
         for key in self.variables.keys {
@@ -175,6 +189,15 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         return self.coefficient * r
     }
     
+    /**
+    Evaluates the term at a given point
+    
+    Scales at O(n), where n is the number of terms
+    
+    :param: x A dictionary of variables to (double) values to plug in.
+    
+    :returns: A reduced term with the input'd variables exponentiated and multiplied. E.G. 2x^2y^2 at ["x": 2] returns 8y^2
+    */
     public func termAt(x: [String: Double]) -> PolynomialTerm {
         var vars = self.variables
         var c = self.coefficient
@@ -187,6 +210,23 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         }
         return PolynomialTerm(coefficient: c, variables: vars)
     }
+    
+    public func of(terms: [PolynomialTerm], at : String) -> [PolynomialTerm] {
+        if let power = self.variables[at] {
+            return terms.map {(term: PolynomialTerm) in
+                let c = pow(term.coefficient, power) * self.coefficient
+                var vars = term.variables
+                for key in vars.keys {
+                    let normalPower = vars[key]!
+                    vars[key] = normalPower * power
+                }
+                return PolynomialTerm(coefficient: c, variables: vars)
+            }
+        }
+        return [self]
+    }
+    
+    // MARK: - Operations
     
     public func add(t : PolynomialTerm) -> PolynomialTerm {
         assert(self.variables == t.variables, "Can't add two terms which don't share the same variables and exponents")
@@ -317,21 +357,6 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     public func integrate(respectTo: String, over: (start: Double, end: Double)) -> PolynomialTerm {
         let integrated = integrate(respectTo)
         return integrated.termAt([respectTo: over.end]) - integrated.termAt([respectTo: over.start])
-    }
-    
-    public func of(terms: [PolynomialTerm], at : String) -> [PolynomialTerm] {
-        if let power = self.variables[at] {
-            return terms.map {(term: PolynomialTerm) in
-                let c = pow(term.coefficient, power) * self.coefficient
-                var vars = term.variables
-                for key in vars.keys {
-                    let normalPower = vars[key]!
-                    vars[key] = normalPower * power
-                }
-                return PolynomialTerm(coefficient: c, variables: vars)
-            }
-        }
-        return [self]
     }
 }
 

@@ -9,6 +9,7 @@
 import Foundation
 
 public class Polynomial : SimplePolynomial {
+    
     public enum Operations : String {
         case Add = "+"
         case Subtract = "-"
@@ -35,9 +36,10 @@ public class Polynomial : SimplePolynomial {
         super.init(terms: simplePolynomial.terms)
     }
     
-    public required init(scalar: Double) {
+    /*
+    public convenience init(scalar: Double) {
         super.init(scalar: scalar)
-    }
+    }*/
     
     public init(polynomial : Polynomial) {
         super.init()
@@ -49,9 +51,10 @@ public class Polynomial : SimplePolynomial {
         self.stack = stack
     }
     
-    public required init(string: String) {
+    /*
+    public convenience init(string: String) {
         super.init(string: string) // meh, will do it later.
-    }
+    }*/
     
     public required init(terms: [PolynomialTerm]) {
         super.init(terms: terms)
@@ -89,7 +92,7 @@ public class Polynomial : SimplePolynomial {
                 let b = s.removeAtIndex(0).polynomial!
                 let op = s.removeAtIndex(0).op!
                 
-                str += "\(op.toRaw()) + (\(b.toString))"
+                str += "\(op.rawValue) + (\(b.toString))"
             }
         } else {
             return super.toString
@@ -189,25 +192,26 @@ public class Polynomial : SimplePolynomial {
     }
     
     public func addPolynomial(p : Polynomial) -> Polynomial {
+        /*
         if p.stack == nil && self.stack == nil && super.canAdd(p) {
-            return Polynomial(simplePolynomial: super.add(SimplePolynomial(terms: p.terms)))
-        }
-        
+            let ret = super.add(p)
+            return Polynomial(simplePolynomial: ret)
+        }*/
         return self.performOp(.Add, on: p)
     }
     
-    public func subtractPolynomial(p: Polynomial) -> Polynomial {
+    public func subtractPolynomial(p: Polynomial) -> Polynomial {/*
         if p.stack == nil && self.stack == nil && super.canSubtract(p) {
             return Polynomial(simplePolynomial: super.subtract(SimplePolynomial(terms: p.terms)))
-        }
+        }*/
         
         return self.performOp(.Subtract, on: p)
     }
 
-    public func multiplyPolynomial(p: Polynomial) -> Polynomial {
+    public func multiplyPolynomial(p: Polynomial) -> Polynomial {/*
         if p.stack == nil && self.stack == nil && super.canMultiply(p) {
             return Polynomial(simplePolynomial: super.multiply(SimplePolynomial(terms: p.terms)))
-        }
+        }*/
         
         return self.performOp(.Multiply, on: p)
     }
@@ -216,7 +220,7 @@ public class Polynomial : SimplePolynomial {
         return self.performOp(.Divide, on: p)
     }
     
-    public func exponentiateBy(p : Polynomial) -> Polynomial {
+    public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
         return self.performOp(.Exponentiate, on: p)
     }
     
@@ -248,11 +252,15 @@ public class Polynomial : SimplePolynomial {
         } else {
             return Polynomial(simplePolynomial: super.differentiate(respectTo))
         }
-        return 0
+        return Polynomial()
     }
     
     public override func gradient() -> Vector {
-        return Vector(polynomials: ["x": 0])
+        return Vector(polynomials: self.variables().reduce([:]) {(dict: [String: SimplePolynomial], variable: String) in
+            var ret = dict
+            ret[variable] = self.differentiate(variable)
+            return ret
+        })
     }
 }
 

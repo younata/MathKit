@@ -76,30 +76,39 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     public class func interpolate1Dimension(x : [Double], output : [Double]) -> SimplePolynomial {
         // create a vandermonde matrix
         var vandermonde : [Double] = []
-        let n = Double(x.count)
         for m in x {
-            for (var i = n; i >= 0; i--) {
-                vandermonde.append(pow(Double(m), i))
+            for (var i = x.count - 1; i > 0; i--) {
+                vandermonde.append(pow(Double(m), Double(i)))
             }
+            vandermonde.append(1.0)
         }
-        let len = la_count_t(n + 1)
+        let rows = la_count_t(x.count)
+        let cols = la_count_t(x.count)
         
         var out = output as [Double]
-        let v = la_matrix_from_double_buffer(&vandermonde, len, len, 1, la_hint_t(LA_SHAPE_DIAGONAL), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
-        let y = la_matrix_from_double_buffer(&out, len, 1, 1, la_hint_t(LA_SHAPE_DIAGONAL), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
-        let o = la_vector_from_matrix_col(y, 0)
-        let r = la_solve(v, o)
-        var ret = Array(count: Int(len), repeatedValue: 0.0)
-        la_vector_to_double_buffer(&ret, 1, r)
+        let v = la_matrix_from_double_buffer(&vandermonde, rows, cols, cols, la_hint_t(LA_NO_HINT), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
+        let y = la_matrix_from_double_buffer(&out, la_count_t(output.count), 1, 1, la_hint_t(LA_NO_HINT), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
+        let r = la_solve(v, y)
         
-        println("\(ret)")
+        let status = Int32(la_status(r))
+        if status == LA_SINGULAR_ERROR {
+            println("LA_SINGULAR_ERROR")
+        } else if status == LA_DIMENSION_MISMATCH_ERROR {
+            println("Dimension mismatch")
+        } else if status == LA_INVALID_PARAMETER_ERROR {
+            println("invalid parameter")
+        }
+
+        let rrows = la_matrix_rows(r)
+        let rcols = la_matrix_cols(r)
+        let cnt = Int(la_matrix_rows(r) - 1 + la_matrix_cols(r))
+        var ret = Array(count: cnt, repeatedValue: 0.0)
+        la_matrix_to_double_buffer(&ret, la_matrix_rows(r), r)
         
         var terms : [PolynomialTerm] = []
-        for (var i = 0; i < Int(len); i++) {
-            let idx = Int(i)
-            var pt = PolynomialTerm()
-            pt.coefficient = ret[idx]
-            pt.variables = ["x": Double(idx)]
+        for i in 0..<output.count {
+            let idx = output.count - (i + 1)
+            var pt = PolynomialTerm(coefficient: ret[i], variables: ["x": Double(idx)])
             terms.append(pt)
         }
         
@@ -216,14 +225,6 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         assert(x.count == self.dimensions(), "SimplePolynomial - valueAt:, expected input.count to equal number of different variables in polygon")
         
         return self.terms.reduce(0.0) { return $0 + $1.valueAt(x) }
-        /*
-        var ret = 0.0
-        
-        for term in self.terms {
-            ret += term.valueAt(x)
-        }
-        
-        return ret;*/
     }
     
     public func polynomialAt(x : [String: Double]) -> SimplePolynomial {
