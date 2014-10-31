@@ -75,6 +75,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     
     public class func interpolate1Dimension(x : [Double], output : [Double]) -> SimplePolynomial {
         // create a vandermonde matrix
+
         var vandermonde : [Double] = []
         for m in x {
             for (var i = x.count - 1; i > 0; i--) {
@@ -99,11 +100,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             println("invalid parameter")
         }
 
-        let rrows = la_matrix_rows(r)
-        let rcols = la_matrix_cols(r)
         let cnt = Int(la_matrix_rows(r) - 1 + la_matrix_cols(r))
         var ret = Array(count: cnt, repeatedValue: 0.0)
         la_matrix_to_double_buffer(&ret, la_matrix_rows(r), r)
+        
+        println("\(ret)")
         
         var terms : [PolynomialTerm] = []
         for i in 0..<output.count {

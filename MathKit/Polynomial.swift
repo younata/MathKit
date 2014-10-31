@@ -192,26 +192,25 @@ public class Polynomial : SimplePolynomial {
     }
     
     public func addPolynomial(p : Polynomial) -> Polynomial {
-        /*
-        if p.stack == nil && self.stack == nil && super.canAdd(p) {
-            let ret = super.add(p)
+        if p.stack == nil && self.stack == nil && self.canAdd(p) {
+            let ret = self.add(p)
             return Polynomial(simplePolynomial: ret)
-        }*/
+        }
         return self.performOp(.Add, on: p)
     }
     
-    public func subtractPolynomial(p: Polynomial) -> Polynomial {/*
-        if p.stack == nil && self.stack == nil && super.canSubtract(p) {
-            return Polynomial(simplePolynomial: super.subtract(SimplePolynomial(terms: p.terms)))
-        }*/
+    public func subtractPolynomial(p: Polynomial) -> Polynomial {
+        if p.stack == nil && self.stack == nil && self.canSubtract(p) {
+            return Polynomial(simplePolynomial: self.subtract(p))
+        }
         
         return self.performOp(.Subtract, on: p)
     }
 
-    public func multiplyPolynomial(p: Polynomial) -> Polynomial {/*
-        if p.stack == nil && self.stack == nil && super.canMultiply(p) {
-            return Polynomial(simplePolynomial: super.multiply(SimplePolynomial(terms: p.terms)))
-        }*/
+    public func multiplyPolynomial(p: Polynomial) -> Polynomial {
+        if p.stack == nil && self.stack == nil && self.canMultiply(p) {
+            return Polynomial(simplePolynomial: self.multiply(p))
+        }
         
         return self.performOp(.Multiply, on: p)
     }

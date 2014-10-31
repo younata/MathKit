@@ -67,12 +67,39 @@ class SimplePolynomialTests: XCTestCase {
         XCTAssertEqual(SimplePolynomial(string: "2x + x"), SimplePolynomial(string: "3x"), "from string")
     }
     
-    func testInterpolation() {
+    func test1DInterpolation() {
         let x2 = (x: [-1.0, 0.0, 1.0], y: [1.0, 0.0, 1.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x2.x], output: x2.y), SimplePolynomial(string: "x^2"), "1d interpolation")
         
-        let interpolated = SimplePolynomial.interpolate([x2.x], output: x2.y)
+        let x2_2 = (x: [-2.0, -1.0, 0.0, 1.0, 2.0], y: [4.0, 1.0, 0.0, 1.0, 4.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x2_2.x], output: x2_2.y), SimplePolynomial(string: "x^2"), "1d interpolation")
         
-        XCTAssertEqual(interpolated, SimplePolynomial(string: "x^2"), "interpolation")
+        let x2_3 = (x: [-1.0, 0.0, 1.0], y: [2.0, 1.0, 2.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x2_3.x], output: x2_3.y), SimplePolynomial(string: "x^2 + 1"), "1d interpolation")
+        
+        let x2_4 = (x: [-1.0, 0.0, 1.0], y: [1.0, 1.0, 3.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x2_4.x], output: x2_4.y), SimplePolynomial(string: "x^2 + x + 1"), "1d interpolation")
+        
+        let x2_5 = (x: [-1.0, 0.0, 1.0], y: [3.0, 1.0, 1.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x2_5.x], output: x2_5.y), SimplePolynomial(string: "x^2 - x + 1"), "1d interpolation")
+        
+        let x3 = (x: [-1.0, 0.0, 1.0, 2.0], y: [-1.0, 0.0, 1.0, 8.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x3.x], output: x3.y), SimplePolynomial(string: "x^3"), "1d interpolation")
+        
+        let x4 = (x: [-2.0, 1.0, 0.0, 1.0, 2.0], y: [16.0, 1.0, 0.0, 1.0, 16.0])
+        XCTAssertEqual(SimplePolynomial.interpolate([x4.x], output: x4.y), SimplePolynomial(string: "x^4"), "1d interpolation")
+    }
+    
+    func test2DInterpolation() {
+        XCTFail("2d interpolation")
+    }
+    
+    func test3DInterpolation() {
+        XCTFail("3d interpolation")
+    }
+    
+    func testArbitraryDimensionInterpolation() {
+        XCTFail("n-dimension interpolation")
     }
 
     // Mark: Info
