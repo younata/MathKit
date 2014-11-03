@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8924D8D51A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
+		8924D8D61A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
+		8924D8D71A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
+		8924D8D81A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
+		8924D8D91A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
 		8933E89919E9A71200ECFF3F /* MathKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8933E89819E9A71200ECFF3F /* MathKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
@@ -16,6 +21,8 @@
 		8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */; };
+		893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
+		893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
 		89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
 		89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */; };
 		89CCD8B719F8021100C65A6C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
@@ -65,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8924D8D41A06E458003B7529 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		8933E89319E9A71200ECFF3F /* MathKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8933E89719E9A71200ECFF3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8933E89819E9A71200ECFF3F /* MathKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathKit.h; sourceTree = "<group>"; };
@@ -165,6 +173,7 @@
 				8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */,
 				8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */,
 				8933E8AF19E9A73500ECFF3F /* Polynomial.swift */,
+				8924D8D41A06E458003B7529 /* Function.swift */,
 				8933E89619E9A71200ECFF3F /* Supporting Files */,
 			);
 			path = MathKit;
@@ -454,6 +463,7 @@
 				8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */,
 				89D06A1519FD5F26003909A3 /* Polynomial.swift in Sources */,
 				8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */,
+				8924D8D51A06E458003B7529 /* Function.swift in Sources */,
 				8933E8B219E9A73500ECFF3F /* SimplePolynomial.swift in Sources */,
 				89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */,
 			);
@@ -464,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */,
+				893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */,
 				8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */,
 				89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */,
 				89DBC0BD19F9E332003AC251 /* Utils.swift in Sources */,
@@ -471,6 +482,7 @@
 				8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */,
 				8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */,
 				89D06A1619FD5F27003909A3 /* Polynomial.swift in Sources */,
+				8924D8D61A06E458003B7529 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8924D8D91A06E458003B7529 /* Function.swift in Sources */,
 				89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */,
 				89CCD8B719F8021100C65A6C /* Vector.swift in Sources */,
 				89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */,
@@ -496,6 +509,7 @@
 				89D5557B19F6023200D987D7 /* Vector.swift in Sources */,
 				89D06A1719FD5F28003909A3 /* Polynomial.swift in Sources */,
 				89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */,
+				8924D8D71A06E458003B7529 /* Function.swift in Sources */,
 				89D5557D19F6023200D987D7 /* SimplePolynomial.swift in Sources */,
 				89DBC0BE19F9E332003AC251 /* Utils.swift in Sources */,
 			);
@@ -506,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89D5557E19F6023300D987D7 /* Vector.swift in Sources */,
+				893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */,
 				89D5558119F6023C00D987D7 /* SimplePolynomialTests.swift in Sources */,
 				89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */,
 				89DBC0BF19F9E332003AC251 /* Utils.swift in Sources */,
@@ -513,6 +528,7 @@
 				89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */,
 				89D5558019F6023300D987D7 /* SimplePolynomial.swift in Sources */,
 				89D06A1819FD5F29003909A3 /* Polynomial.swift in Sources */,
+				8924D8D81A06E458003B7529 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

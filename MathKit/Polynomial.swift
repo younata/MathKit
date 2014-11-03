@@ -17,16 +17,9 @@ public class Polynomial : SimplePolynomial {
         case Divide = "/"
         case Exponentiate = "**"
         
-        func associates(op: Operations) -> Bool {
-            if (self != op) {
-                return false
-            }
-            
-            return self == .Add || self == .Multiply
-        }
     }
     
-    var stack : [(polynomial: SimplePolynomial?, op: Operations?)]? = nil
+    var stack : [(polynomial: SimplePolynomial?, op: Function?)]? = nil
         
     public override init() {
         super.init()
@@ -173,9 +166,9 @@ public class Polynomial : SimplePolynomial {
         return 0
     }
     
-    private func performOp(op: Operations, on: Polynomial) -> Polynomial {
+    private func performOp(op: Function, on: Polynomial) -> Polynomial {
         var ret = self.copy() as Polynomial
-        var stackToAdd : [(polynomial: SimplePolynomial?, op: Operations?)] = []
+        var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = []
         stackToAdd = [(on, nil), (nil, op)]
         if let os = on.stack {
             let a = os.first?.polynomial!
@@ -223,7 +216,7 @@ public class Polynomial : SimplePolynomial {
         return self.performOp(.Exponentiate, on: p)
     }
     
-    public override func differentiate(respectTo: String) -> Polynomial {
+    public override func differentiate(respectTo: String) -> Polynomial? {
         if var stack = self.stack {
             while (stack.count > 2) {
                 let a = stack.removeAtIndex(0).polynomial!
@@ -254,7 +247,7 @@ public class Polynomial : SimplePolynomial {
         return Polynomial()
     }
     
-    public override func gradient() -> Vector {
+    public override func gradient() -> Vector? {
         return Vector(polynomials: self.variables().reduce([:]) {(dict: [String: SimplePolynomial], variable: String) in
             var ret = dict
             ret[variable] = self.differentiate(variable)

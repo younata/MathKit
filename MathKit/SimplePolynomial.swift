@@ -355,11 +355,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return multiplyDouble(1.0 / v)
     }
     
-    public func differentiate() -> SimplePolynomial {
+    public func differentiate() -> SimplePolynomial? {
         return differentiate("x")
     }
     
-    public func differentiate(respectTo : String) -> SimplePolynomial { // partial derivative!
+    public func differentiate(respectTo : String) -> SimplePolynomial? { // partial derivative!
         var terms : [PolynomialTerm] = []
         
         if (!contains(variables(), respectTo)) {
@@ -373,7 +373,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return SimplePolynomial(terms: terms)
     }
     
-    public func gradient() -> Vector {      
+    public func gradient() -> Vector? {
         var vars: [String: SimplePolynomial] = [:]
         
         for term in variables() {
@@ -382,7 +382,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return Vector(polynomials: vars)
     }
     
-    public func integrate(respectTo: String) -> SimplePolynomial {
+    public func integrate(respectTo: String) -> SimplePolynomial? {
         var t: [PolynomialTerm] = []
         for term in self.terms {
             let integrated = term.integrate(respectTo)
@@ -391,7 +391,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return SimplePolynomial(terms: t)
     }
     
-    public func integrate(respectTo: String, over: (start: Double, end: Double)) -> SimplePolynomial {
+    public func integrate(respectTo: String, over: (start: Double, end: Double)) -> SimplePolynomial? {
         let integrated = self.integrate(respectTo)
         return integrated.polynomialAt([respectTo: over.end]) - integrated.polynomialAt([respectTo: over.start])
     }
