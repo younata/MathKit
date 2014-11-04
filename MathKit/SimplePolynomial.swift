@@ -222,14 +222,20 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         return self.almostEquals(a)
     }
     
-    public func valueAt(x : [String: Double]) -> Double {
+    public func valueAt(x : [String: Double]) -> Double? {
         assert(x.count == self.dimensions(), "SimplePolynomial - valueAt:, expected input.count to equal number of different variables in polygon")
         
         return self.terms.reduce(0.0) { return $0 + $1.valueAt(x) }
     }
     
-    public func polynomialAt(x : [String: Double]) -> SimplePolynomial {
+    public func polynomialAt(x : [String: Double]) -> SimplePolynomial? {
         return SimplePolynomial(terms: self.terms.map {return $0.termAt(x)})
+    }
+    
+    public func of(polynomial: SimplePolynomial, at: String) -> SimplePolynomial? { // returns f(g), where g is a polynomial
+        return SimplePolynomial(terms: self.terms.reduce([]) {(list: [PolynomialTerm], term: PolynomialTerm) in
+            return list + term.of(polynomial.terms, at: at)
+        })
     }
     
     public func canAdd(p : SimplePolynomial) -> Bool {
@@ -531,12 +537,6 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         } else {
             return [Vector(scalars: [varname: first]), Vector(scalars: [varname: second])]
         }
-    }
-    
-    public func of(polynomial: SimplePolynomial, at: String) -> SimplePolynomial { // returns f(g), where g is a polynomial
-        return SimplePolynomial(terms: self.terms.reduce([]) {(list: [PolynomialTerm], term: PolynomialTerm) in
-            return list + term.of(polynomial.terms, at: at)
-        })
     }
 }
 

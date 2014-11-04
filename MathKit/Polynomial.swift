@@ -10,15 +10,6 @@ import Foundation
 
 public class Polynomial : SimplePolynomial {
     
-    public enum Operations : String {
-        case Add = "+"
-        case Subtract = "-"
-        case Multiply = "*"
-        case Divide = "/"
-        case Exponentiate = "**"
-        
-    }
-    
     var stack : [(polynomial: SimplePolynomial?, op: Function?)]? = nil
         
     public override init() {
@@ -28,12 +19,7 @@ public class Polynomial : SimplePolynomial {
     public init(simplePolynomial: SimplePolynomial) {
         super.init(terms: simplePolynomial.terms)
     }
-    
-    /*
-    public convenience init(scalar: Double) {
-        super.init(scalar: scalar)
-    }*/
-    
+
     public init(polynomial : Polynomial) {
         super.init()
         stack = polynomial.stack
@@ -77,15 +63,38 @@ public class Polynomial : SimplePolynomial {
     
     public override var toString : String {
         var str = ""
-        if var s = stack {
-            let a = s.removeAtIndex(0).polynomial!
-            str += "(\(a.toString))"
-            
-            while s.count > 0 {
-                let b = s.removeAtIndex(0).polynomial!
-                let op = s.removeAtIndex(0).op!
-                
-                str += "\(op.rawValue) + (\(b.toString))"
+        if var stack = self.stack {
+            while (stack.count > 0) {
+                var polys : [Polynomial] = []
+                polys.append(stack.removeAtIndex(0).polynomial!)
+                var function : Function! = nil
+                while true {
+                    let a = stack.removeAtIndex(0)
+                    if let p = a.polynomial {
+                        polys.append(p)
+                    } else {
+                        function = a.op!
+                        break
+                    }
+                }
+                assert(function.numberOfInputs == polys.count, "")
+                if function.isOperator && function.numberOfInputs == 2 {
+                    if polys.count == 2 {
+                        str += "(\(polys.first!.toString)) \(function.description) (\(polys.last!.toString))"
+                    } else {
+                        str += "(\(function.description) (\(polys.last!.toString))"
+                    }
+                } else {
+                    str = function.description + "(" + str
+                    str += "\(function.description)("
+                    for (i, p) in enumerate(polys) {
+                        str += "\(polys.toString)"
+                        if i != (polys.count - 1) {
+                            str += ", "
+                        }
+                    }
+                    str += ") "
+                }
             }
         } else {
             return super.toString
@@ -122,30 +131,26 @@ public class Polynomial : SimplePolynomial {
         }
     }
     
-    public override func valueAt(x: [String : Double]) -> Double {
+    public override func valueAt(x: [String : Double]) -> Double? {
         if var stack = self.stack {
             while (stack.count > 1) {
-                var a = stack.removeAtIndex(0).polynomial!
-                var b = stack.removeAtIndex(0).polynomial!
-                assert(stack.count != 0, "stack underflow")
-                let c = stack.removeAtIndex(0).op!
-                var res : SimplePolynomial? = nil
-                switch (c) {
-                case .Add:
-                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
-                case .Subtract:
-                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
-                case .Multiply:
-                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
-                case .Divide:
-                    res = SimplePolynomial(scalar: a.valueAt(x) + b.valueAt(x))
-                case .Exponentiate:
-                    res = SimplePolynomial(scalar: pow(a.valueAt(x), b.valueAt(x)))
+                var polys : [Polynomial] = []
+                polys.append(stack.removeAtIndex(0).polynomial!)
+                var function : Function! = nil
+                while true {
+                    let a = stack.removeAtIndex(0)
+                    if let p = a.polynomial {
+                        polys.append(p)
+                    } else {
+                        function = a.op!
+                        break
+                    }
                 }
-                if let r = res {
-                    stack.insert((res, nil), atIndex: 0)
+                assert(function.numberOfInputs == polys.count, "")
+                if let res = function.apply(polys) {
+                    stack.insert((SimplePolynomial(scalar:res), nil), atIndex: 0)
                 } else {
-                    fatalError("res should not be nil")
+                    return nil
                 }
                 assert(stack.count != self.stack!.count, "expected stack to be a mutable copy of self.stack, not to actually refer to it")
             }
@@ -161,24 +166,19 @@ public class Polynomial : SimplePolynomial {
     
     public func depth() -> Int {
         if let s = stack {
-            return ((s.count - 1) / 2) + 1
+            return s.filter({ $0.polynomial != nil }).count - 1
         }
         return 0
     }
     
-    private func performOp(op: Function, on: Polynomial) -> Polynomial {
+    private func performFunction(op: Function, on: [Polynomial]) -> Polynomial {
+        assert(op.numberOfInputs == on.count + 1, "Expected op to work with inputs for function")
         var ret = self.copy() as Polynomial
-        var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = []
-        stackToAdd = [(on, nil), (nil, op)]
-        if let os = on.stack {
-            let a = os.first?.polynomial!
-            let rest = os.filter { return $0.polynomial! != a }
-            stackToAdd = [(a, nil), (nil, op)] + rest
-        }
+        let stackToAdd = on.map {return ($0, nil)} + (nil, op)
         if ret.stack != nil {
             ret.stack! += stackToAdd
         } else {
-            ret = Polynomial(stack: [((self.copy() as Polynomial), nil)] + stackToAdd)
+            ret = Polynomial(stack: [(ret, nil)] + stackToAdd)
         }
         
         return ret
@@ -189,7 +189,7 @@ public class Polynomial : SimplePolynomial {
             let ret = self.add(p)
             return Polynomial(simplePolynomial: ret)
         }
-        return self.performOp(.Add, on: p)
+        return self.performFunction(Addition(), on: [p])
     }
     
     public func subtractPolynomial(p: Polynomial) -> Polynomial {
@@ -197,7 +197,7 @@ public class Polynomial : SimplePolynomial {
             return Polynomial(simplePolynomial: self.subtract(p))
         }
         
-        return self.performOp(.Subtract, on: p)
+        return self.performOp(Subtraction(), on: [p])
     }
 
     public func multiplyPolynomial(p: Polynomial) -> Polynomial {
@@ -205,40 +205,35 @@ public class Polynomial : SimplePolynomial {
             return Polynomial(simplePolynomial: self.multiply(p))
         }
         
-        return self.performOp(.Multiply, on: p)
+        return self.performOp(Multiplication(), on: [p])
     }
     
     public func dividePolynomial(p : Polynomial) -> Polynomial {
-        return self.performOp(.Divide, on: p)
+        return self.performOp(Division(), on: [p])
     }
     
     public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
-        return self.performOp(.Exponentiate, on: p)
+        return self.performOp(Exponentiation(), on: [p])
     }
     
     public override func differentiate(respectTo: String) -> Polynomial? {
         if var stack = self.stack {
-            while (stack.count > 2) {
-                let a = stack.removeAtIndex(0).polynomial!
-                let b = stack.removeAtIndex(0).polynomial!
-                let op = stack.removeAtIndex(0).op!
-                var ret: Polynomial? = nil
-                switch (op) {
-                case .Add, .Subtract:
-                    if (op == .Add) {
-                        ret = Polynomial(simplePolynomial: a.differentiate(respectTo) + b.differentiate(respectTo))
+            while (stack.count > 1) {
+                var polys : [Polynomial] = []
+                polys.append(stack.removeAtIndex(0).polynomial!)
+                var function : Function! = nil
+                while true {
+                    let a = stack.removeAtIndex(0)
+                    if let p = a.polynomial {
+                        polys.append(p)
                     } else {
-                        ret = Polynomial(simplePolynomial: a.differentiate(respectTo) - b.differentiate(respectTo))
+                        function = a.op!
+                        break
                     }
-                    stack.insert((ret!, nil), atIndex: 0)
-                    break
-                case .Multiply, .Divide:
-                    // I have no idea how to do this
-                    break
-                case .Exponentiate:
-                    // I have no idea how to do this
-                    break
                 }
+                assert(function.numberOfInputs == polys.count, "")
+                let ret = function.differentiate(polys, respectTo: respectTo)
+                stack.insert((ret!, nil), atIndex: 0)
             }
             assert(stack.count == 1, "")
         } else {

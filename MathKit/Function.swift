@@ -13,7 +13,7 @@ public protocol Function : Printable {
     
     var numberOfInputs : Int
     
-    func apply(terms: [Double]) -> Double
+    func apply(terms: [Double]) -> Double?
     
     func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial?
     
@@ -26,12 +26,12 @@ public class Addition : Function {
 
     var numberOfInputs : Int { return 2 }
     
-    func apply(terms: [Double]) -> Double {
+    func apply(terms: [Double]) -> Double? {
         assert(terms.count == self.numberOfInputs, "")
         return terms.first! + terms.last!
     }
     
-    func differentiate(term: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
         return Polynomial(SimplePolynomial: terms.first!.differentiate(respectTo) + terms.last!.differentiate(respectTo))
     }
     
@@ -46,7 +46,7 @@ public class Subtraction : Function {
     
     var numberOfInputs : Int { return 2 }
     
-    func apply(terms: [Double]) -> Double {
+    func apply(terms: [Double]) -> Double? {
         assert(terms.count == self.numberOfInputs, "")
         return terms.first! - terms.last!
     }
@@ -66,7 +66,7 @@ public class Multiplication : Function {
     
     var numberOfInputs : Int { return 2 }
     
-    func apply(terms: [Double]) -> Double {
+    func apply(terms: [Double]) -> Double? {
         assert(terms.count == self.numberOfInputs, "")
         return terms.first! * terms.last!
     }
@@ -86,8 +86,11 @@ public class Division : Function {
     
     var numberOfInputs : Int { return 2 }
     
-    func apply(terms: [Double]) -> Double {
+    func apply(terms: [Double]) -> Double? {
         assert(terms.count == self.numberOfInputs, "")
+        if terms.last! == 0 {
+            return nil
+        }
         return terms.first! / terms.last!
     }
     
@@ -106,7 +109,7 @@ public class Exponentiation : Function {
     
     var numberOfInputs : Int { return 2 }
     
-    func apply(terms: [Double]) -> Double {
+    func apply(terms: [Double]) -> Double? {
         assert(terms.count == self.numberOfInputs, "")
         return pow(terms.first!, terms.last!)
     }
