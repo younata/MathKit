@@ -156,8 +156,8 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testGradient() {
-        XCTAssertEqual(p1.gradient(), Vector(scalars: ["x": 1.0]), "gradient")
-        XCTAssertEqual(p2.gradient(), Vector(scalars: ["x": 2.0]), "gradient")
+        XCTAssertEqual(p1.gradient()!, Vector(scalars: ["x": 1.0]), "gradient")
+        XCTAssertEqual(p2.gradient()!, Vector(scalars: ["x": 2.0]), "gradient")
     }
     
     func testIntegration() {

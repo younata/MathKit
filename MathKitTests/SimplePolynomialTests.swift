@@ -146,28 +146,28 @@ class SimplePolynomialTests: XCTestCase {
     }
 
     func testValueAt() {
-        XCTAssertEqual(p1.valueAt([:]), 1.0, "valueAt")
-        XCTAssertEqual(p2.valueAt(["x": 1.0]), 3.0, "valueAt")
-        XCTAssertEqual(p3.valueAt(["x": 1.0, "y": 1.0]), 4.0, "valueAt")
-        XCTAssertEqual(p4.valueAt(["x": 1.0, "y": 1.0]), 6.0, "valueAt")
-        XCTAssertEqual(p5.valueAt(["x": 1.0, "y": 1.0]), 6.0, "valueAt")
+        XCTAssertEqual(p1.valueAt([:])!, 1.0, "valueAt")
+        XCTAssertEqual(p2.valueAt(["x": 1.0])!, 3.0, "valueAt")
+        XCTAssertEqual(p3.valueAt(["x": 1.0, "y": 1.0])!, 4.0, "valueAt")
+        XCTAssertEqual(p4.valueAt(["x": 1.0, "y": 1.0])!, 6.0, "valueAt")
+        XCTAssertEqual(p5.valueAt(["x": 1.0, "y": 1.0])!, 6.0, "valueAt")
     }
     
     func testPolynomialAt() {
         for p in [p1, p2, p3, p4, p5] {
-            XCTAssertEqual(p.polynomialAt([:]), p, "polynomialAt")
+            XCTAssertEqual(p.polynomialAt([:])!, p, "polynomialAt")
         }
         
-        XCTAssertEqual(p2.polynomialAt(["x": 1.0]), SimplePolynomial(string: "3"), "polynomialAt")
+        XCTAssertEqual(p2.polynomialAt(["x": 1.0])!, SimplePolynomial(string: "3"), "polynomialAt")
         
-        XCTAssertEqual(p3.polynomialAt(["x": 1.0]), SimplePolynomial(string: "y + 3y^2"), "polynomialAt")
-        XCTAssertEqual(p3.polynomialAt(["y": 1.0]), SimplePolynomial(string: "x + 3"), "polynomialAt")
+        XCTAssertEqual(p3.polynomialAt(["x": 1.0])!, SimplePolynomial(string: "y + 3y^2"), "polynomialAt")
+        XCTAssertEqual(p3.polynomialAt(["y": 1.0])!, SimplePolynomial(string: "x + 3"), "polynomialAt")
         
-        XCTAssertEqual(p4.polynomialAt(["x": 1.0]), SimplePolynomial(string: "2 + y + 3y^2"), "polynomialAt")
-        XCTAssertEqual(p4.polynomialAt(["y": 1.0]), SimplePolynomial(string: "3x + 3"), "polynomialAt")
+        XCTAssertEqual(p4.polynomialAt(["x": 1.0])!, SimplePolynomial(string: "2 + y + 3y^2"), "polynomialAt")
+        XCTAssertEqual(p4.polynomialAt(["y": 1.0])!, SimplePolynomial(string: "3x + 3"), "polynomialAt")
         
-        XCTAssertEqual(p5.polynomialAt(["x": 1.0]), SimplePolynomial(string: "3 + 3y^2"), "polynomialAt")
-        XCTAssertEqual(p5.polynomialAt(["y": 1.0]), SimplePolynomial(string: "3x^2 + 3"), "polynomialAt")
+        XCTAssertEqual(p5.polynomialAt(["x": 1.0])!, SimplePolynomial(string: "3 + 3y^2"), "polynomialAt")
+        XCTAssertEqual(p5.polynomialAt(["y": 1.0])!, SimplePolynomial(string: "3x^2 + 3"), "polynomialAt")
     }
 
     func testPolynomialAddition() {
@@ -362,23 +362,23 @@ class SimplePolynomialTests: XCTestCase {
     }
 
     func testDifferentiation() {
-        XCTAssertEqual(p1.differentiate("x"), SimplePolynomial(string: "1"), "differentation")
-        XCTAssertEqual(p2.differentiate("x"), SimplePolynomial(string: "2"), "differentation")
+        XCTAssertEqual(p1.differentiate("x")!, SimplePolynomial(string: "1"), "differentation")
+        XCTAssertEqual(p2.differentiate("x")!, SimplePolynomial(string: "2"), "differentation")
 
-        XCTAssertEqual(p3.differentiate("x"), SimplePolynomial(string: "y"), "differentation")
-        XCTAssertEqual(p3.differentiate("y"), SimplePolynomial(string: "x + 6y"), "differentation")
+        XCTAssertEqual(p3.differentiate("x")!, SimplePolynomial(string: "y"), "differentation")
+        XCTAssertEqual(p3.differentiate("y")!, SimplePolynomial(string: "x + 6y"), "differentation")
 
-        XCTAssertEqual(p4.differentiate("x"), SimplePolynomial(string: "2 + y"), "differentation")
-        XCTAssertEqual(p4.differentiate("y"), SimplePolynomial(string: "x + 6y"), "differentation")
+        XCTAssertEqual(p4.differentiate("x")!, SimplePolynomial(string: "2 + y"), "differentation")
+        XCTAssertEqual(p4.differentiate("y")!, SimplePolynomial(string: "x + 6y"), "differentation")
 
-        XCTAssertEqual(p5.differentiate("x"), SimplePolynomial(string: "6x"), "differentation")
-        XCTAssertEqual(p5.differentiate("y"), SimplePolynomial(string: "6y"), "differentation")
+        XCTAssertEqual(p5.differentiate("x")!, SimplePolynomial(string: "6x"), "differentation")
+        XCTAssertEqual(p5.differentiate("y")!, SimplePolynomial(string: "6y"), "differentation")
 
         var p = SimplePolynomial(string: "4x^2y")
-        XCTAssertEqual(p.differentiate("x"), SimplePolynomial(string: "8(x)(y)"), "differentiate")
+        XCTAssertEqual(p.differentiate("x")!, SimplePolynomial(string: "8(x)(y)"), "differentiate")
 
         for p in [p1, p2, p3, p4, p5] {
-            XCTAssertEqual(p.differentiate("a"), p, "differentation")
+            XCTAssertEqual(p.differentiate("a")!, p, "differentation")
         }
     }
 
@@ -388,43 +388,43 @@ class SimplePolynomialTests: XCTestCase {
         let p3r = Vector(polynomials: ["x": SimplePolynomial(string: "y"), "y": SimplePolynomial(string: "x + 6y")])
         let p4r = Vector(polynomials: ["x": SimplePolynomial(string: "y + 2"), "y": SimplePolynomial(string: "x + 6y")])
         let p5r = Vector(polynomials: ["x": SimplePolynomial(string: "6x"), "y": SimplePolynomial(string: "6y")])
-        XCTAssertEqual(p1.gradient(), p1r, "gradient")
-        XCTAssertEqual(p2.gradient(), p2r, "gradient")
-        XCTAssertEqual(p3.gradient(), p3r, "gradient")
-        XCTAssertEqual(p4.gradient(), p4r, "gradient")
-        XCTAssertEqual(p5.gradient(), p5r, "gradient")
+        XCTAssertEqual(p1.gradient()!, p1r, "gradient")
+        XCTAssertEqual(p2.gradient()!, p2r, "gradient")
+        XCTAssertEqual(p3.gradient()!, p3r, "gradient")
+        XCTAssertEqual(p4.gradient()!, p4r, "gradient")
+        XCTAssertEqual(p5.gradient()!, p5r, "gradient")
     }
     
     func testIntegration() {
-        XCTAssertEqual(p1.integrate("x"), SimplePolynomial(string: "x"), "integration")
+        XCTAssertEqual(p1.integrate("x")!, SimplePolynomial(string: "x"), "integration")
         
-        XCTAssertEqual(p2.integrate("x"), SimplePolynomial(string: "x^2 + x"), "integration")
+        XCTAssertEqual(p2.integrate("x")!, SimplePolynomial(string: "x^2 + x"), "integration")
         
-        XCTAssertEqual(p3.integrate("x"), SimplePolynomial(string: "3y^2x + 0.5x^2y"), "integration")
-        XCTAssertEqual(p3.integrate("y"), SimplePolynomial(string: "y^3 + 0.5y^2x"), "integration")
+        XCTAssertEqual(p3.integrate("x")!, SimplePolynomial(string: "3y^2x + 0.5x^2y"), "integration")
+        XCTAssertEqual(p3.integrate("y")!, SimplePolynomial(string: "y^3 + 0.5y^2x"), "integration")
         
-        XCTAssertEqual(p4.integrate("x"), SimplePolynomial(string: "3y^2x + x^2 + 0.5x^2y"), "integration")
-        XCTAssertEqual(p4.integrate("y"), SimplePolynomial(string: "y^3 + 2(x)(y) + 0.5y^2x"), "integration")
+        XCTAssertEqual(p4.integrate("x")!, SimplePolynomial(string: "3y^2x + x^2 + 0.5x^2y"), "integration")
+        XCTAssertEqual(p4.integrate("y")!, SimplePolynomial(string: "y^3 + 2(x)(y) + 0.5y^2x"), "integration")
         
-        XCTAssertEqual(p5.integrate("x"), SimplePolynomial(string: "x^3 + 3y^2x"), "integration")
-        XCTAssertEqual(p5.integrate("y"), SimplePolynomial(string: "3x^2y + y^3"), "integration")
+        XCTAssertEqual(p5.integrate("x")!, SimplePolynomial(string: "x^3 + 3y^2x"), "integration")
+        XCTAssertEqual(p5.integrate("y")!, SimplePolynomial(string: "3x^2y + y^3"), "integration")
     }
     
     func testIntegrationOverRange() {
         let r = (1.0, 2.0)
         
-        XCTAssertEqual(p1.integrate("x", over: r), SimplePolynomial(scalar: 1), "integration")
+        XCTAssertEqual(p1.integrate("x", over: r)!, SimplePolynomial(scalar: 1), "integration")
         
-        XCTAssertEqual(p2.integrate("x", over: r), SimplePolynomial(scalar: 4), "integration")
+        XCTAssertEqual(p2.integrate("x", over: r)!, SimplePolynomial(scalar: 4), "integration")
         
-        XCTAssertEqual(p3.integrate("x", over: r), SimplePolynomial(string: "3y^2 + 1.5y"), "integration")
-        XCTAssertEqual(p3.integrate("y", over: r), SimplePolynomial(string: "1.5x + 7"), "integration")
+        XCTAssertEqual(p3.integrate("x", over: r)!, SimplePolynomial(string: "3y^2 + 1.5y"), "integration")
+        XCTAssertEqual(p3.integrate("y", over: r)!, SimplePolynomial(string: "1.5x + 7"), "integration")
         
-        XCTAssertEqual(p4.integrate("x", over: r), SimplePolynomial(string: "3y^2 + 1.5y + 3"), "integration")
-        XCTAssertEqual(p4.integrate("y", over: r), SimplePolynomial(string: "3.5x + 7"), "integration")
+        XCTAssertEqual(p4.integrate("x", over: r)!, SimplePolynomial(string: "3y^2 + 1.5y + 3"), "integration")
+        XCTAssertEqual(p4.integrate("y", over: r)!, SimplePolynomial(string: "3.5x + 7"), "integration")
         
-        XCTAssertEqual(p5.integrate("x", over: r), SimplePolynomial(string: "3y^2 + 7"), "integration")
-        XCTAssertEqual(p5.integrate("y", over: r), SimplePolynomial(string: "3x^2 + 7"), "integration")
+        XCTAssertEqual(p5.integrate("x", over: r)!, SimplePolynomial(string: "3y^2 + 7"), "integration")
+        XCTAssertEqual(p5.integrate("y", over: r)!, SimplePolynomial(string: "3x^2 + 7"), "integration")
     }
 
     func testFindRoots() {
@@ -460,12 +460,12 @@ class SimplePolynomialTests: XCTestCase {
     
     func testFunctionComposition() {
         let empty = SimplePolynomial(string: "")
-        XCTAssertEqual(p1.of(empty, at: "x"), p1, "composition of 0")
+        XCTAssertEqual(p1.of(empty, at: "x")!, p1, "composition of 0")
         for p in [p2, p3, p4, p5] {
-            XCTAssertEqual(p.of(empty, at: "x"), p.polynomialAt(["x": 0]), "composition of 0")
+            XCTAssertEqual(p.of(empty, at: "x")!, p.polynomialAt(["x": 0])!, "composition of 0")
         }
         for p in [p3, p4, p5] {
-            XCTAssertEqual(p.of(empty, at: "y"), p.polynomialAt(["y": 0]), "composition of 0")
+            XCTAssertEqual(p.of(empty, at: "y")!, p.polynomialAt(["y": 0])!, "composition of 0")
         }
         
         /*
@@ -474,10 +474,10 @@ class SimplePolynomialTests: XCTestCase {
         f(x, y) = 3.0(y^2.0) + 2.0(x) + (x)(y)
         f(x, y) = 3.0(x^2.0) + 3.0(y^2.0)
         */
-        XCTAssertEqual(p2.of(p2, at: "x"), SimplePolynomial(string: "4x + 3"), "composition")
-        XCTAssertEqual(p2.of(p3, at: "x"), SimplePolynomial(string: "6y^2 + 2(x)y + 1"), "composition")
-        XCTAssertEqual(p2.of(p4, at: "x"), SimplePolynomial(string: "6y^2 + 4x + 2(x)(y) + 1"), "composition")
-        XCTAssertEqual(p2.of(p5, at: "x"), SimplePolynomial(string: "6x^2 + 6y^2 + 1"), "composition")
+        XCTAssertEqual(p2.of(p2, at: "x")!, SimplePolynomial(string: "4x + 3"), "composition")
+        XCTAssertEqual(p2.of(p3, at: "x")!, SimplePolynomial(string: "6y^2 + 2(x)y + 1"), "composition")
+        XCTAssertEqual(p2.of(p4, at: "x")!, SimplePolynomial(string: "6y^2 + 4x + 2(x)(y) + 1"), "composition")
+        XCTAssertEqual(p2.of(p5, at: "x")!, SimplePolynomial(string: "6x^2 + 6y^2 + 1"), "composition")
         
         // and repeatfor p3, p4, p5...
         

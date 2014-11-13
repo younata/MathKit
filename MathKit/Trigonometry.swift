@@ -8,6 +8,10 @@
 
 import Foundation
 
+// Sin, Cos, Tan
+// inverse (arc) of above
+// hyperbolic of above
+
 public class Sine : Function {
     public var isOperator : Bool { return false }
     public var description: String { return "sin" }
