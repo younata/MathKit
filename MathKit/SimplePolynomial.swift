@@ -16,20 +16,6 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         
     }
     
-    /*
-    public class func convertFromFloatLiteral(value: FloatLiteralType) -> Self {
-        return self(scalar: value)
-    }
-    
-    public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
-    public class func convertFromExtendedGraphemeClusterLiteral(value: ExtendedGraphemeClusterLiteralType) -> Self {
-        return self(string: value)
-    }
-    
-    public class func convertFromStringLiteral(value: StringLiteralType) -> Self {
-        return self(string: value)
-    }*/
-    
     convenience public init(scalar : Double) {
         self.init(terms: [PolynomialTerm(scalar: scalar)])
     }
@@ -225,7 +211,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     public func valueAt(x : [String: Double]) -> Double? {
         assert(x.count == self.dimensions(), "SimplePolynomial - valueAt:, expected input.count to equal number of different variables in polygon")
         
-        return self.terms.reduce(0.0) { return $0 + $1.valueAt(x) }
+        return self.terms.reduce(0.0) { return $0! + $1.valueAt(x) }
     }
     
     public func polynomialAt(x : [String: Double]) -> SimplePolynomial? {
@@ -398,8 +384,10 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     }
     
     public func integrate(respectTo: String, over: (start: Double, end: Double)) -> SimplePolynomial? {
-        let integrated = self.integrate(respectTo)
-        return integrated.polynomialAt([respectTo: over.end]) - integrated.polynomialAt([respectTo: over.start])
+        if let integrated = self.integrate(respectTo) {
+            return integrated.polynomialAt([respectTo: over.end])! - integrated.polynomialAt([respectTo: over.start])!
+        }
+        return nil
     }
     
     public func solve() -> [(root: Vector, error: Double)] {
@@ -452,10 +440,12 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         for term in self.variables() {
             for var n = -100.0; n <= 100.0; n+=1.0 {
                 i[term] = n
-                let value = abs(self.valueAt(i))
-                if value < min {
-                    min = value
-                    x = i
+                if let v = self.valueAt(i) {
+                    let value = abs(v)
+                    if value < min {
+                        min = value
+                        x = i
+                    }
                 }
             }
         }
@@ -468,11 +458,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             if n++ > 100 { // i is incremented after the comparison is made.
                 break
             }
-            let delta = self.valueAt(x)// / grad.valueAt(x)
+            let delta = self.valueAt(x)!// / grad.valueAt(x)
             for term in x.keys {
                 x[term] = x[term]! - delta
             }
-            error = abs(self.valueAt(x))
+            error = abs(self.valueAt(x)!)
             if error < epsilon {
                 break
             }

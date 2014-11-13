@@ -332,7 +332,7 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         }
     }
     
-    public func gradient() -> Vector {
+    public func gradient() -> Vector? {
         let vars = self.variables.keys
         
         let sp = SimplePolynomial(terms: [self])

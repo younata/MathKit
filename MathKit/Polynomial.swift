@@ -25,7 +25,7 @@ public class Polynomial : SimplePolynomial {
         stack = polynomial.stack
     }
     
-    public init(stack: [(polynomial: SimplePolynomial?, op: Operations?)]) {
+    public init(stack: [(polynomial: SimplePolynomial?, op: Function?)]) {
         super.init()
         self.stack = stack
     }
@@ -65,7 +65,7 @@ public class Polynomial : SimplePolynomial {
         var str = ""
         if var stack = self.stack {
             while (stack.count > 0) {
-                var polys : [Polynomial] = []
+                var polys : [SimplePolynomial] = []
                 polys.append(stack.removeAtIndex(0).polynomial!)
                 var function : Function! = nil
                 while true {
@@ -88,7 +88,7 @@ public class Polynomial : SimplePolynomial {
                     str = function.description + "(" + str
                     str += "\(function.description)("
                     for (i, p) in enumerate(polys) {
-                        str += "\(polys.toString)"
+                        str += "\(p.toString)"
                         if i != (polys.count - 1) {
                             str += ", "
                         }
@@ -134,13 +134,14 @@ public class Polynomial : SimplePolynomial {
     public override func valueAt(x: [String : Double]) -> Double? {
         if var stack = self.stack {
             while (stack.count > 1) {
-                var polys : [Polynomial] = []
-                polys.append(stack.removeAtIndex(0).polynomial!)
+                var polys : [Double] = []
+                let v = stack.removeAtIndex(0).polynomial?.valueAt(x)
+                polys.append(v!)
                 var function : Function! = nil
                 while true {
                     let a = stack.removeAtIndex(0)
                     if let p = a.polynomial {
-                        polys.append(p)
+                        polys.append(p.valueAt(x)!)
                     } else {
                         function = a.op!
                         break
@@ -174,7 +175,7 @@ public class Polynomial : SimplePolynomial {
     private func performFunction(op: Function, on: [Polynomial]) -> Polynomial {
         assert(op.numberOfInputs == on.count + 1, "Expected op to work with inputs for function")
         var ret = self.copy() as Polynomial
-        let stackToAdd = on.map {return ($0, nil)} + (nil, op)
+        var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = on.map {return ($0, nil)} + [(nil, op)]
         if ret.stack != nil {
             ret.stack! += stackToAdd
         } else {
@@ -197,7 +198,7 @@ public class Polynomial : SimplePolynomial {
             return Polynomial(simplePolynomial: self.subtract(p))
         }
         
-        return self.performOp(Subtraction(), on: [p])
+        return self.performFunction(Subtraction(), on: [p])
     }
 
     public func multiplyPolynomial(p: Polynomial) -> Polynomial {
@@ -205,21 +206,21 @@ public class Polynomial : SimplePolynomial {
             return Polynomial(simplePolynomial: self.multiply(p))
         }
         
-        return self.performOp(Multiplication(), on: [p])
+        return self.performFunction(Multiplication(), on: [p])
     }
     
     public func dividePolynomial(p : Polynomial) -> Polynomial {
-        return self.performOp(Division(), on: [p])
+        return self.performFunction(Division(), on: [p])
     }
     
     public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
-        return self.performOp(Exponentiation(), on: [p])
+        return self.performFunction(Exponentiation(), on: [p])
     }
     
     public override func differentiate(respectTo: String) -> Polynomial? {
         if var stack = self.stack {
             while (stack.count > 1) {
-                var polys : [Polynomial] = []
+                var polys : [SimplePolynomial] = []
                 polys.append(stack.removeAtIndex(0).polynomial!)
                 var function : Function! = nil
                 while true {
@@ -237,7 +238,7 @@ public class Polynomial : SimplePolynomial {
             }
             assert(stack.count == 1, "")
         } else {
-            return Polynomial(simplePolynomial: super.differentiate(respectTo))
+            return Polynomial(simplePolynomial: super.differentiate(respectTo) ?? SimplePolynomial())
         }
         return Polynomial()
     }
