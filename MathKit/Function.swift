@@ -15,9 +15,9 @@ public protocol Function : Printable {
     
     func apply(terms: [Double]) -> Double?
     
-    func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial?
+    func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial?
     
-    func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial?
+    func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial?
 }
 
 public class Addition : Function {
@@ -31,12 +31,12 @@ public class Addition : Function {
         return terms.first! + terms.last!
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! + terms.last!.differentiate(respectTo)!)
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        return nil//Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! + terms.last!.differentiate(respectTo)!)
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! + terms.last!.integrate(respectTo)!)
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        return nil//Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! + terms.last!.integrate(respectTo)!)
     }
 }
 
@@ -51,12 +51,12 @@ public class Subtraction : Function {
         return terms.first! - terms.last!
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! - terms.last!.differentiate(respectTo)!)
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        return nil//Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! - terms.last!.differentiate(respectTo)!)
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! - terms.last!.integrate(respectTo)!)
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        return nil//Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! - terms.last!.integrate(respectTo)!)
     }
 }
 
@@ -71,11 +71,11 @@ public class Multiplication : Function {
         return terms.first! * terms.last!
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -94,11 +94,11 @@ public class Division : Function {
         return terms.first! / terms.last!
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -114,11 +114,11 @@ public class Exponentiation : Function {
         return pow(terms.first!, terms.last!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }

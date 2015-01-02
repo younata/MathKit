@@ -22,11 +22,11 @@ public class Sine : Function {
         return sin(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -41,11 +41,11 @@ public class Cosine : Function {
         return cos(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -60,11 +60,11 @@ public class Tanget : Function {
         return tan(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -79,11 +79,11 @@ public class ArcSine : Function {
         return asin(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -98,11 +98,11 @@ public class ArcCos : Function {
         return acos(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -117,11 +117,11 @@ public class ArcTangent : Function {
         return atan(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -136,11 +136,11 @@ public class ArcTangent2 : Function {
         return atan2(terms.first!, terms.last!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -155,11 +155,11 @@ public class Sinh : Function {
         return sinh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -174,11 +174,11 @@ public class Cosh : Function {
         return cosh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -193,11 +193,11 @@ public class Tanh : Function {
         return tanh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -212,11 +212,11 @@ public class ArcSinh : Function {
         return asinh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -231,11 +231,11 @@ public class ArcCosh : Function {
         return acosh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
@@ -250,11 +250,11 @@ public class ArcTanh : Function {
         return atanh(terms.first!)
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }

@@ -9,12 +9,8 @@
 import Accelerate
 import Foundation
 
-public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
+public class SimplePolynomial: Equatable, Comparable, Printable/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
     public var terms : [PolynomialTerm] = []
-    
-    public override init() {
-        
-    }
     
     convenience public init(scalar : Double) {
         self.init(terms: [PolynomialTerm(scalar: scalar)])

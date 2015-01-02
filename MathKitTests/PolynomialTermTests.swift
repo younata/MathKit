@@ -66,9 +66,9 @@ class PolynomialTermTests: XCTestCase {
     // MARK: - Operations
     
     func testValueAt() {
-        XCTAssertEqualWithAccuracy(p1.valueAt(["x": 1]), 1.0, 1e-12, "value at")
+        XCTAssertEqualWithAccuracy(p1.valueAt(["x": 1])!, 1.0, 1e-12, "value at")
         let p5 = PolynomialTerm(coefficient: 2.4, variables: ["x": 3.5])
-        XCTAssertEqualWithAccuracy(p5.valueAt(["x": 2.45]), 55.244943, 1e-6, "value at")
+        XCTAssertEqualWithAccuracy(p5.valueAt(["x": 2.45])!, 55.244943, 1e-6, "value at")
     }
     
     func testTermAt() {
@@ -188,6 +188,6 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testComposition() {
-        XCTAssertEqual(SimplePolynomial(terms: p1.of([p1], at: "x")), SimplePolynomial(terms: [p1]), "composition")
+        XCTAssertEqual(Polynomial(terms: p1.of([p1], at: "x")), Polynomial(terms: [p1]), "composition")
     }
 }

@@ -8,14 +8,13 @@
 
 import Foundation
 
-public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
+public struct PolynomialTerm: Equatable, Comparable, Printable {
     public var coefficient : Double = 0
     public var variables : [String: Double] = [:]
     
-    public override init() {
+    public init() {
         self.coefficient = 0
         self.variables = [:]
-        super.init()
     }
     
     public init(coefficient : Double, variables : [String : Double]) {
@@ -30,7 +29,6 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
                 }
             }
         }
-        super.init()
     }
     
     public init(scalar : Double) {
@@ -83,14 +81,12 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         if (variables.count != 0 && coefficient == 0.0) {
             coefficient = 1.0
         }
-        
-        PolynomialTerm(coefficient: coefficient, variables: variables)
-        
+                
         self.coefficient = coefficient
         self.variables = variables
     }
     
-    public override var description : String {
+    public var description : String {
         var str = ""
         if (self.coefficient != 1.0 || self.variables.count == 0) {
             str += "\(self.coefficient)"
@@ -177,13 +173,14 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     
     :returns: The value of the term at the given point.
     */
-    public func valueAt(x : [String : Double]) -> Double {
+    public func valueAt(x : [String : Double]) -> Double? {
         var r = 1.0
         for key in self.variables.keys {
             if let d = x[key] {
                 r *= pow(d, self.variables[key]!)
             } else {
-                assert(false, "Can't compute the value of a polynomialTerm with unknown variables")
+                println("Can't compute the value of a polynomialTerm with unknown variables")
+                return nil
             }
         }
         return self.coefficient * r
@@ -335,9 +332,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     public func gradient() -> Vector? {
         let vars = self.variables.keys
         
-        let sp = SimplePolynomial(terms: [self])
+        let p = Polynomial(terms: [self])
         
-        return sp.gradient()
+        return p.gradient()
     }
     
     public func integrate(respectTo: String) -> PolynomialTerm {
@@ -424,4 +421,19 @@ public func / (a : PolynomialTerm, b : Double) -> PolynomialTerm {
 
 public func /= (inout a : PolynomialTerm, b : Double) {
     a = a / b
+}
+
+public func condenseTerms(terms: [PolynomialTerm]?, at: [String: Double]) -> Double? {
+    if let theTerms = terms {
+        var ret : Double = 0
+        for term in theTerms {
+            if let v = term.valueAt(at) {
+                ret += v
+            } else {
+                return nil
+            }
+        }
+        return ret
+    }
+    return nil
 }
