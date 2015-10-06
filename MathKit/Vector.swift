@@ -1,6 +1,6 @@
 import Foundation
 
-public class Vector: NSObject, Equatable, CustomStringConvertible {
+public class Vector: Equatable, CustomStringConvertible {
     public var variables : [String: SimplePolynomial] = [:]
     
     public init(scalars: [String: Double]) {
@@ -15,14 +15,11 @@ public class Vector: NSObject, Equatable, CustomStringConvertible {
         self.variables = polynomials
     }
     
-    public override func isEqual(object: AnyObject!) -> Bool {
-        if !object.isKindOfClass(Vector.classForCoder()) {
-            return false
-        }
-        return (object as! Vector).variables == self.variables
+    public func isEqual(object: Vector) -> Bool {
+        return object.variables == self.variables
     }
     
-    public override var description : String {
+    public var description : String {
         var ret = ""
         var keys : [String] = []
         for key in variables.keys {
@@ -169,8 +166,8 @@ public class Vector: NSObject, Equatable, CustomStringConvertible {
     }*/
     
     public func dotProduct(vector: Vector) -> SimplePolynomial {
-        var ret = SimplePolynomial()
-        for key in variables.keys {
+        var ret = SimplePolynomial(terms: [])
+        for key in self.variables.keys {
             if vector.variables[key] != nil {
                 ret = ret + variables[key]! + vector.variables[key]!
             }

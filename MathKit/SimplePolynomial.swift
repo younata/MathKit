@@ -1,15 +1,15 @@
 import Accelerate
 import Foundation
 
-public class SimplePolynomial: NSObject, Equatable, Comparable, CustomStringConvertible/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
+public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
     public var terms : [PolynomialTerm] = []
-    
-    public override init() {
-        
-    }
     
     convenience public init(scalar : Double) {
         self.init(terms: [PolynomialTerm(scalar: scalar)])
+    }
+
+    convenience public init() {
+        self.init(terms: [])
     }
     
     required public init(terms: [PolynomialTerm]) {
@@ -30,7 +30,6 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, CustomStringConv
             }
             return list
         }
-        super.init()
     }
     
     convenience public init(string: String) {
@@ -121,7 +120,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, CustomStringConv
         }
     }
     
-    public override var description : String {
+    public var description : String {
         let str = self.toString
         var varsUsed = self.variables()
         var v = ""

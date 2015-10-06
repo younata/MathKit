@@ -24,11 +24,11 @@ public class Addition : Function {
     }
     
     public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! + terms.last!.differentiate(respectTo)!)
+        return Polynomial(terms: [])//terms.first!.differentiate(respectTo)! + terms.last!.differentiate(respectTo)!)
     }
     
     public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! + terms.last!.integrate(respectTo)!)
+        return Polynomial(terms: [])//terms.first!.integrate(respectTo)! + terms.last!.integrate(respectTo)!)
     }
 }
 
@@ -44,11 +44,11 @@ public class Subtraction : Function {
     }
     
     public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.differentiate(respectTo)! - terms.last!.differentiate(respectTo)!)
+        return Polynomial(terms: [])//terms.first!.differentiate(respectTo)! - terms.last!.differentiate(respectTo)!)
     }
     
     public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(simplePolynomial: terms.first!.integrate(respectTo)! - terms.last!.integrate(respectTo)!)
+        return Polynomial(terms: [])//terms.first!.integrate(respectTo)! - terms.last!.integrate(respectTo)!)
     }
 }
 

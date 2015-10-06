@@ -8,7 +8,7 @@ public class Logarithm : Function {
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        return log(term.last!) / log(term.first!)
+        return log(terms.last!) / log(terms.first!)
     }
     
     public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {

@@ -1,24 +1,14 @@
 import Foundation
 
-public class Polynomial : SimplePolynomial {
+public class Polynomial: CustomStringConvertible {
     
     var stack : [(polynomial: SimplePolynomial?, op: Function?)]? = nil
-        
-    public override init() {
-        super.init()
-    }
-    
-    public init(simplePolynomial: SimplePolynomial) {
-        super.init(terms: simplePolynomial.terms)
-    }
 
     public init(polynomial : Polynomial) {
-        super.init()
         stack = polynomial.stack
     }
     
     public init(stack: [(polynomial: SimplePolynomial?, op: Function?)]) {
-        super.init()
         self.stack = stack
     }
     
@@ -28,19 +18,18 @@ public class Polynomial : SimplePolynomial {
     }*/
     
     public required init(terms: [PolynomialTerm]) {
-        super.init(terms: terms)
     }
-    
-    public override func copy() -> AnyObject {
-        if self.stack != nil {
-            let s = self.stack!
-            return Polynomial(stack: s)
-        } else {
-            return Polynomial(simplePolynomial: self)
-        }
-    }
-    
-    public override var description : String {
+
+//    public func copy() -> Polynomial {
+//        if self.stack != nil {
+//            let s = self.stack!
+//            return Polynomial(stack: s)
+//        } else {
+//            return Polynomial(simplePolynomial: self)
+//        }
+//    }
+
+    public var description : String {
         var varsUsed = self.variables()
         var v = ""
         varsUsed.sortInPlace { $0 < $1 }
@@ -53,7 +42,7 @@ public class Polynomial : SimplePolynomial {
         return "f(\(v)) = \(self.toString)"
     }
     
-    public override var toString : String {
+    public var toString : String {
         var str = ""
         if var stack = self.stack {
             while (stack.count > 0) {
@@ -89,12 +78,12 @@ public class Polynomial : SimplePolynomial {
                 }
             }
         } else {
-            return super.toString
+            return ""
         }
         return str
     }
     
-    public override func variables() -> [String] {
+    public func variables() -> [String] {
         if let s = stack {
             let prototype: [SimplePolynomial] = []
             let filtered = s.filter {return $0.polynomial != nil}
@@ -105,11 +94,11 @@ public class Polynomial : SimplePolynomial {
             }
             return (reduced2.allObjects as! [String])
         } else {
-            return super.variables()
+            return []
         }
     }
     
-    public override func degree() -> Double {
+    public func degree() -> Double {
         if let s = stack {
             return (s.filter {
                 return $0.polynomial != nil
@@ -119,11 +108,11 @@ public class Polynomial : SimplePolynomial {
                 return max($0, $1.degree())
             }
         } else {
-            return super.degree()
+            return 0
         }
     }
     
-    public override func valueAt(x: [String : Double]) -> Double? {
+    public func valueAt(x: [String : Double]) -> Double? {
         if var stack = self.stack {
             while (stack.count > 1) {
                 var polys : [Double] = []
@@ -149,7 +138,7 @@ public class Polynomial : SimplePolynomial {
             }
             return stack.first!.polynomial!.valueAt(x)
         } else {
-            return super.valueAt(x)
+            return 0
         }
     }
     
@@ -164,154 +153,154 @@ public class Polynomial : SimplePolynomial {
         return 0
     }
     
-    private func performFunction(op: Function, on: [Polynomial]) -> Polynomial {
-        assert(op.numberOfInputs == on.count + 1, "Expected op to work with inputs for function")
-        var ret = self.copy() as! Polynomial
-        var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = on.map {return ($0, nil)} + [(nil, op)]
-        if ret.stack != nil {
-            ret.stack! += stackToAdd
-        } else {
-            ret = Polynomial(stack: [(ret, nil)] + stackToAdd)
-        }
-        
-        return ret
-    }
-    
-    public func addPolynomial(p : Polynomial) -> Polynomial {
-        if p.stack == nil && self.stack == nil && self.canAdd(p) {
-            let ret = self.add(p)
-            return Polynomial(simplePolynomial: ret)
-        }
-        return self.performFunction(Addition(), on: [p])
-    }
-    
-    public func subtractPolynomial(p: Polynomial) -> Polynomial {
-        if p.stack == nil && self.stack == nil && self.canSubtract(p) {
-            return Polynomial(simplePolynomial: self.subtract(p))
-        }
-        
-        return self.performFunction(Subtraction(), on: [p])
-    }
+//    private func performFunction(op: Function, on: [Polynomial]) -> Polynomial {
+//        assert(op.numberOfInputs == on.count + 1, "Expected op to work with inputs for function")
+//        var ret = self.copy() as! Polynomial
+//        var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = on.map {return ($0, nil)} + [(nil, op)]
+//        if ret.stack != nil {
+//            ret.stack! += stackToAdd
+//        } else {
+//            ret = Polynomial(stack: [(ret, nil)] + stackToAdd)
+//        }
+//        
+//        return ret
+//    }
+//    
+//    public func addPolynomial(p : Polynomial) -> Polynomial {
+//        if p.stack == nil && self.stack == nil && self.canAdd(p) {
+//            let ret = self.add(p)
+//            return Polynomial(simplePolynomial: ret)
+//        }
+//        return self.performFunction(Addition(), on: [p])
+//    }
+//    
+//    public func subtractPolynomial(p: Polynomial) -> Polynomial {
+//        if p.stack == nil && self.stack == nil && self.canSubtract(p) {
+//            return Polynomial(simplePolynomial: self.subtract(p))
+//        }
+//        
+//        return self.performFunction(Subtraction(), on: [p])
+//    }
+//
+//    public func multiplyPolynomial(p: Polynomial) -> Polynomial {
+//        if p.stack == nil && self.stack == nil && self.canMultiply(p) {
+//            return Polynomial(simplePolynomial: self.multiply(p))
+//        }
+//        
+//        return self.performFunction(Multiplication(), on: [p])
+//    }
 
-    public func multiplyPolynomial(p: Polynomial) -> Polynomial {
-        if p.stack == nil && self.stack == nil && self.canMultiply(p) {
-            return Polynomial(simplePolynomial: self.multiply(p))
-        }
-        
-        return self.performFunction(Multiplication(), on: [p])
-    }
-    
-    public func dividePolynomial(p : Polynomial) -> Polynomial {
-        return self.performFunction(Division(), on: [p])
-    }
-    
-    public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
-        return self.performFunction(Exponentiation(), on: [p])
-    }
-    
-    public override func differentiate(respectTo: String) -> Polynomial? {
-        if var stack = self.stack {
-            while (stack.count > 1) {
-                var polys : [SimplePolynomial] = []
-                polys.append(stack.removeAtIndex(0).polynomial!)
-                var function : Function! = nil
-                while true {
-                    let a = stack.removeAtIndex(0)
-                    if let p = a.polynomial {
-                        polys.append(p)
-                    } else {
-                        function = a.op!
-                        break
-                    }
-                }
-                assert(function.numberOfInputs == polys.count, "")
-                let ret = function.differentiate(polys, respectTo: respectTo)
-                stack.insert((ret!, nil), atIndex: 0)
-            }
-            assert(stack.count == 1, "")
-        } else {
-            return Polynomial(simplePolynomial: super.differentiate(respectTo) ?? SimplePolynomial())
-        }
-        return Polynomial()
-    }
-    
-    public override func gradient() -> Vector? {
-        return Vector(polynomials: self.variables().reduce([:]) {(dict: [String: SimplePolynomial], variable: String) in
-            var ret = dict
-            ret[variable] = self.differentiate(variable)
-            return ret
-        })
-    }
+//    public func dividePolynomial(p : Polynomial) -> Polynomial {
+//        return self.performFunction(Division(), on: [p])
+//    }
+//    
+//    public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
+//        return self.performFunction(Exponentiation(), on: [p])
+//    }
+
+//    public func differentiate(respectTo: String) -> Polynomial? {
+//        if var stack = self.stack {
+//            while (stack.count > 1) {
+//                var polys : [SimplePolynomial] = []
+//                polys.append(stack.removeAtIndex(0).polynomial!)
+//                var function : Function! = nil
+//                while true {
+//                    let a = stack.removeAtIndex(0)
+//                    if let p = a.polynomial {
+//                        polys.append(p)
+//                    } else {
+//                        function = a.op!
+//                        break
+//                    }
+//                }
+//                assert(function.numberOfInputs == polys.count, "")
+//                let ret = function.differentiate(polys, respectTo: respectTo)
+//                stack.insert((ret!, nil), atIndex: 0)
+//            }
+//            assert(stack.count == 1, "")
+//        } else {
+//            return Polynomial(simplePolynomial: super.differentiate(respectTo) ?? SimplePolynomial())
+//        }
+//        return Polynomial()
+//    }
+//    
+//    public func gradient() -> Vector? {
+//        return Vector(polynomials: self.variables().reduce([:]) {(dict: [String: SimplePolynomial], variable: String) in
+//            var ret = dict
+//            ret[variable] = self.differentiate(variable)
+//            return ret
+//        })
+//    }
 }
 
-public func == (a : Polynomial, b : Polynomial) -> Bool {
-    return a.equals(b)
-}
-
-public func != (a : Polynomial, b : Polynomial) -> Bool {
-    return !a.equals(b)
-}
-
-public func + (a : Polynomial, b : Polynomial) -> Polynomial {
-    return a.addPolynomial(b);
-}
-
-public func += (inout a : Polynomial, b : Polynomial) {
-    a = a + b
-}
-
-public func + (a : Polynomial, b : Double) -> Polynomial {
-    return a.addPolynomial(Polynomial(scalar: b))
-}
-
-public func += (inout a : Polynomial, b : Double) {
-    a = a + b
-}
-
-public func - (a : Polynomial, b : Polynomial) -> Polynomial {
-    return a.subtractPolynomial(b)
-}
-
-public func -= (inout a : Polynomial, b : Polynomial) {
-    a = a - b
-}
-
-public func - (a : Polynomial, b : Double) -> Polynomial {
-    return a.subtractPolynomial(Polynomial(scalar: b))
-}
-
-public func -= (inout a : Polynomial, b : Double) {
-    a = a - b
-}
-
-public func * (a : Polynomial, b : Polynomial) -> Polynomial {
-    return a.multiplyPolynomial(b)
-}
-
-public func *= (inout a : Polynomial, b : Polynomial) {
-    a = a * b
-}
-
-public func * (a : Polynomial, b : Double) -> Polynomial {
-    return a.multiplyPolynomial(Polynomial(scalar: b))
-}
-
-public func *= (inout a : Polynomial, b : Double) {
-    a = a * b
-}
-
-public func / (a : Polynomial, b : Polynomial) -> Polynomial {
-    return a.dividePolynomial(b)
-}
-
-public func /= (inout a : Polynomial, b : Polynomial) {
-    a = a / b
-}
-
-public func / (a : Polynomial, b : Double) -> Polynomial {
-    return a.dividePolynomial(Polynomial(scalar: b))
-}
-
-public func /= (inout a : Polynomial, b : Double) {
-    a = a / b
-}
+//public func == (a : Polynomial, b : Polynomial) -> Bool {
+//    return a.equals(b)
+//}
+//
+//public func != (a : Polynomial, b : Polynomial) -> Bool {
+//    return !a.equals(b)
+//}
+//
+//public func + (a : Polynomial, b : Polynomial) -> Polynomial {
+//    return a.addPolynomial(b);
+//}
+//
+//public func += (inout a : Polynomial, b : Polynomial) {
+//    a = a + b
+//}
+//
+//public func + (a : Polynomial, b : Double) -> Polynomial {
+//    return a.addPolynomial(Polynomial(scalar: b))
+//}
+//
+//public func += (inout a : Polynomial, b : Double) {
+//    a = a + b
+//}
+//
+//public func - (a : Polynomial, b : Polynomial) -> Polynomial {
+//    return a.subtractPolynomial(b)
+//}
+//
+//public func -= (inout a : Polynomial, b : Polynomial) {
+//    a = a - b
+//}
+//
+//public func - (a : Polynomial, b : Double) -> Polynomial {
+//    return a.subtractPolynomial(Polynomial(scalar: b))
+//}
+//
+//public func -= (inout a : Polynomial, b : Double) {
+//    a = a - b
+//}
+//
+//public func * (a : Polynomial, b : Polynomial) -> Polynomial {
+//    return a.multiplyPolynomial(b)
+//}
+//
+//public func *= (inout a : Polynomial, b : Polynomial) {
+//    a = a * b
+//}
+//
+//public func * (a : Polynomial, b : Double) -> Polynomial {
+//    return a.multiplyPolynomial(Polynomial(scalar: b))
+//}
+//
+//public func *= (inout a : Polynomial, b : Double) {
+//    a = a * b
+//}
+//
+//public func / (a : Polynomial, b : Polynomial) -> Polynomial {
+//    return a.dividePolynomial(b)
+//}
+//
+//public func /= (inout a : Polynomial, b : Polynomial) {
+//    a = a / b
+//}
+//
+//public func / (a : Polynomial, b : Double) -> Polynomial {
+//    return a.dividePolynomial(Polynomial(scalar: b))
+//}
+//
+//public func /= (inout a : Polynomial, b : Double) {
+//    a = a / b
+//}

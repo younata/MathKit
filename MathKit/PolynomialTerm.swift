@@ -1,13 +1,12 @@
 import Foundation
 
-public class PolynomialTerm: NSObject, Equatable, Comparable, CustomStringConvertible {
+public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
     public var coefficient : Double = 0
     public var variables : [String: Double] = [:]
     
-    public override init() {
+    public init() {
         self.coefficient = 0
         self.variables = [:]
-        super.init()
     }
     
     public init(coefficient : Double, variables : [String : Double]) {
@@ -22,7 +21,6 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, CustomStringConver
                 }
             }
         }
-        super.init()
     }
     
     public init(scalar : Double) {
@@ -36,8 +34,8 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, CustomStringConver
         // 2x^1y^1z^2 == 2 * xyz^2
         // terms of form x*2 are invalid.
         
-        if (countElements(string) == 0) {
-            PolynomialTerm()
+        guard !string.isEmpty else {
+            return
         }
         
         let scanner = NSScanner(string: string)
@@ -75,14 +73,12 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, CustomStringConver
         if (variables.count != 0 && coefficient == 0.0) {
             coefficient = 1.0
         }
-        
-        PolynomialTerm(coefficient: coefficient, variables: variables)
-        
+
         self.coefficient = coefficient
         self.variables = variables
     }
     
-    public override var description : String {
+    public var description : String {
         var str = ""
         if (self.coefficient != 1.0 || self.variables.count == 0) {
             str += "\(self.coefficient)"

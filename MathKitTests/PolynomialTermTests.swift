@@ -11,7 +11,7 @@ class PolynomialTermTests: XCTestCase {
     
     func testInitNothing() {
         let p = PolynomialTerm()
-        XCTAssertEqualWithAccuracy(p.coefficient, 0.0, 1e-12, "coefficient should be zero")
+        XCTAssertEqualWithAccuracy(p.coefficient, 0.0, accuracy: 1e-12, "coefficient should be zero")
         XCTAssertEqual(p.variables, [:], "coefficient variables should be empty")
     }
     
@@ -19,7 +19,7 @@ class PolynomialTermTests: XCTestCase {
         let c = 1.0
         let v = ["x": 1.0]
         let p = PolynomialTerm(coefficient: c, variables: v)
-        XCTAssertEqualWithAccuracy(p.coefficient, c, 1e-12, "coefficient should be correctly assigned")
+        XCTAssertEqualWithAccuracy(p.coefficient, c, accuracy: 1e-12, "coefficient should be correctly assigned")
         XCTAssertEqual(p.variables, v, "variables should be correctly assigned")
         
         XCTAssertEqual(p1, PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0]), "")
@@ -58,9 +58,9 @@ class PolynomialTermTests: XCTestCase {
     // MARK: - Operations
     
     func testValueAt() {
-        XCTAssertEqualWithAccuracy(p1.valueAt(["x": 1]), 1.0, 1e-12, "value at")
+        XCTAssertEqualWithAccuracy(p1.valueAt(["x": 1]), 1.0, accuracy: 1e-12, "value at")
         let p5 = PolynomialTerm(coefficient: 2.4, variables: ["x": 3.5])
-        XCTAssertEqualWithAccuracy(p5.valueAt(["x": 2.45]), 55.244943, 1e-6, "value at")
+        XCTAssertEqualWithAccuracy(p5.valueAt(["x": 2.45]), 55.244943, accuracy: 1e-6, "value at")
     }
     
     func testTermAt() {
@@ -99,7 +99,7 @@ class PolynomialTermTests: XCTestCase {
         
         for v in [p1, p2, p3, p4] {
             for var i : Double = 0.0; i < 100.0; i++ {
-                XCTAssertEqual(v * i, scalarMultBehavior(v, i), "scalar multiplication")
+                XCTAssertEqual(v * i, scalarMultBehavior(v, b: i), "scalar multiplication")
             }
         }
     }
@@ -123,7 +123,7 @@ class PolynomialTermTests: XCTestCase {
         
         for v in [p1, p2, p3, p4] {
             for var i : Double = 1.0; i < 100.0; i++ {
-                XCTAssertEqual(v / i, scalarDivBehavior(v, i), "scalar division")
+                XCTAssertEqual(v / i, scalarDivBehavior(v, b: i), "scalar division")
             }
         }
     }
