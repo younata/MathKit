@@ -1,12 +1,3 @@
-
-//
-//  SimplePolynomialTests.swift
-//  MathKit
-//
-//  Created by Rachel Brindle on 10/11/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Foundation
 import XCTest
 

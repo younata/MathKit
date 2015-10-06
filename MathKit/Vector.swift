@@ -1,14 +1,6 @@
-//
-//  Vector.swift
-//  CFDKit
-//
-//  Created by Rachel Brindle on 8/12/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Foundation
 
-public class Vector: NSObject, Equatable, Printable {
+public class Vector: NSObject, Equatable, CustomStringConvertible {
     public var variables : [String: SimplePolynomial] = [:]
     
     public init(scalars: [String: Double]) {
@@ -27,7 +19,7 @@ public class Vector: NSObject, Equatable, Printable {
         if !object.isKindOfClass(Vector.classForCoder()) {
             return false
         }
-        return (object as Vector).variables == self.variables
+        return (object as! Vector).variables == self.variables
     }
     
     public override var description : String {
@@ -36,7 +28,7 @@ public class Vector: NSObject, Equatable, Printable {
         for key in variables.keys {
             keys.append(key)
         }
-        keys.sort { return $0 < $1 }
+        keys.sortInPlace { return $0 < $1 }
         for t in keys {
             ret += "\(t): \(variables[t]!)\n"
         }

@@ -1,14 +1,6 @@
-//
-//  PolynomialTerm.swift
-//  CFDKit
-//
-//  Created by Rachel Brindle on 8/12/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Foundation
 
-public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
+public class PolynomialTerm: NSObject, Equatable, Comparable, CustomStringConvertible {
     public var coefficient : Double = 0
     public var variables : [String: Double] = [:]
     
@@ -99,7 +91,7 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
         for key in self.variables.keys {
             keysArray.append(key)
         }
-        let keys = keysArray.sorted { return $0 < $1 }
+        let keys = keysArray.sort { return $0 < $1 }
         for key in keys {
             let v = self.variables[key]!
             str += "(\(key)"
@@ -137,9 +129,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     
     This scales at O(n^2) worst case (n is number of variables in each term)
     
-    :param: term The PolynomialTerm this is being compared to
+    - parameter term: The PolynomialTerm this is being compared to
     
-    :returns: A boolean based on whether or not t and self are equivalent
+    - returns: A boolean based on whether or not t and self are equivalent
     */
     public func equals(term : PolynomialTerm) -> Bool {
         let epsilon = 1e-6
@@ -173,9 +165,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     
     Scales at O(n), where n is the number of terms.
     
-    :param: x A dictionary of variables to (double) values to plug in.
+    - parameter x: A dictionary of variables to (double) values to plug in.
     
-    :returns: The value of the term at the given point.
+    - returns: The value of the term at the given point.
     */
     public func valueAt(x : [String : Double]) -> Double {
         var r = 1.0
@@ -194,9 +186,9 @@ public class PolynomialTerm: NSObject, Equatable, Comparable, Printable {
     
     Scales at O(n), where n is the number of terms
     
-    :param: x A dictionary of variables to (double) values to plug in.
+    - parameter x: A dictionary of variables to (double) values to plug in.
     
-    :returns: A reduced term with the input'd variables exponentiated and multiplied. E.G. 2x^2y^2 at ["x": 2] returns 8y^2
+    - returns: A reduced term with the input'd variables exponentiated and multiplied. E.G. 2x^2y^2 at ["x": 2] returns 8y^2
     */
     public func termAt(x: [String: Double]) -> PolynomialTerm {
         var vars = self.variables

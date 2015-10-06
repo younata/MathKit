@@ -1,15 +1,7 @@
-//
-//  SimplePolynomial.swift
-//  CFDKit
-//
-//  Created by Rachel Brindle on 7/16/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Accelerate
 import Foundation
 
-public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
+public class SimplePolynomial: NSObject, Equatable, Comparable, CustomStringConvertible/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
     public var terms : [PolynomialTerm] = []
     
     public override init() {
@@ -25,7 +17,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             if term.coefficient != 0.0 {
                 let inverted = term.invert()
                 var lst = list
-                for (i, x) in enumerate(lst) {
+                for (i, x) in lst.enumerate() {
                     if x.variables == term.variables {
                         lst[i] = x + term
                         return lst
@@ -50,7 +42,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
                 previousArgument = comp
                 continue
             }
-            var t = PolynomialTerm(string: comp)
+            let t = PolynomialTerm(string: comp)
             if (previousArgument == "-") {
                 t.coefficient *= -1
             }
@@ -79,23 +71,23 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         
         let status = Int32(la_status(r))
         if status == LA_SINGULAR_ERROR {
-            println("LA_SINGULAR_ERROR")
+            print("LA_SINGULAR_ERROR")
         } else if status == LA_DIMENSION_MISMATCH_ERROR {
-            println("Dimension mismatch")
+            print("Dimension mismatch")
         } else if status == LA_INVALID_PARAMETER_ERROR {
-            println("invalid parameter")
+            print("invalid parameter")
         }
 
         let cnt = Int(la_matrix_rows(r) - 1 + la_matrix_cols(r))
         var ret = Array(count: cnt, repeatedValue: 0.0)
         la_matrix_to_double_buffer(&ret, la_matrix_rows(r), r)
         
-        println("\(ret)")
+        print("\(ret)")
         
         var terms : [PolynomialTerm] = []
         for i in 0..<output.count {
             let idx = output.count - (i + 1)
-            var pt = PolynomialTerm(coefficient: ret[i], variables: ["x": Double(idx)])
+            let pt = PolynomialTerm(coefficient: ret[i], variables: ["x": Double(idx)])
             terms.append(pt)
         }
         
@@ -130,10 +122,10 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     }
     
     public override var description : String {
-        var str = self.toString
+        let str = self.toString
         var varsUsed = self.variables()
         var v = ""
-        varsUsed.sort { $0 < $1 }
+        varsUsed.sortInPlace { $0 < $1 }
         for s in varsUsed {
             if (!v.isEmpty) {
                 v += ", "
@@ -145,7 +137,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     
     public var toString : String {
         var str = ""
-        let t = self.terms.sorted({ $0 < $1 })
+        let t = self.terms.sort({ $0 < $1 })
         
         for term in t {
             if (!str.isEmpty) {
@@ -160,12 +152,12 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         var ret : [String] = []
         for t in self.terms {
             for key in t.variables.keys {
-                if (!contains(ret, key)) {
+                if (!ret.contains(key)) {
                     ret.append(key)
                 }
             }
         }
-        return ret.sorted { return $0 < $1 }
+        return ret.sort { return $0 < $1 }
     }
     
     public func degree() -> Double {
@@ -196,7 +188,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         }
         
         for term in t1 {
-            if (!contains(t2, term)) {
+            if (!t2.contains(term)) {
                 return false
             }
         }
@@ -250,8 +242,8 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             c.append(v)
         }
-        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
-            return !cont(variables, term.variables)
+        let otherTerms = p.terms.filter {(term: PolynomialTerm) in
+            return !cont(variables, obj: term.variables)
         }
         for term in otherTerms {
             c.append(term)
@@ -292,8 +284,8 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
             }
             c.append(v)
         }
-        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
-            return !cont(variables, term.variables)
+        let otherTerms = p.terms.filter {(term: PolynomialTerm) in
+            return !cont(variables, obj: term.variables)
         }
         for term in otherTerms {
             c.append((term * -1))
@@ -354,7 +346,7 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
     public func differentiate(respectTo : String) -> SimplePolynomial? { // partial derivative!
         var terms : [PolynomialTerm] = []
         
-        if (!contains(variables(), respectTo)) {
+        if (!variables().contains(respectTo)) {
             return self
         }
         
@@ -398,11 +390,11 @@ public class SimplePolynomial: NSObject, Equatable, Comparable, Printable/*, Flo
         if self.dimensions() == 1 {
             var isLinear = false
             var isQuadratic = false
-            let degrees = self.terms.map({$0.degree}).sorted({$0 < $1})
+            let degrees = self.terms.map({$0.degree}).sort({$0 < $1})
             let seq = [0.0, 1.0]
             let isSubset : ([Double], [Double]) -> (Bool) = {(subset: [Double], superset: [Double]) in
                 for item in subset {
-                    if !contains(superset, item) {
+                    if !superset.contains(item) {
                         return false
                     }
                 }

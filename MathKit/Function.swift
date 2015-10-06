@@ -1,14 +1,6 @@
-//
-//  Function.swift
-//  MathKit
-//
-//  Created by Rachel Brindle on 11/2/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Foundation
 
-public protocol Function : Printable {
+public protocol Function : CustomStringConvertible {
     var isOperator : Bool { get }
     
     var numberOfInputs : Int { get }

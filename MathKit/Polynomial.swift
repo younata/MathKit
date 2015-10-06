@@ -1,11 +1,3 @@
-//
-//  Polynomial.swift
-//  CFDKit
-//
-//  Created by Rachel Brindle on 8/14/14.
-//  Copyright (c) 2014 Rachel Brindle. All rights reserved.
-//
-
 import Foundation
 
 public class Polynomial : SimplePolynomial {
@@ -51,7 +43,7 @@ public class Polynomial : SimplePolynomial {
     public override var description : String {
         var varsUsed = self.variables()
         var v = ""
-        varsUsed.sort { $0 < $1 }
+        varsUsed.sortInPlace { $0 < $1 }
         for s in varsUsed {
             if (!v.isEmpty) {
                 v += ", "
@@ -87,7 +79,7 @@ public class Polynomial : SimplePolynomial {
                 } else {
                     str = function.description + "(" + str
                     str += "\(function.description)("
-                    for (i, p) in enumerate(polys) {
+                    for (i, p) in polys.enumerate() {
                         str += "\(p.toString)"
                         if i != (polys.count - 1) {
                             str += ", "
@@ -104,14 +96,14 @@ public class Polynomial : SimplePolynomial {
     
     public override func variables() -> [String] {
         if let s = stack {
-            var prototype: [SimplePolynomial] = []
+            let prototype: [SimplePolynomial] = []
             let filtered = s.filter {return $0.polynomial != nil}
             let reduced1 : [SimplePolynomial] = filtered.reduce(prototype) {return $0 + [$1.polynomial!]}
             let reduced2 = reduced1.reduce(NSSet()) {
                 let set = NSSet(array: $1.variables())
-                return $0.setByAddingObjectsFromSet(set)
+                return $0.setByAddingObjectsFromSet(set as Set<NSObject>)
             }
-            return (reduced2.allObjects as [String])
+            return (reduced2.allObjects as! [String])
         } else {
             return super.variables()
         }
@@ -174,7 +166,7 @@ public class Polynomial : SimplePolynomial {
     
     private func performFunction(op: Function, on: [Polynomial]) -> Polynomial {
         assert(op.numberOfInputs == on.count + 1, "Expected op to work with inputs for function")
-        var ret = self.copy() as Polynomial
+        var ret = self.copy() as! Polynomial
         var stackToAdd : [(polynomial: SimplePolynomial?, op: Function?)] = on.map {return ($0, nil)} + [(nil, op)]
         if ret.stack != nil {
             ret.stack! += stackToAdd
