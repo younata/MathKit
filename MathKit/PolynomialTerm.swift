@@ -1,45 +1,16 @@
 import Foundation
 
-public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
-    public var coefficient : Double = 0
-    public var variables : [String: Double] = [:]
-    
-    public init() {
-        self.coefficient = 0
-        self.variables = [:]
-    }
-    
-    public init(coefficient : Double, variables : [String : Double]) {
-        self.coefficient = coefficient
+extension NSScanner {
+    func scanPolynomialTerm() -> PolynomialTerm? {
+        let string = (self.string as NSString).substringFromIndex(self.scanLocation)
         
-        self.variables = [:]
-        
-        if (coefficient != 0.0) {
-            for key in variables.keys {
-                if (variables[key] != 0.0) {
-                    self.variables[key] = variables[key]
-                }
-            }
-        }
-    }
-    
-    public init(scalar : Double) {
-        self.variables = [:]
-        self.coefficient = scalar
-    }
-    
-    public init(string : String) {
-        // input is of form 2xy^2 == 2 * xy^2
-        // can do multichar variable names with
-        // 2x^1y^1z^2 == 2 * xyz^2
-        // terms of form x*2 are invalid.
-        
-        guard !string.isEmpty else {
-            return
+        if (string.isEmpty) {
+            PolynomialTerm()
         }
         
         let scanner = NSScanner(string: string)
         let set = NSMutableCharacterSet.letterCharacterSet()
+
         var coefficient = 0.0
         scanner.scanDouble(&coefficient)
         var variables : [String: Double] = [:]
@@ -74,8 +45,53 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
             coefficient = 1.0
         }
 
+        if coefficient == 0.0 {
+            return nil
+        }
+        self.scanLocation += scanner.scanLocation
+        return PolynomialTerm(coefficient: coefficient, variables: variables)
+    }
+}
+
+public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
+    public var coefficient : Double = 0
+    public var variables : [String: Double] = [:]
+
+    public init() {
+        self.coefficient = 0
+        self.variables = [:]
+    }
+
+    public init(coefficient : Double, variables : [String : Double]) {
         self.coefficient = coefficient
-        self.variables = variables
+
+        self.variables = [:]
+
+        if (coefficient != 0.0) {
+            for key in variables.keys {
+                if (variables[key] != 0.0) {
+                    self.variables[key] = variables[key]
+                }
+            }
+        }
+    }
+
+    public init(scalar : Double) {
+        self.variables = [:]
+        self.coefficient = scalar
+    }
+
+    public init(string : String) {
+        // input is of form 2xy^2 == 2 * xy^2
+        // can do multichar variable names with
+        // 2x^1y^1z^2 == 2 * xyz^2
+        // terms of form x*2 are invalid.
+
+        let scanner = NSScanner(string: string)
+        if let term = scanner.scanPolynomialTerm() {
+            self.coefficient = term.coefficient
+            self.variables = term.variables
+        }
     }
     
     public var description : String {
@@ -165,13 +181,14 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
     
     - returns: The value of the term at the given point.
     */
-    public func valueAt(x : [String : Double]) -> Double {
+    public func valueAt(x : [String : Double]) -> Double? {
         var r = 1.0
         for key in self.variables.keys {
             if let d = x[key] {
                 r *= pow(d, self.variables[key]!)
             } else {
-                assert(false, "Can't compute the value of a polynomialTerm with unknown variables")
+                print("Can't compute the value of a polynomialTerm with unknown variables")
+                return nil
             }
         }
         return self.coefficient * r
@@ -216,15 +233,19 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
     
     // MARK: - Operations
     
-    public func add(t : PolynomialTerm) -> PolynomialTerm {
-        assert(self.variables == t.variables, "Can't add two terms which don't share the same variables and exponents")
+    public func add(t : PolynomialTerm) -> PolynomialTerm? {
+        if self.variables != t.variables {
+            return nil
+        }
         let c = self.coefficient + t.coefficient
         
         return PolynomialTerm(coefficient: c, variables: self.variables)
     }
     
-    public func subtract(t : PolynomialTerm) -> PolynomialTerm {
-        assert(self.variables == t.variables, "Can't add two terms which don't share the same variables and exponents")
+    public func subtract(t : PolynomialTerm) -> PolynomialTerm? {
+        if self.variables != t.variables {
+            return nil
+        }
         let c = self.coefficient - t.coefficient
         
         return PolynomialTerm(coefficient: c, variables: self.variables)
@@ -266,9 +287,10 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
         return PolynomialTerm(coefficient: c, variables: v)
     }
     
-    public func divide(t : PolynomialTerm) -> PolynomialTerm {
-        assert(t.coefficient != 0.0, "Divide by zero error")
-        
+    public func divide(t : PolynomialTerm) -> PolynomialTerm? {
+        if t.coefficient == 0.0 {
+            return nil
+        }
         let c = self.coefficient / t.coefficient
         
         var d : [String : Double] = [:]
@@ -290,8 +312,10 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
         return PolynomialTerm(coefficient: c, variables: d)
     }
     
-    public func divideDouble(v: Double) -> PolynomialTerm {
-        assert(v != 0.0, "Divide by zero error")
+    public func divideDouble(v: Double) -> PolynomialTerm? {
+        if v == 0.0 {
+            return nil
+        }
         
         return self.multiplyDouble(1.0 / v)
     }
@@ -323,9 +347,9 @@ public class PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
     public func gradient() -> Vector? {
         let vars = self.variables.keys
         
-        let sp = SimplePolynomial(terms: [self])
+        let p = Polynomial(terms: [self])
         
-        return sp.gradient()
+        return p.gradient()
     }
     
     public func integrate(respectTo: String) -> PolynomialTerm {
@@ -367,7 +391,7 @@ public func < (a : PolynomialTerm, b : PolynomialTerm) -> Bool {
 }
 
 public func + (a : PolynomialTerm, b : PolynomialTerm) -> PolynomialTerm {
-    return a.add(b)
+    return a.add(b)!
 }
 
 public func += (inout a : PolynomialTerm, b : PolynomialTerm) {
@@ -375,7 +399,7 @@ public func += (inout a : PolynomialTerm, b : PolynomialTerm) {
 }
 
 public func - (a : PolynomialTerm, b : PolynomialTerm) -> PolynomialTerm {
-    return a.subtract(b)
+    return a.subtract(b)!
 }
 
 public func -= (inout a : PolynomialTerm, b : PolynomialTerm) {
@@ -399,7 +423,7 @@ public func *= (inout a : PolynomialTerm, b : Double) {
 }
 
 public func / (a : PolynomialTerm, b : PolynomialTerm) -> PolynomialTerm {
-    return a.divide(b)
+    return a.divide(b)!
 }
 
 public func /= (inout a : PolynomialTerm, b : PolynomialTerm) {
@@ -407,9 +431,17 @@ public func /= (inout a : PolynomialTerm, b : PolynomialTerm) {
 }
 
 public func / (a : PolynomialTerm, b : Double) -> PolynomialTerm {
-    return a.divideDouble(b)
+    return a.divideDouble(b)!
 }
 
 public func /= (inout a : PolynomialTerm, b : Double) {
     a = a / b
+}
+
+public func ** (a : PolynomialTerm, b : Double) -> PolynomialTerm {
+    return a.exponentiate(b)
+}
+
+public func **= (inout a : PolynomialTerm, b : Double) {
+    a = a ** b
 }

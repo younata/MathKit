@@ -12,11 +12,11 @@ class SimplePolynomialTests: XCTestCase {
     let mt1 = PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0, "y": 1.0])
     let mt2 = PolynomialTerm(coefficient: 2.0, variables: ["x": 1.0, "y": 1.0])
     
-    var p1: SimplePolynomial! = nil
-    var p2: SimplePolynomial! = nil
-    var p3: SimplePolynomial! = nil
-    var p4: SimplePolynomial! = nil
-    var p5: SimplePolynomial! = nil
+    var p1 = SimplePolynomial()
+    var p2 = SimplePolynomial()
+    var p3 = SimplePolynomial()
+    var p4 = SimplePolynomial()
+    var p5 = SimplePolynomial()
     
     override func setUp() {
         super.setUp()
@@ -31,7 +31,10 @@ class SimplePolynomialTests: XCTestCase {
     // Mark: - Initialization
 
     func testInitializationNothing() {
-        let p = SimplePolynomial(terms: [PolynomialTerm()])
+        var p = SimplePolynomial()
+        XCTAssertEqual(p.terms.count, 0, "should init() with nothing")
+
+        p = SimplePolynomial(terms: [PolynomialTerm()])
         XCTAssertEqual(p.terms.count, 0, "should not accept terms with coefficient 0")
     }
     
@@ -227,13 +230,13 @@ class SimplePolynomialTests: XCTestCase {
         }
         for p in [p1, p2, p3, p4, p5] {
             for var i = 0.0; i < 100; i++ {
-                XCTAssertEqual(p + i, addScalar(p, d: i), "scalar addition")
+                XCTAssertEqual(p + i, addScalar(p, i), "scalar addition")
             }
         }
     }
 
     func testPolynomialSubtraction() {
-        let z = SimplePolynomial(terms: [])
+        let z = SimplePolynomial()
         XCTAssertEqual(p1 - p1, z, "identity")
         XCTAssertEqual(p2 - p2, z, "identity")
         XCTAssertEqual(p3 - p3, z, "identity")
@@ -300,7 +303,7 @@ class SimplePolynomialTests: XCTestCase {
         }
         for p in [p1, p2, p3, p4, p5] {
             for var i = 0.0; i < 100; i++ {
-                XCTAssertEqual(p - i, subtractScalar(p, d: i), "scalar subtraction")
+                XCTAssertEqual(p - i, subtractScalar(p, i), "scalar subtraction")
             }
         }
     }
@@ -328,7 +331,7 @@ class SimplePolynomialTests: XCTestCase {
         }
         for p in [p1, p2, p3, p4, p5] {
             for var i = 0.0; i < 100; i++ {
-                XCTAssertEqual(p * i, multScalar(p, d: i), "scalar multiplication")
+                XCTAssertEqual(p * i, multScalar(p, i), "scalar multiplication")
                 XCTAssertEqual(p * i, p.multiplyDouble(i), "overloading")
             }
         }
@@ -344,7 +347,7 @@ class SimplePolynomialTests: XCTestCase {
         }
         for p in [p1, p2, p3, p4, p5] {
             for var i = 1.0; i < 100; i++ {
-                XCTAssertEqual(p / i, divideScalar(p, d: i), "scalar division")
+                XCTAssertEqual(p / i, divideScalar(p, i), "scalar division")
             }
         }
     }
@@ -362,7 +365,7 @@ class SimplePolynomialTests: XCTestCase {
         XCTAssertEqual(p5.differentiate("x")!, SimplePolynomial(string: "6x"), "differentation")
         XCTAssertEqual(p5.differentiate("y")!, SimplePolynomial(string: "6y"), "differentation")
 
-        let p = SimplePolynomial(string: "4x^2y")
+        var p = SimplePolynomial(string: "4x^2y")
         XCTAssertEqual(p.differentiate("x")!, SimplePolynomial(string: "8(x)(y)"), "differentiate")
 
         for p in [p1, p2, p3, p4, p5] {
@@ -425,10 +428,10 @@ class SimplePolynomialTests: XCTestCase {
         let q1 = SimplePolynomial(string: "x^2 - 1")
         let q1r = q1.solve()
         XCTAssertEqual(q1r.count, 2, "quadratic solve")
-        let roots : [Vector] = q1r.map { return $0.root }
+        var roots : [Vector] = q1r.map { return $0.root }
         let solutions1 = [Vector(polynomials: ["x": SimplePolynomial(scalar: -1)]), Vector(polynomials: ["x": SimplePolynomial(scalar: 1)])]
         for r in solutions1 {
-            XCTAssert(roots.contains(r), "quadratic solve")
+            XCTAssert(contains(roots, r), "quadratic solve")
         }
         
         let q2 = SimplePolynomial(string: "x^2 + 1")

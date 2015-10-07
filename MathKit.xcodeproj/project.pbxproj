@@ -20,12 +20,9 @@
 		8933E89919E9A71200ECFF3F /* MathKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8933E89819E9A71200ECFF3F /* MathKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		8933E8B219E9A73500ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
-		8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */; };
 		893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
 		893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
 		89635FDC1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
@@ -34,10 +31,8 @@
 		89635FDF1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
 		89635FE01A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
 		89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
-		89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */; };
 		89CCD8B719F8021100C65A6C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		89CCD8B919F8021100C65A6C /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */; };
 		89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
 		89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
@@ -51,11 +46,8 @@
 		89D5556D19F601F600D987D7 /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
 		89D5557B19F6023200D987D7 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		89D5557D19F6023200D987D7 /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
 		89D5557E19F6023300D987D7 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		89D5557F19F6023300D987D7 /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		89D5558019F6023300D987D7 /* SimplePolynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */; };
-		89D5558119F6023C00D987D7 /* SimplePolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */; };
 		89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
 		89DBC0BD19F9E332003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
@@ -481,7 +473,6 @@
 				8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */,
 				8924D8E31A086B58003B7529 /* Trigonometry.swift in Sources */,
 				8924D8D51A06E458003B7529 /* Function.swift in Sources */,
-				8933E8B219E9A73500ECFF3F /* SimplePolynomial.swift in Sources */,
 				89635FDC1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */,
 			);
@@ -499,8 +490,6 @@
 				8924D8E41A086B58003B7529 /* Trigonometry.swift in Sources */,
 				89635FDD1A1516230052C248 /* Algebra.swift in Sources */,
 				8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */,
-				8933E8EC19E9BBAE00ECFF3F /* SimplePolynomialTests.swift in Sources */,
-				8933E8DB19E9A75100ECFF3F /* SimplePolynomial.swift in Sources */,
 				89D06A1619FD5F27003909A3 /* Polynomial.swift in Sources */,
 				8924D8D61A06E458003B7529 /* Function.swift in Sources */,
 			);
@@ -512,12 +501,10 @@
 			files = (
 				8924D8E71A086B58003B7529 /* Trigonometry.swift in Sources */,
 				8924D8D91A06E458003B7529 /* Function.swift in Sources */,
-				89CCD8B319F801C200C65A6C /* SimplePolynomialPerformance.swift in Sources */,
 				89CCD8B719F8021100C65A6C /* Vector.swift in Sources */,
 				89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */,
 				89DBC0C019F9E332003AC251 /* Utils.swift in Sources */,
 				89CCD8BF19F816FB00C65A6C /* VectorPerformance.swift in Sources */,
-				89CCD8B919F8021100C65A6C /* SimplePolynomial.swift in Sources */,
 				89635FE01A1516230052C248 /* Algebra.swift in Sources */,
 				89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */,
 				89D06A1919FD5F2A003909A3 /* Polynomial.swift in Sources */,
@@ -533,7 +520,6 @@
 				89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */,
 				8924D8E51A086B58003B7529 /* Trigonometry.swift in Sources */,
 				8924D8D71A06E458003B7529 /* Function.swift in Sources */,
-				89D5557D19F6023200D987D7 /* SimplePolynomial.swift in Sources */,
 				89635FDE1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BE19F9E332003AC251 /* Utils.swift in Sources */,
 			);
@@ -545,14 +531,12 @@
 			files = (
 				89D5557E19F6023300D987D7 /* Vector.swift in Sources */,
 				893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */,
-				89D5558119F6023C00D987D7 /* SimplePolynomialTests.swift in Sources */,
 				89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */,
 				89DBC0BF19F9E332003AC251 /* Utils.swift in Sources */,
 				8924D8E61A086B58003B7529 /* Trigonometry.swift in Sources */,
 				89635FDF1A1516230052C248 /* Algebra.swift in Sources */,
 				89D5557F19F6023300D987D7 /* PolynomialTerm.swift in Sources */,
 				89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */,
-				89D5558019F6023300D987D7 /* SimplePolynomial.swift in Sources */,
 				89D06A1819FD5F29003909A3 /* Polynomial.swift in Sources */,
 				8924D8D81A06E458003B7529 /* Function.swift in Sources */,
 			);

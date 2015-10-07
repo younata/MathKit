@@ -7,110 +7,169 @@ public protocol Function : CustomStringConvertible {
     
     func apply(terms: [Double]) -> Double?
     
-    func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial?
+    func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial?
     
-    func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial?
+    func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial?
 }
 
-public class Addition : Function {
+public struct Addition : Function {
     public var isOperator : Bool { return true }
     public var description: String { return "+" }
-
+    
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        assert(terms.count == self.numberOfInputs, "")
-        return terms.first! + terms.last!
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        return terms[c-2] + terms[c-1]
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(terms: [])//terms.first!.differentiate(respectTo)! + terms.last!.differentiate(respectTo)!)
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        let p1 = terms[c-2].map { $0.differentiate(respectTo) }
+        let p2 = terms[c-1].map { $0.differentiate(respectTo) }
+        
+        let ret = Polynomial(terms: p1)
+        let p3 = Polynomial(terms: p2)
+        ret.addPolynomial(p3)
+        
+        return ret
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(terms: [])//terms.first!.integrate(respectTo)! + terms.last!.integrate(respectTo)!)
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        let p1 = terms[c-2].map { $0.integrate(respectTo) }
+        let p2 = terms[c-1].map { $0.integrate(respectTo) }
+        
+        let ret = Polynomial(terms: p1)
+        let p3 = Polynomial(terms: p2)
+        ret.addPolynomial(p3)
+        
+        return ret
     }
 }
 
-public class Subtraction : Function {
+public struct Subtraction : Function {
     public var isOperator : Bool { return true }
     public var description: String { return "-" }
     
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        assert(terms.count == self.numberOfInputs, "")
-        return terms.first! - terms.last!
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        return terms[c-2] - terms[c-1]
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(terms: [])//terms.first!.differentiate(respectTo)! - terms.last!.differentiate(respectTo)!)
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        let p1 = terms[c-2].map { $0.differentiate(respectTo) }
+        let p2 = terms[c-1].map { $0.differentiate(respectTo) }
+        
+        let ret = Polynomial(terms: p1)
+        let p3 = Polynomial(terms: p2)
+        ret.subtractPolynomial(p3)
+        
+        return ret
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
-        return Polynomial(terms: [])//terms.first!.integrate(respectTo)! - terms.last!.integrate(respectTo)!)
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        let p1 = terms[c-2].map { $0.integrate(respectTo) }
+        let p2 = terms[c-1].map { $0.integrate(respectTo) }
+        
+        let ret = Polynomial(terms: p1)
+        let p3 = Polynomial(terms: p2)
+        ret.subtractPolynomial(p3)
+        
+        return ret
     }
 }
 
-public class Multiplication : Function {
+public struct Multiplication : Function {
     public var isOperator : Bool { return true }
     public var description: String { return "*" }
     
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        assert(terms.count == self.numberOfInputs, "")
-        return terms.first! * terms.last!
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        return terms[c-2] * terms[c-1]
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
 
-public class Division : Function {
+public struct Division : Function {
     public var isOperator : Bool { return true }
     public var description: String { return "/" }
     
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        assert(terms.count == self.numberOfInputs, "")
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
         if terms.last! == 0 {
             return nil
         }
-        return terms.first! / terms.last!
+        let c = terms.count
+        return terms[c-2] / terms[c-1]
     }
     
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }
 
-public class Exponentiation : Function {
+public struct Exponentiation : Function {
     public var isOperator : Bool { return true }
     public var description: String { return "**" }
     
     public var numberOfInputs : Int { return 2 }
     
     public func apply(terms: [Double]) -> Double? {
-        assert(terms.count == self.numberOfInputs, "")
-        return pow(terms.first!, terms.last!)
+        if terms.count < self.numberOfInputs {
+            return nil
+        }
+        let c = terms.count
+        return pow(terms[c-2], terms[c-1])
     }
-    
-    public func differentiate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+
+    public func differentiate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
     
-    public func integrate(terms: [SimplePolynomial], respectTo: String) -> Polynomial? {
+    public func integrate(terms: [[PolynomialTerm]], respectTo: String) -> Polynomial? {
         return nil
     }
 }

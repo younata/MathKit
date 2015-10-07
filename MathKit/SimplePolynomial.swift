@@ -1,15 +1,11 @@
 import Accelerate
 import Foundation
 
-public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
+public class SimplePolynomial: Equatable, Comparable, Printable/*, FloatLiteralConvertible, StringLiteralConvertible*/ {
     public var terms : [PolynomialTerm] = []
     
     convenience public init(scalar : Double) {
         self.init(terms: [PolynomialTerm(scalar: scalar)])
-    }
-
-    convenience public init() {
-        self.init(terms: [])
     }
     
     required public init(terms: [PolynomialTerm]) {
@@ -17,7 +13,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
             if term.coefficient != 0.0 {
                 let inverted = term.invert()
                 var lst = list
-                for (i, x) in lst.enumerate() {
+                for (i, x) in enumerate(lst) {
                     if x.variables == term.variables {
                         lst[i] = x + term
                         return lst
@@ -30,6 +26,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
             }
             return list
         }
+        super.init()
     }
     
     convenience public init(string: String) {
@@ -41,7 +38,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
                 previousArgument = comp
                 continue
             }
-            let t = PolynomialTerm(string: comp)
+            var t = PolynomialTerm(string: comp)
             if (previousArgument == "-") {
                 t.coefficient *= -1
             }
@@ -70,23 +67,23 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
         
         let status = Int32(la_status(r))
         if status == LA_SINGULAR_ERROR {
-            print("LA_SINGULAR_ERROR")
+            println("LA_SINGULAR_ERROR")
         } else if status == LA_DIMENSION_MISMATCH_ERROR {
-            print("Dimension mismatch")
+            println("Dimension mismatch")
         } else if status == LA_INVALID_PARAMETER_ERROR {
-            print("invalid parameter")
+            println("invalid parameter")
         }
 
         let cnt = Int(la_matrix_rows(r) - 1 + la_matrix_cols(r))
         var ret = Array(count: cnt, repeatedValue: 0.0)
         la_matrix_to_double_buffer(&ret, la_matrix_rows(r), r)
         
-        print("\(ret)")
+        println("\(ret)")
         
         var terms : [PolynomialTerm] = []
         for i in 0..<output.count {
             let idx = output.count - (i + 1)
-            let pt = PolynomialTerm(coefficient: ret[i], variables: ["x": Double(idx)])
+            var pt = PolynomialTerm(coefficient: ret[i], variables: ["x": Double(idx)])
             terms.append(pt)
         }
         
@@ -120,11 +117,11 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
         }
     }
     
-    public var description : String {
-        let str = self.toString
+    public override var description : String {
+        var str = self.toString
         var varsUsed = self.variables()
         var v = ""
-        varsUsed.sortInPlace { $0 < $1 }
+        varsUsed.sort { $0 < $1 }
         for s in varsUsed {
             if (!v.isEmpty) {
                 v += ", "
@@ -136,7 +133,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
     
     public var toString : String {
         var str = ""
-        let t = self.terms.sort({ $0 < $1 })
+        let t = self.terms.sorted({ $0 < $1 })
         
         for term in t {
             if (!str.isEmpty) {
@@ -151,12 +148,12 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
         var ret : [String] = []
         for t in self.terms {
             for key in t.variables.keys {
-                if (!ret.contains(key)) {
+                if (!contains(ret, key)) {
                     ret.append(key)
                 }
             }
         }
-        return ret.sort { return $0 < $1 }
+        return ret.sorted { return $0 < $1 }
     }
     
     public func degree() -> Double {
@@ -187,7 +184,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
         }
         
         for term in t1 {
-            if (!t2.contains(term)) {
+            if (!contains(t2, term)) {
                 return false
             }
         }
@@ -241,8 +238,8 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
             }
             c.append(v)
         }
-        let otherTerms = p.terms.filter {(term: PolynomialTerm) in
-            return !cont(variables, obj: term.variables)
+        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
+            return !cont(variables, term.variables)
         }
         for term in otherTerms {
             c.append(term)
@@ -283,8 +280,8 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
             }
             c.append(v)
         }
-        let otherTerms = p.terms.filter {(term: PolynomialTerm) in
-            return !cont(variables, obj: term.variables)
+        let otherTerms = filter(p.terms) {(term: PolynomialTerm) in
+            return !cont(variables, term.variables)
         }
         for term in otherTerms {
             c.append((term * -1))
@@ -345,7 +342,7 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
     public func differentiate(respectTo : String) -> SimplePolynomial? { // partial derivative!
         var terms : [PolynomialTerm] = []
         
-        if (!variables().contains(respectTo)) {
+        if (!contains(variables(), respectTo)) {
             return self
         }
         
@@ -389,11 +386,11 @@ public class SimplePolynomial: Equatable, Comparable, CustomStringConvertible/*,
         if self.dimensions() == 1 {
             var isLinear = false
             var isQuadratic = false
-            let degrees = self.terms.map({$0.degree}).sort({$0 < $1})
+            let degrees = self.terms.map({$0.degree}).sorted({$0 < $1})
             let seq = [0.0, 1.0]
             let isSubset : ([Double], [Double]) -> (Bool) = {(subset: [Double], superset: [Double]) in
                 for item in subset {
-                    if !superset.contains(item) {
+                    if !contains(superset, item) {
                         return false
                     }
                 }
