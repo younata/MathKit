@@ -5,7 +5,7 @@ extension NSScanner {
         let string = (self.string as NSString).substringFromIndex(self.scanLocation)
         
         if (string.isEmpty) {
-            PolynomialTerm()
+            return PolynomialTerm()
         }
         
         let scanner = NSScanner(string: string)

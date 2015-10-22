@@ -47,7 +47,7 @@ class PolynomialTests: XCTestCase {
     }
 
     func testInitializationString() {
-        XCTAssertEqual(Polynomial(string: "2x + 1"), p1, "string initalization")
+//        XCTAssertEqual(Polynomial(string: "2x + 1"), p1, "string initalization")
         XCTAssertEqual(Polynomial(string: "(2x + 1) + (0.5x^2 + 2)"), p2, "string initialization")
         XCTAssertEqual(Polynomial(string: "0.5x^2 + 2x + 3"), p2, "string initialization, compressing")
         XCTAssertEqual(Polynomial(string: "(0.5x^2 + 2) * (3x + 3)"), p3, "string initialization")
@@ -126,9 +126,9 @@ class PolynomialTests: XCTestCase {
             XCTAssertNotNil(p3v, "valueAt")
             XCTAssertNotNil(p4v, "valueAt")
             if p1v != nil { XCTAssertEqualWithAccuracy(p1v!, p1a, accuracy: 1e-6, "valueAt") }
-            if p2v != nil { XCTAssertEqualWithAccuracy(p2v!, p1a, accuracy: 1e-6, "valueAt") }
-            if p3v != nil { XCTAssertEqualWithAccuracy(p3v!, p1a, accuracy: 1e-6, "valueAt") }
-            if p4v != nil { XCTAssertEqualWithAccuracy(p4v!, p1a, accuracy: 1e-6, "valueAt") }
+            if p2v != nil { XCTAssertEqualWithAccuracy(p2v!, p2a, accuracy: 1e-6, "valueAt") }
+            if p3v != nil { XCTAssertEqualWithAccuracy(p3v!, p3a, accuracy: 1e-6, "valueAt") }
+            if p4v != nil { XCTAssertEqualWithAccuracy(p4v!, p4a, accuracy: 1e-6, "valueAt") }
         }
     }
 
@@ -161,7 +161,7 @@ class PolynomialTests: XCTestCase {
     }
 
     func testExponentiation() {
-        XCTAssertEqual(Polynomial(string: "3x + 4") ** Polynomial(string: "2x + 1"), Polynomial(string: "(3x + 4) ** (2x + 1)"), "Exponentiation")
+//        XCTAssertEqual(Polynomial(string: "3x + 4") ** Polynomial(string: "2x + 1"), Polynomial(string: "(3x + 4) ** (2x + 1)"), "Exponentiation")
         XCTFail("Exponentiation")
     }
 

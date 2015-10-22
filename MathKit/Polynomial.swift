@@ -1,62 +1,83 @@
 import Foundation
 
+private struct PolynomialStackItem {
+    private let polynomial: PolynomialTerm?
+    private let op: Function?
+
+    private init(polynomial: PolynomialTerm?, op: Function?) {
+        self.polynomial = polynomial
+        self.op = op
+    }
+}
+
 public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Comparable
     
-    var stack : [(polynomial: [PolynomialTerm]?, op: Function?)] = []
+    private var stack : [PolynomialStackItem] = []
 
     public init() {}
 
-    public init(terms: [PolynomialTerm]) {
-        self.init(stack: [(terms, nil)])
+    public init(term: PolynomialTerm) {
+        self.init(stack: [(term, nil)])
     }
 
     public init(polynomial : Polynomial) {
         self.stack = polynomial.stack
     }
-    
-    public init(var stack: [(polynomial: [PolynomialTerm]?, op: Function?)]) {
-        for (i, po) in stack.enumerate() {
-            if let p = po.polynomial {
-                let x = reduceTerms(p)
-                stack[i] = (polynomial: (x.count != 0 ? x : nil), op: nil)
-            }
-        }
-        let filteredStack = stack.filter {return $0.polynomial != nil || $0.op != nil}
 
-        var stack = filteredStack
-        for itm in filteredStack {
-            if let op = itm.op {
-                if ["+", "-", "*"].contains(op.description) {
-                    var p1 = Polynomial(terms: stack[0].polynomial!)
-                    let p2 = Polynomial(terms: stack[1].polynomial!)
-                    switch (op.description) {
-                    case "+":
-                        p1 = p1.addPolynomial(p2)
-                    case "-":
-                        p1 = p1.subtractPolynomial(p2)
-                    case "*":
-                        p1 = p1.multiplyPolynomial(p2)
-                    default:
-                        assert(false, "")
-                    }
-                    if p1.stack.count == 1 {
-                        stack.removeAtIndex(0) // Removes what became p1
-                        stack.removeAtIndex(0) // Removes what became p2
-                        stack.removeAtIndex(0) // Removes the op
-                        stack.insert(p1.stack[0], atIndex: 0)
-                    } else {
-                        break
-                    }
-                } else {
-                    break
-                }
-            }
+    private init(stackItems: [PolynomialStackItem]) {
+        self.stack = stackItems
+    }
+    
+    public init(stack: [(polynomial: PolynomialTerm?, op: Function?)]) {
+        var stackItems = [PolynomialStackItem]()
+
+        for item in stack {
+            let stackItem = PolynomialStackItem(polynomial: item.polynomial, op: item.op)
+            stackItems.append(stackItem)
         }
-        self.stack = stack
+        self.stack = stackItems
+//        for (i, po) in stack.enumerate() {
+//            if let p = po.polynomial {
+//                let x = reduceTerms(p)
+//                stack[i] = (polynomial: (x.count != 0 ? x : nil), op: nil)
+//            }
+//        }
+//        let filteredStack = stack.filter {return $0.polynomial != nil || $0.op != nil}
+//
+//        var stack = filteredStack
+//        for itm in filteredStack {
+//            if let op = itm.op {
+//                if ["+", "-", "*"].contains(op.description) {
+//                    var p1 = Polynomial(terms: stack[0].polynomial!)
+//                    let p2 = Polynomial(terms: stack[1].polynomial!)
+//                    switch (op.description) {
+//                    case "+":
+//                        p1 = p1.addPolynomial(p2)
+//                    case "-":
+//                        p1 = p1.subtractPolynomial(p2)
+//                    case "*":
+//                        p1 = p1.multiplyPolynomial(p2)
+//                    default:
+//                        assert(false, "")
+//                    }
+//                    if p1.stack.count == 1 {
+//                        stack.removeAtIndex(0) // Removes what became p1
+//                        stack.removeAtIndex(0) // Removes what became p2
+//                        stack.removeAtIndex(0) // Removes the op
+//                        stack.insert(p1.stack[0], atIndex: 0)
+//                    } else {
+//                        break
+//                    }
+//                } else {
+//                    break
+//                }
+//            }
+//        }
+//        self.stack = stack
     }
     
     public init(scalar: Double) {
-        self.init(terms: [PolynomialTerm(scalar: scalar)])
+        self.init(term: PolynomialTerm(scalar: scalar))
     }
     
     // eg: (3x^2 + x + 1)
@@ -69,8 +90,8 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
 
         // there has got to be a better way to do this...
 
-        let functions : [String: Function] = ["+": Addition(), "-": Subtraction(),
-            "*": Multiplication(), "/": Division(), "**": Exponentiation()]
+//        let functions : [String: Function] = ["+": Addition(), "-": Subtraction(),
+//            "*": Multiplication(), "/": Division(), "**": Exponentiation()]
 
         let characterSet = NSCharacterSet(charactersInString: "+-*/")
 
@@ -81,8 +102,14 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
 
         let loc = 0
 
+        var terms = [PolynomialTerm]()
+
         while !scanner.atEnd {
             if inPolynomial {
+
+                if let term = scanner.scanPolynomialTerm() {
+                    terms.append(term)
+                }
 
                 if scanner.scanUpToString(closeParen, intoString: nil) {
                     scanner.scanLocation = loc
@@ -91,6 +118,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
                 if searchForCloseParen && scanner.scanUpToString(closeParen, intoString: nil) {
                     inPolynomial = false
                     searchForCloseParen = false
+                    terms = []
                 }
             } else {
                 if scanner.scanUpToCharactersFromSet(characterSet, intoString: nil) {
@@ -107,7 +135,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
                     } else if str.hasPrefix("+") {
                         function = Addition()
                     } else {
-                        // ERROR!
+                        continue
                     }
                     let toAdd: (polynomial: [PolynomialTerm]?, op: Function?) = (polynomial: nil, op: function)
                     stack.append(toAdd)
@@ -120,7 +148,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
                     searchForCloseParen = true
                 }
                 let loc = scanner.scanLocation
-                if scanner.scanPolynomialTerm() != nil {
+                if let _ = scanner.scanPolynomialTerm() {
                     scanner.scanLocation = loc
                     inPolynomial = true
                 }
@@ -168,7 +196,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
         var str = ""
         var stack = self.stack
         while (stack.count > 0) {
-            var polys : [[PolynomialTerm]] = []
+            var polys : [PolynomialTerm] = []
             var theFunction : Function? = nil
             while true {
                 if stack.count == 0 {
@@ -205,7 +233,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
                     str += ") "
                 }
                 for (var i = 0; i < (polys.count - function.numberOfInputs); i++) {
-                    stack.insert((polys[i], nil), atIndex: 0)
+                    stack.insert(PolynomialStackItem(polynomial: polys[i], op: nil), atIndex: 0)
                 }
             } else {
                 str += polys.reduce("") {(orig, terms) in
@@ -218,7 +246,7 @@ public struct Polynomial : Equatable, CustomStringConvertible { // TODO: add Com
     
     public func variables() -> [String] {
         let filtered = stack.filter {return $0.polynomial != nil}
-        let reduced1 : [PolynomialTerm] = filtered.reduce(Array<PolynomialTerm>()) {return $0 + $1.polynomial!}
+        let reduced1 : [PolynomialTerm] = filtered.reduce(Array<PolynomialTerm>()) {return $0 + [$1.polynomial!]}
         let reduced2 = reduced1.reduce(Set<String>()) {
             return $0.union(Set(Array($1.variables.keys)))
         }
