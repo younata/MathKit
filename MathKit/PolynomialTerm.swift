@@ -1,7 +1,7 @@
 import Foundation
 
 extension NSScanner {
-    func scanPolynomialTerm() -> PolynomialTerm? {
+    public func scanPolynomialTerm() -> PolynomialTerm? {
         let string = (self.string as NSString).substringFromIndex(self.scanLocation)
         
         if (string.isEmpty) {
@@ -53,7 +53,7 @@ extension NSScanner {
     }
 }
 
-public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
+public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible, LatexStringConvertable {
     public var coefficient : Double = 0
     public var variables : [String: Double] = [:]
 
@@ -94,7 +94,7 @@ public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
         }
     }
     
-    public var description : String {
+    public var description: String {
         var str = ""
         if (self.coefficient != 1.0 || self.variables.count == 0) {
             str += "\(self.coefficient)"
@@ -114,8 +114,12 @@ public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible {
         }
         return str
     }
+
+    public var latexDescription: String {
+        return ""
+    }
     
-    public var degree : Double {
+    public var degree: Double {
         var ret = 0.0;
             for v in self.variables.keys {
                 ret = max(ret, self.variables[v]!)

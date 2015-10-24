@@ -7,56 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8924D8D51A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
-		8924D8D61A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
-		8924D8D71A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
-		8924D8D81A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
-		8924D8D91A06E458003B7529 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Function.swift */; };
+		8924D8D51A06E458003B7529 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Arithmetic.swift */; };
+		8924D8D71A06E458003B7529 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8D41A06E458003B7529 /* Arithmetic.swift */; };
 		8924D8E31A086B58003B7529 /* Trigonometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8E21A086B58003B7529 /* Trigonometry.swift */; };
-		8924D8E41A086B58003B7529 /* Trigonometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8E21A086B58003B7529 /* Trigonometry.swift */; };
 		8924D8E51A086B58003B7529 /* Trigonometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8E21A086B58003B7529 /* Trigonometry.swift */; };
-		8924D8E61A086B58003B7529 /* Trigonometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8E21A086B58003B7529 /* Trigonometry.swift */; };
-		8924D8E71A086B58003B7529 /* Trigonometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924D8E21A086B58003B7529 /* Trigonometry.swift */; };
 		8933E89919E9A71200ECFF3F /* MathKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8933E89819E9A71200ECFF3F /* MathKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
-		8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
 		8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
 		893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */; };
 		89635FDC1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
-		89635FDD1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
 		89635FDE1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
-		89635FDF1A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
-		89635FE01A1516230052C248 /* Algebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89635FDB1A1516230052C248 /* Algebra.swift */; };
-		89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
-		89CCD8B719F8021100C65A6C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
-		89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
+		89AF014B1BD87F7F00F0BF4F /* MathKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8933E89319E9A71200ECFF3F /* MathKit.framework */; };
+		89AF014D1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF014E1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF01541BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF01551BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */; settings = {ASSET_TAGS = (); }; };
+		89CCD8AC19F801A700C65A6C /* MathKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKit.framework */; };
 		89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */; };
 		89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
 		89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
 		89CCD8BF19F816FB00C65A6C /* VectorPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BE19F816FB00C65A6C /* VectorPerformance.swift */; };
 		89D06A1519FD5F26003909A3 /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
-		89D06A1619FD5F27003909A3 /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
 		89D06A1719FD5F28003909A3 /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
-		89D06A1819FD5F29003909A3 /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
-		89D06A1919FD5F2A003909A3 /* Polynomial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AF19E9A73500ECFF3F /* Polynomial.swift */; };
 		89D5556719F601F500D987D7 /* MathKit-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 89D5556619F601F500D987D7 /* MathKit-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		89D5556D19F601F600D987D7 /* MathKitOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKitOSX.framework */; };
+		89D5556D19F601F600D987D7 /* MathKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKit.framework */; };
 		89D5557B19F6023200D987D7 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
 		89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
-		89D5557E19F6023300D987D7 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AC19E9A73500ECFF3F /* Vector.swift */; };
-		89D5557F19F6023300D987D7 /* PolynomialTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */; };
 		89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */; };
 		89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
-		89DBC0BD19F9E332003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
 		89DBC0BE19F9E332003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
-		89DBC0BF19F9E332003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
-		89DBC0C019F9E332003AC251 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DBC0BB19F9E331003AC251 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		89AF01491BD87F7900F0BF4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8933E88A19E9A71200ECFF3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8933E89219E9A71200ECFF3F;
+			remoteInfo = MathKit;
+		};
 		89CCD8AD19F801A700C65A6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8933E88A19E9A71200ECFF3F /* Project object */;
@@ -74,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8924D8D41A06E458003B7529 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		8924D8D41A06E458003B7529 /* Arithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
 		8924D8E21A086B58003B7529 /* Trigonometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigonometry.swift; sourceTree = "<group>"; };
 		8933E89319E9A71200ECFF3F /* MathKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8933E89719E9A71200ECFF3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,12 +81,14 @@
 		8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTermTests.swift; sourceTree = "<group>"; };
 		8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomialTests.swift; sourceTree = "<group>"; };
 		89635FDB1A1516230052C248 /* Algebra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algebra.swift; sourceTree = "<group>"; };
+		89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArithmeticTests.swift; sourceTree = "<group>"; };
+		89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatexStringConvertible.swift; sourceTree = "<group>"; };
 		89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MathKitOSX Performance.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89CCD8A919F801A700C65A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomialPerformance.swift; sourceTree = "<group>"; };
 		89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTermPerformance.swift; sourceTree = "<group>"; };
 		89CCD8BE19F816FB00C65A6C /* VectorPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorPerformance.swift; sourceTree = "<group>"; };
-		89D5556219F601F500D987D7 /* MathKitOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathKitOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89D5556219F601F500D987D7 /* MathKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D5556519F601F500D987D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89D5556619F601F500D987D7 /* MathKit-OSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MathKit-OSX.h"; sourceTree = "<group>"; };
 		89D5556C19F601F600D987D7 /* MathKitOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MathKitOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89AF014B1BD87F7F00F0BF4F /* MathKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89CCD8AC19F801A700C65A6C /* MathKitOSX.framework in Frameworks */,
+				89CCD8AC19F801A700C65A6C /* MathKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89D5556D19F601F600D987D7 /* MathKitOSX.framework in Frameworks */,
+				89D5556D19F601F600D987D7 /* MathKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,7 +155,7 @@
 			children = (
 				8933E89319E9A71200ECFF3F /* MathKit.framework */,
 				8933E89E19E9A71300ECFF3F /* MathKitTests.xctest */,
-				89D5556219F601F500D987D7 /* MathKitOSX.framework */,
+				89D5556219F601F500D987D7 /* MathKit.framework */,
 				89D5556C19F601F600D987D7 /* MathKitOSXTests.xctest */,
 				89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */,
 			);
@@ -173,11 +167,12 @@
 			children = (
 				8933E89819E9A71200ECFF3F /* MathKit.h */,
 				89DBC0BB19F9E331003AC251 /* Utils.swift */,
+				89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */,
 				8933E8AC19E9A73500ECFF3F /* Vector.swift */,
 				8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */,
 				8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */,
 				8933E8AF19E9A73500ECFF3F /* Polynomial.swift */,
-				8924D8D41A06E458003B7529 /* Function.swift */,
+				8924D8D41A06E458003B7529 /* Arithmetic.swift */,
 				8924D8E21A086B58003B7529 /* Trigonometry.swift */,
 				89635FDB1A1516230052C248 /* Algebra.swift */,
 				8933E89619E9A71200ECFF3F /* Supporting Files */,
@@ -200,6 +195,7 @@
 				8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */,
 				8933E8E719E9AF8100ECFF3F /* VectorTests.swift */,
 				8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */,
+				89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */,
 				8933E8A019E9A71300ECFF3F /* Supporting Files */,
 			);
 			path = MathKitTests;
@@ -316,6 +312,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				89AF014A1BD87F7900F0BF4F /* PBXTargetDependency */,
 			);
 			name = MathKitTests;
 			productName = MathKitTests;
@@ -355,7 +352,7 @@
 			);
 			name = MathKitOSX;
 			productName = "MathKit-OSX";
-			productReference = 89D5556219F601F500D987D7 /* MathKitOSX.framework */;
+			productReference = 89D5556219F601F500D987D7 /* MathKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		89D5556B19F601F600D987D7 /* MathKitOSXTests */ = {
@@ -384,7 +381,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Rachel Brindle";
 				TargetAttributes = {
 					8933E89219E9A71200ECFF3F = {
@@ -469,10 +466,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8933E8B019E9A73500ECFF3F /* Vector.swift in Sources */,
+				89AF01541BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */,
 				89D06A1519FD5F26003909A3 /* Polynomial.swift in Sources */,
 				8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */,
 				8924D8E31A086B58003B7529 /* Trigonometry.swift in Sources */,
-				8924D8D51A06E458003B7529 /* Function.swift in Sources */,
+				8924D8D51A06E458003B7529 /* Arithmetic.swift in Sources */,
 				89635FDC1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */,
 			);
@@ -483,15 +481,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */,
+				89AF014D1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */,
 				893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */,
-				8933E8DA19E9A75100ECFF3F /* PolynomialTerm.swift in Sources */,
 				89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */,
-				89DBC0BD19F9E332003AC251 /* Utils.swift in Sources */,
-				8924D8E41A086B58003B7529 /* Trigonometry.swift in Sources */,
-				89635FDD1A1516230052C248 /* Algebra.swift in Sources */,
-				8933E8D919E9A75100ECFF3F /* Vector.swift in Sources */,
-				89D06A1619FD5F27003909A3 /* Polynomial.swift in Sources */,
-				8924D8D61A06E458003B7529 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,15 +491,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8924D8E71A086B58003B7529 /* Trigonometry.swift in Sources */,
-				8924D8D91A06E458003B7529 /* Function.swift in Sources */,
-				89CCD8B719F8021100C65A6C /* Vector.swift in Sources */,
 				89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */,
-				89DBC0C019F9E332003AC251 /* Utils.swift in Sources */,
 				89CCD8BF19F816FB00C65A6C /* VectorPerformance.swift in Sources */,
-				89635FE01A1516230052C248 /* Algebra.swift in Sources */,
-				89CCD8B819F8021100C65A6C /* PolynomialTerm.swift in Sources */,
-				89D06A1919FD5F2A003909A3 /* Polynomial.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,10 +501,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				89D5557B19F6023200D987D7 /* Vector.swift in Sources */,
+				89AF01551BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */,
 				89D06A1719FD5F28003909A3 /* Polynomial.swift in Sources */,
 				89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */,
 				8924D8E51A086B58003B7529 /* Trigonometry.swift in Sources */,
-				8924D8D71A06E458003B7529 /* Function.swift in Sources */,
+				8924D8D71A06E458003B7529 /* Arithmetic.swift in Sources */,
 				89635FDE1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BE19F9E332003AC251 /* Utils.swift in Sources */,
 			);
@@ -529,22 +515,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89D5557E19F6023300D987D7 /* Vector.swift in Sources */,
 				893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */,
+				89AF014E1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */,
 				89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */,
-				89DBC0BF19F9E332003AC251 /* Utils.swift in Sources */,
-				8924D8E61A086B58003B7529 /* Trigonometry.swift in Sources */,
-				89635FDF1A1516230052C248 /* Algebra.swift in Sources */,
-				89D5557F19F6023300D987D7 /* PolynomialTerm.swift in Sources */,
 				89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */,
-				89D06A1819FD5F29003909A3 /* Polynomial.swift in Sources */,
-				8924D8D81A06E458003B7529 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		89AF014A1BD87F7900F0BF4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8933E89219E9A71200ECFF3F /* MathKit */;
+			targetProxy = 89AF01491BD87F7900F0BF4F /* PBXContainerItemProxy */;
+		};
 		89CCD8AE19F801A700C65A6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 89D5556119F601F500D987D7 /* MathKitOSX */;
@@ -579,6 +564,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -654,6 +640,7 @@
 				INFOPLIST_FILE = MathKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -671,6 +658,7 @@
 				INFOPLIST_FILE = MathKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -689,6 +677,7 @@
 				);
 				INFOPLIST_FILE = MathKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -702,6 +691,7 @@
 				);
 				INFOPLIST_FILE = MathKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -721,6 +711,7 @@
 				INFOPLIST_FILE = "MathKitOSX Performance/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -739,6 +730,7 @@
 				INFOPLIST_FILE = "MathKitOSX Performance/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -761,7 +753,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = MathKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -781,7 +774,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = MathKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -802,6 +796,7 @@
 				INFOPLIST_FILE = "MathKit-OSXTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -819,6 +814,7 @@
 				INFOPLIST_FILE = "MathKit-OSXTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};

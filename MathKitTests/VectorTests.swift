@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import MathKit
 
 class VectorTests: XCTestCase {
     

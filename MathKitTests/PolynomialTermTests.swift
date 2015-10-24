@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import MathKit
 
 class NSScannerPolynomialTermTests: XCTestCase {
 
@@ -67,6 +68,15 @@ class PolynomialTermTests: XCTestCase {
     }
     
     func testPrint() {
+        let p = PolynomialTerm(coefficient: 1.0, variables: [:])
+        XCTAssertEqual(p.description, "1.0", "description")
+        XCTAssertEqual(p1.description, "(x)", "description")
+        XCTAssertEqual(p2.description, "2.0(x)", "description")
+        XCTAssertEqual(p3.description, "3.0(x^2.0)", "description")
+        XCTAssertEqual(p4.description, "4.0(x^2.0)(y)", "description")
+    }
+
+    func testLatexDescription() {
         let p = PolynomialTerm(coefficient: 1.0, variables: [:])
         XCTAssertEqual(p.description, "1.0", "description")
         XCTAssertEqual(p1.description, "(x)", "description")

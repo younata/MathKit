@@ -9,28 +9,14 @@ public func cont<T: Equatable>(arr: [T], obj: T) -> Bool {
     return false
 }
 
-public func reduceTerms(var terms: [PolynomialTerm]) -> [PolynomialTerm] {
-    if terms.count > 1 {
-        for (i,x) in terms.enumerate() {
-            if i >= terms.count {
-                break
+internal func reducePolynomialTerms(terms: [PolynomialTerm]) -> [PolynomialTerm] {
+    return terms.reduce([PolynomialTerm]()) {
+        for (idx, term) in $0.enumerate() {
+            if term.degree == $1.degree {
+                var array = $0
+                array[idx] = term + $1
+                return array
             }
-            for (j,y) in terms[(i + 1)..<terms.count].enumerate() {
-                if i == j {
-                    continue
-                }
-                if let res = x.add(y) {
-                    terms.removeAtIndex(j)
-                    terms[i] = res
-                    break
-                }
-            }
-        }
-    }
-    let prototype : [PolynomialTerm] = []
-    return terms.reduce(prototype) {
-        if $1 == PolynomialTerm() {
-            return $0
         }
         return $0 + [$1]
     }

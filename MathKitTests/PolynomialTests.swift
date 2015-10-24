@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+@testable import MathKit
 
 class PolynomialTests: XCTestCase {
     
@@ -15,39 +16,24 @@ class PolynomialTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+        let pt2 = Polynomial(terms: t2)
+        let pt3 = Polynomial(terms: t3)
+        let pt4 = Polynomial(terms: t4)
+
         p1 = Polynomial(terms: t1)
-        p2 = Polynomial(stack: [(t1, nil), (t2, nil), (nil, Addition())])
-        p3 = Polynomial(stack: [(t2, nil), (t3, nil), (nil, Multiplication())])
-        p4 = Polynomial(stack: [(t3, nil), (t4, nil), (nil, Division())])
+        p2 = Polynomial(function: Addition(terms: [p1, pt2]))
+        p3 = Polynomial(function: Multiplication(terms: [pt2, pt3]))
+        p4 = Polynomial(function: Division(terms: [pt3, pt4]))
     }
 
-    func testInitializationNothing() {
-        var p = Polynomial()
-        XCTAssertEqual(p.stack.count, 0, "should init() with empty stack")
-
-        p = Polynomial(stack: [])
-        XCTAssertEqual(p.stack.count, 0, "should init() with empty array if given that")
-
-        p = Polynomial(terms: [PolynomialTerm()])
-        XCTAssertEqual(p.stack.count, 0, "should not accept terms with coefficient 0")
-    }
-
-    func testInitializationValid() {
-        let pt = PolynomialTerm(coefficient: 1.0, variables: [:])
-
-        let p = Polynomial(terms: [pt])
-        XCTAssertEqual(p.stack.count, 1, "should init() with valid terms")
-
-        XCTAssertEqual(Polynomial(terms: [PolynomialTerm(string: "2x"), PolynomialTerm(string: "x")]), Polynomial(terms: [PolynomialTerm(string: "3x")]), "Should automatically add similar terms together")
-    }
-
-    func testInitializationCompressing() {
-        XCTAssertEqual(p2, Polynomial(terms: t1 + t2), "Compressing Initialization")
-        XCTAssertEqual(p3, Polynomial(terms: [PolynomialTerm(string: "1.5x^3"), PolynomialTerm(string: "1.5x^2"), PolynomialTerm(string: "6x"), PolynomialTerm(string: "6")]), "Compressing Initialization")
+    func testInitializationFunction() {
+        let pt2 = Polynomial(terms: t2)
+        XCTAssertEqual(p2, Polynomial(function: Addition(terms: [p1, pt2])))
     }
 
     func testInitializationString() {
-//        XCTAssertEqual(Polynomial(string: "2x + 1"), p1, "string initalization")
+        XCTAssertEqual(Polynomial(string: "2x + 1"), p1, "string initalization")
         XCTAssertEqual(Polynomial(string: "(2x + 1) + (0.5x^2 + 2)"), p2, "string initialization")
         XCTAssertEqual(Polynomial(string: "0.5x^2 + 2x + 3"), p2, "string initialization, compressing")
         XCTAssertEqual(Polynomial(string: "(0.5x^2 + 2) * (3x + 3)"), p3, "string initialization")
@@ -72,12 +58,30 @@ class PolynomialTests: XCTestCase {
     }
 
     // Mark: Info
+    func testComparable() {
+        let pt2 = Polynomial(terms: t2)
+        let pt3 = Polynomial(terms: t3)
+        let pt4 = Polynomial(terms: t4)
+
+        XCTAssertGreaterThan(pt2, p1)
+        XCTAssertFalse(pt2 < p1)
+
+        let p = Polynomial(term: PolynomialTerm(string: "1"))
+
+        XCTAssertGreaterThan(p1, p)
+
+        XCTAssertLessThanOrEqual(pt3, pt4)
+        XCTAssertGreaterThanOrEqual(pt3, pt4)
+        XCTAssertFalse(pt3 < pt4)
+        XCTAssertFalse(pt3 > pt4)
+        XCTAssert(pt3 != pt4)
+    }
 
     func testDescription() {
         XCTAssertEqual(p1.description, "f(x) = 2.0(x) + 1.0", "description")
-        XCTAssertEqual(p2.description, "f(x) = 0.5(x^2) + 2.0(x) + 3.0", "description")
+        XCTAssertEqual(p2.description, "f(x) = 0.5(x^2.0) + 2.0(x) + 3.0", "description")
         XCTAssertEqual(p3.description, "f(x) = 1.5(x^3.0) + 1.5(x^2.0) + 6.0(x) + 6.0", "description")
-        XCTAssertEqual(p4.description, "f(x) = (3.0(x) + 3.0) / (x + 4.0)", "description")
+        XCTAssertEqual(p4.description, "f(x) = (3.0(x) + 3.0) / ((x) + 4.0)", "description")
     }
 
     func testVariablesUsed() {
@@ -102,8 +106,12 @@ class PolynomialTests: XCTestCase {
         XCTAssert(p1 == p1, "identity, overloaded operator")
     }
 
+    func testSimplify() {
+        XCTAssertEqual(p2.simplify(), Polynomial(terms: (t1 + t2).sort()))
+    }
+
     func testValueAt() {
-        for x in -10..<10 {
+        for x in -10..<10 where x != -4 {
             let p1v = p1.valueAt(["x": Double(x)])
             let p2v = p2.valueAt(["x": Double(x)])
             let p3v = p3.valueAt(["x": Double(x)])
@@ -111,9 +119,9 @@ class PolynomialTests: XCTestCase {
 
             let d = Double(x)
 
-            let t1a = Double(2 * x + 1)
-            let t2a = Double(1.5 * pow(d, 2) + 2)
-            let t3a = Double(3 * x + 3)
+            let t1a = Double((2 * x) + 1)
+            let t2a = Double((0.5 * pow(d, 2)) + 2)
+            let t3a = Double((3 * x) + 3)
             let t4a = Double(x + 4)
 
             let p1a = t1a
@@ -166,16 +174,20 @@ class PolynomialTests: XCTestCase {
     }
 
     func testDifferentiation() {
-        let p = Polynomial(string: "0.5x^2 + 3x + 1").differentiate("x")
+        let a = PolynomialTerm(string: "0.5x^2")
+        let b = PolynomialTerm(string: "3x")
+        let c = PolynomialTerm(scalar: 1)
+
+        let p = Polynomial(terms: [a, b, c]).differentiate("x")
         XCTAssertNotNil(p, "Differentiation")
         if p != nil {
-            XCTAssertEqual(p!, Polynomial(string: "x + 3"), "Differentiation")
+            let d = PolynomialTerm(string: "x")
+            let e = PolynomialTerm(scalar: 3)
+            XCTAssertEqual(p!, Polynomial(terms: [d, e]), "Differentiation")
         }
-        XCTFail("Differentiation")
     }
 
     func testGradient() {
-        // blep.
         XCTFail("Gradient")
     }
 
