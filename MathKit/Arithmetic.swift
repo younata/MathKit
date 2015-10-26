@@ -76,7 +76,8 @@ public struct Subtraction: Function, Equatable {
     }
     
     public func differentiate(respectTo: String) -> Polynomial? {
-        return nil
+        guard let a = self.terms.first?.differentiate(respectTo), b = self.terms.last?.differentiate(respectTo) else { return nil }
+        return Polynomial(function: Subtraction(terms: [a, b]))
     }
     
     public func integrate(respectTo: String) -> Polynomial? {
@@ -126,7 +127,8 @@ public struct Multiplication: Function, Equatable {
     }
     
     public func differentiate(respectTo: String) -> Polynomial? {
-        return nil
+        guard let a = self.terms.first, da = a.differentiate(respectTo), b = self.terms.last, db = b.differentiate(respectTo) else { return nil }
+        return ((a * db).simplify() + (b * da).simplify()).simplify()
     }
     
     public func integrate(respectTo: String) -> Polynomial? {
@@ -156,6 +158,19 @@ public struct Division: Function, Equatable {
     }
 
     public func simplify() -> Polynomial? {
+        let zero = Polynomial(term: PolynomialTerm(scalar: 0))
+        guard let dividend = self.terms.first?.simplify(), divisor = self.terms.last?.simplify() where divisor != zero && dividend.terms != nil && divisor.terms != nil else { return nil }
+        if dividend == zero { return dividend }
+        guard dividend.degree() >= divisor.degree() else { return nil }
+
+        // polynomial long division!
+        var (quotient, remainder) = (zero, dividend)
+        while remainder != zero && remainder.degree() >= divisor.degree() {
+            let t = Polynomial(term: remainder.terms!.first! / divisor.terms!.first!)
+            (quotient, remainder) = ((quotient + t).simplify(), (remainder - (t * divisor).simplify()).simplify())
+        }
+
+        if remainder == zero { return quotient }
         return nil
     }
 
@@ -165,7 +180,8 @@ public struct Division: Function, Equatable {
     }
     
     public func differentiate(respectTo: String) -> Polynomial? {
-        return nil
+        guard let a = self.terms.first, da = a.differentiate(respectTo), b = self.terms.last, db = b.differentiate(respectTo) else { return nil }
+        return (((b * da).simplify() - (a * db).simplify()).simplify() / (b * b).simplify()).simplify()
     }
     
     public func integrate(respectTo: String) -> Polynomial? {

@@ -27,6 +27,10 @@ class PolynomialTests: XCTestCase {
         p4 = Polynomial(function: Division(terms: [pt3, pt4]))
     }
 
+    func testInitializationNothing() {
+        XCTAssertEqual(Polynomial(terms: []), Polynomial(term: PolynomialTerm(scalar: 0)))
+    }
+
     func testInitializationFunction() {
         let pt2 = Polynomial(terms: t2)
         XCTAssertEqual(p2, Polynomial(function: Addition(terms: [p1, pt2])))
@@ -178,7 +182,13 @@ class PolynomialTests: XCTestCase {
         let b = PolynomialTerm(string: "3x")
         let c = PolynomialTerm(scalar: 1)
 
-        let p = Polynomial(terms: [a, b, c]).differentiate("x")
+        let parent = Polynomial(terms: [a, b, c])
+        XCTAssertNotNil(parent.differentiate("a"))
+        let expectedDifferentiated = Polynomial(term: PolynomialTerm(scalar: 0))
+        XCTAssertEqual(parent.differentiate("a"), expectedDifferentiated)
+
+        let p = parent.differentiate("x")
+
         XCTAssertNotNil(p, "Differentiation")
         if p != nil {
             let d = PolynomialTerm(string: "x")

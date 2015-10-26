@@ -26,7 +26,12 @@ public struct Polynomial: Equatable, Comparable, CustomStringConvertible, LatexS
     }
 
     public init(terms: [PolynomialTerm]) {
-        self.terms = reducePolynomialTerms(terms)
+        let t = reducePolynomialTerms(terms)
+        if t.isEmpty {
+            self.terms = [PolynomialTerm(scalar: 0)]
+        } else {
+            self.terms = t
+        }
     }
 
     public init(function: Function) {
@@ -161,23 +166,23 @@ public struct Polynomial: Equatable, Comparable, CustomStringConvertible, LatexS
     }
 
     public func addPolynomial(p : Polynomial) -> Polynomial {
-        return Polynomial(function: Addition(terms: [self, p]))
+        return Polynomial(function: Addition(terms: [self, p])).simplify()
     }
     
     public func subtractPolynomial(p: Polynomial) -> Polynomial {
-        return Polynomial(function: Subtraction(terms: [self, p]))
+        return Polynomial(function: Subtraction(terms: [self, p])).simplify()
     }
 
     public func multiplyPolynomial(p: Polynomial) -> Polynomial {
-        return Polynomial(function: Multiplication(terms: [self, p]))
+        return Polynomial(function: Multiplication(terms: [self, p])).simplify()
     }
     
     public func dividePolynomial(p : Polynomial) -> Polynomial {
-        return Polynomial(function: Division(terms: [self, p]))
+        return Polynomial(function: Division(terms: [self, p])).simplify()
     }
     
     public func exponentiatePolynomial(p : Polynomial) -> Polynomial {
-        return Polynomial(function: Exponentiation(terms: [self, p]))
+        return Polynomial(function: Exponentiation(terms: [self, p])).simplify()
     }
     
     public func differentiate(respectTo: String) -> Polynomial? {
