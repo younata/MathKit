@@ -45,6 +45,12 @@ class PolynomialTests: XCTestCase {
         XCTAssertEqual(Polynomial(string: "(0.5x^2 + 2) * (3x + 3)"), p3, "string initialization")
         XCTAssertEqual(Polynomial(string: "1.5x^3 + 1.5x^2 + 6x + 6"), p3, "string initialization, compressing")
         XCTAssertEqual(Polynomial(string: "(3x + 3) / (x + 4)"), p4, "string initialization")
+        XCTAssertEqual(Polynomial(string: "(3x + 3) ^ (x + 4)"), p5, "string initialization")
+
+        let num = Polynomial(terms: [PolynomialTerm(string: "3(x)(y)"), PolynomialTerm(string: "3y")])
+        let denom = Polynomial(terms: [PolynomialTerm(string: "2x"), PolynomialTerm(string: "y")])
+        let multiVariable = Polynomial(function: Division(terms: [num, denom]))
+        XCTAssertEqual(Polynomial(string: "(3(x)(y) + 3y) / (2x + y)"), multiVariable)
     }
 
     func test1DInterpolation() {
@@ -88,10 +94,11 @@ class PolynomialTests: XCTestCase {
         XCTAssertEqual(p2.description, "f(x) = 0.5(x^2.0) + 2.0(x) + 3.0", "description")
         XCTAssertEqual(p3.description, "f(x) = 1.5(x^3.0) + 1.5(x^2.0) + 6.0(x) + 6.0", "description")
         XCTAssertEqual(p4.description, "f(x) = (3.0(x) + 3.0) / ((x) + 4.0)", "description")
+        XCTAssertEqual(p5.description, "f(x) = (3.0(x) + 3.0) ^ ((x) + 4.0)", "description")
     }
 
     func testVariablesUsed() {
-        for p in [p1, p2, p3, p4] {
+        for p in [p1, p2, p3, p4, p5] {
             XCTAssertEqual(p.variables(), ["x"], "variables")
         }
         // TODO: better test variables
@@ -122,6 +129,7 @@ class PolynomialTests: XCTestCase {
             let p2v = p2.valueAt(["x": Double(x)])
             let p3v = p3.valueAt(["x": Double(x)])
             let p4v = p4.valueAt(["x": Double(x)])
+            let p5v = p5.valueAt(["x": Double(x)])
 
             let d = Double(x)
 
@@ -134,15 +142,18 @@ class PolynomialTests: XCTestCase {
             let p2a = t1a + t2a
             let p3a = t2a * t3a
             let p4a = t3a / t4a
+            let p5a = pow(t3a, t4a)
 
             XCTAssertNotNil(p1v, "valueAt")
             XCTAssertNotNil(p2v, "valueAt")
             XCTAssertNotNil(p3v, "valueAt")
             XCTAssertNotNil(p4v, "valueAt")
+            XCTAssertNotNil(p5v, "valueAt")
             if p1v != nil { XCTAssertEqualWithAccuracy(p1v!, p1a, accuracy: 1e-6, "valueAt") }
             if p2v != nil { XCTAssertEqualWithAccuracy(p2v!, p2a, accuracy: 1e-6, "valueAt") }
             if p3v != nil { XCTAssertEqualWithAccuracy(p3v!, p3a, accuracy: 1e-6, "valueAt") }
             if p4v != nil { XCTAssertEqualWithAccuracy(p4v!, p4a, accuracy: 1e-6, "valueAt") }
+            if p5v != nil { XCTAssertEqualWithAccuracy(p5v!, p5a, accuracy: 1e-6, "valueAt") }
         }
     }
 

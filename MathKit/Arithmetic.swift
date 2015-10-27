@@ -162,6 +162,7 @@ public struct Division: Function, Equatable {
 
     public func simplify() -> Polynomial? {
         let zero = Polynomial(term: PolynomialTerm(scalar: 0))
+        guard self.terms.first?.variables().count <= 1 && self.terms.last?.variables().count <= 1 else { return nil }
         guard let dividend = self.terms.first?.simplify(), divisor = self.terms.last?.simplify() where divisor != zero && dividend.terms != nil && divisor.terms != nil else { return nil }
         if dividend == zero { return dividend }
         guard dividend.degree() >= divisor.degree() else { return nil }
