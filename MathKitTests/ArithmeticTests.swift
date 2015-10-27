@@ -37,8 +37,8 @@ class AdditionTests: XCTestCase {
     func testSimplify() {
         XCTAssertEqual(subject.simplify(), Polynomial(terms: [PolynomialTerm(string: "0.5x^2"), PolynomialTerm(string: "2x"), PolynomialTerm(string: "3")]))
 
-//        let a = Addition(terms: [p1, Polynomial(function: subject)])
-//        XCTAssertEqual(a.simplify(), Polynomial(terms: [PolynomialTerm(string: "x^2"), PolynomialTerm(string: "2x"), PolynomialTerm(string: "4")]))
+        let a = Addition(terms: [p1, Polynomial(function: subject)])
+        XCTAssertEqual(a.simplify(), Polynomial(terms: [PolynomialTerm(string: "x^2"), PolynomialTerm(string: "2x"), PolynomialTerm(string: "4")]))
     }
 
     func testValueAt() {
@@ -56,7 +56,11 @@ class AdditionTests: XCTestCase {
     }
 
     func testIntegrate() {
-        XCTFail()
+        let f = Polynomial(terms: [PolynomialTerm(string: "0.5(x^2)(a)"), PolynomialTerm(string: "2(x)(a)"), PolynomialTerm(string: "3a")])
+        XCTAssertEqual(subject.integrate("a"), f)
+
+        XCTAssertEqual(subject.integrate("x"), Polynomial(terms: [PolynomialTerm(string: "0.166666666666667x^3"), PolynomialTerm(string: "x^2"), PolynomialTerm(string: "3x")]))
+        XCTAssertEqual(subject.integrate("x")?.differentiate("x"), Polynomial(function: subject))
     }
 }
 
@@ -100,7 +104,7 @@ class SubtractionTests: XCTestCase {
     }
 
     func testDifferentiate() {
-        XCTAssertEqual(subject.differentiate("a"), Polynomial(terms: []))
+        XCTAssertEqual(subject.differentiate("a"), Polynomial.zero())
 
         let dp1 = Polynomial(terms: [PolynomialTerm(string: "x")])
         let dp2 = Polynomial(terms: [PolynomialTerm(string: "2")])
@@ -109,7 +113,13 @@ class SubtractionTests: XCTestCase {
     }
 
     func testIntegrate() {
-        XCTFail()
+        let f = Polynomial(terms: [PolynomialTerm(string: "0.5(x^2)(a)"), PolynomialTerm(string: "-2(x)(a)"), PolynomialTerm(string: "-1a")])
+        XCTAssertEqual(subject.integrate("a"), f)
+
+        let integrated = Polynomial(terms: [PolynomialTerm(string: "0.1666666666666666667x^3"), PolynomialTerm(string: "-1x^2"), PolynomialTerm(string: "-1x")])
+        XCTAssertEqual(subject.integrate("x"), integrated)
+
+        XCTAssertEqual(subject.integrate("x")?.differentiate("x"), Polynomial(function: subject))
     }
 }
 
@@ -154,14 +164,19 @@ class MultiplicationTests: XCTestCase {
     }
 
     func testDifferentiate() {
-        XCTAssertEqual(subject.differentiate("a"), Polynomial(terms: []))
+        XCTAssertEqual(subject.differentiate("a"), Polynomial.zero())
 
         let differentiated = Polynomial(terms: [PolynomialTerm(string: "3x^2"), PolynomialTerm(string: "2x"), PolynomialTerm(string: "2")])
         XCTAssertEqual(subject.differentiate("x"), differentiated)
     }
 
     func testIntegrate() {
-        XCTFail()
+        XCTAssertEqual(subject.integrate("a"), Polynomial(terms: [PolynomialTerm(string: "(a)x^3"), PolynomialTerm(string: "(a)x^2"), PolynomialTerm(string: "2(a)(x)"), PolynomialTerm(string: "2a")]))
+
+        let integrated = Polynomial(terms: [PolynomialTerm(string: "0.25x^4"), PolynomialTerm(string: "0.3333x^3"), PolynomialTerm(string: "x^2"), PolynomialTerm(string: "2x")])
+        XCTAssertEqual(subject.integrate("x"), integrated)
+
+        XCTAssertEqual(subject.integrate("x")?.differentiate("x"), Polynomial(function: subject))
     }
 }
 
@@ -196,14 +211,14 @@ class DivisionTests: XCTestCase {
     }
 
     func testSimplify() {
-        let a = Division(terms: [Polynomial(terms: []), Polynomial(term: PolynomialTerm(scalar: 1))])
-        XCTAssertEqual(a.simplify(), Polynomial(term: PolynomialTerm(scalar: 0)))
+        let a = Division(terms: [Polynomial(terms: []), Polynomial.one()])
+        XCTAssertEqual(a.simplify(), Polynomial.zero())
 
         let b = Division(terms: [p1 * p1, p1])
         XCTAssertEqual(b.simplify(), p1)
 
         let c = Division(terms: [p2, p2])
-        XCTAssertEqual(c.simplify(), Polynomial(term: PolynomialTerm(scalar: 1)))
+        XCTAssertEqual(c.simplify(), Polynomial.one())
 
         XCTAssertNil(subject.simplify())
     }
@@ -214,25 +229,19 @@ class DivisionTests: XCTestCase {
     }
 
     func testDifferentiate() {
-        XCTAssertEqual(subject.differentiate("a"), Polynomial(terms: []))
+        XCTAssertEqual(subject.differentiate("a"), Polynomial.zero())
 
-        let differentiatedNum = Polynomial(terms: [PolynomialTerm(string: "0.25x^2"), PolynomialTerm(string: "0.5x"), PolynomialTerm(string: "-0.5")])
-        let differentiatedDenomMain = Polynomial(terms: [PolynomialTerm(string: "x"), PolynomialTerm(scalar: 1)])
+        let differentiatedNum = Polynomial(terms: [PolynomialTerm(string: "x^2"), PolynomialTerm(string: "2x"), PolynomialTerm(string: "-2")])
 
-        let differentiatedDenom = Polynomial(function: Multiplication(terms: [differentiatedDenomMain, Polynomial(term: PolynomialTerm(scalar: 2))]))
+        let differentiatedDenom = Polynomial(function: Exponentiation(terms: [p2, Polynomial(scalar: 2)]))
         let differentiated = Polynomial(function: Division(terms: [differentiatedNum, differentiatedDenom]))
 
         XCTAssertEqual(subject.differentiate("x"), differentiated)
-        //XCTAssertEqual(subject.differentiate("a"), subject)
-
-        //let dp1 = Polynomial(terms: [PolynomialTerm(string: "0.5x^2"), PolynomialTerm(string: "1")])
-        //let dp2 = Polynomial(terms: [PolynomialTerm(string: "2x"), PolynomialTerm(string: "2")])
-        //let differentiatedTerms = []
-        //XCTAssertEqual(subject.differentiate("x"), differentiatedTerms)
     }
 
     func testIntegrate() {
-        XCTFail()
+        XCTAssertNil(subject.integrate("a"))
+        XCTAssertNil(subject.integrate("x"))
     }
 }
 

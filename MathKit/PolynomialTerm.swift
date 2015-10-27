@@ -1,58 +1,5 @@
 import Foundation
 
-extension NSScanner {
-    public func scanPolynomialTerm() -> PolynomialTerm? {
-        let string = (self.string as NSString).substringFromIndex(self.scanLocation)
-        
-        if (string.isEmpty) {
-            return PolynomialTerm()
-        }
-        
-        let scanner = NSScanner(string: string)
-        let set = NSMutableCharacterSet.letterCharacterSet()
-
-        var coefficient = 0.0
-        scanner.scanDouble(&coefficient)
-        var variables : [String: Double] = [:]
-        
-        while (!scanner.atEnd) {
-            if NSString(string: scanner.string).substringFromIndex(scanner.scanLocation).hasPrefix("(") {
-                scanner.scanLocation++
-            }
-            var v : NSString? = NSString()
-            scanner.scanCharactersFromSet(set, intoString: &v)
-            if let s = v {
-                if (s.length == 0) {
-                    break
-                }
-                if NSString(string: scanner.string).substringFromIndex(scanner.scanLocation).hasPrefix("^") {
-                    scanner.scanLocation++
-                    var d = 0.0
-                    scanner.scanDouble(&d)
-                    variables[s as String] = d
-                } else {
-                    variables[s as String] = 1.0
-                }
-            } else {
-                break
-            }
-            if NSString(string: scanner.string).substringFromIndex(scanner.scanLocation).hasPrefix(")") {
-                scanner.scanLocation++
-            }
-        }
-        
-        if (variables.count != 0 && coefficient == 0.0) {
-            coefficient = 1.0
-        }
-
-        if coefficient == 0.0 {
-            return nil
-        }
-        self.scanLocation += scanner.scanLocation
-        return PolynomialTerm(coefficient: coefficient, variables: variables)
-    }
-}
-
 public struct PolynomialTerm: Equatable, Comparable, CustomStringConvertible, LatexStringConvertable {
     public var coefficient : Double = 0
     public var variables : [String: Double] = [:]

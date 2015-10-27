@@ -13,6 +13,7 @@ class PolynomialTests: XCTestCase {
     var p2 = Polynomial()
     var p3 = Polynomial()
     var p4 = Polynomial()
+    var p5 = Polynomial()
 
     override func setUp() {
         super.setUp()
@@ -25,6 +26,7 @@ class PolynomialTests: XCTestCase {
         p2 = Polynomial(function: Addition(terms: [p1, pt2]))
         p3 = Polynomial(function: Multiplication(terms: [pt2, pt3]))
         p4 = Polynomial(function: Division(terms: [pt3, pt4]))
+        p5 = Polynomial(function: Exponentiation(terms: [pt3, pt4]))
     }
 
     func testInitializationNothing() {
@@ -154,27 +156,24 @@ class PolynomialTests: XCTestCase {
 
     func testAddition() {
         XCTAssertEqual(p1 + Polynomial(terms: t2), p2, "Addition")
-        XCTFail("Addition")
     }
 
     func testSubtraction() {
         XCTAssertEqual(p2 - Polynomial(terms: t2), p1, "Subtraction")
-        XCTFail("Subtraction")
     }
 
     func testMultiplication() {
         XCTAssertEqual(Polynomial(terms: t2) * Polynomial(terms: t3), p3, "Multiplication")
-        XCTFail("Multiplication")
     }
 
     func testDivision() {
         XCTAssertEqual(Polynomial(terms: t3) / Polynomial(terms: t4), p4, "Division")
-        XCTFail("Division")
     }
 
     func testExponentiation() {
-//        XCTAssertEqual(Polynomial(string: "3x + 4") ** Polynomial(string: "2x + 1"), Polynomial(string: "(3x + 4) ** (2x + 1)"), "Exponentiation")
-        XCTFail("Exponentiation")
+        let pt3 = Polynomial(terms: t3)
+        let pt4 = Polynomial(terms: t4)
+        XCTAssertEqual(p5, Polynomial(function: Exponentiation(terms: [pt3, pt4])))
     }
 
     func testDifferentiation() {
@@ -197,20 +196,24 @@ class PolynomialTests: XCTestCase {
         }
     }
 
+    func testIntegration() {
+        let a = PolynomialTerm(string: "0.5x^2")
+        let b = PolynomialTerm(string: "3x")
+        let c = PolynomialTerm(scalar: 1)
+
+        let parent = Polynomial(terms: [a, b, c])
+        XCTAssertEqual(parent.differentiate("x")?.integrate("x"), Polynomial(terms: [a, b]))
+        XCTAssertEqual(parent.integrate("x")?.differentiate("x"), parent)
+
+        let d = PolynomialTerm(string: "0.5(x^2)(a)")
+        let e = PolynomialTerm(string: "3(x)(a)")
+        let f = PolynomialTerm(string: "a")
+
+        let foo = Polynomial(terms: [d, e, f])
+        XCTAssertEqual(parent.integrate("a"), foo)
+    }
+
     func testGradient() {
         XCTFail("Gradient")
-    }
-
-    func testIntegration() {
-        //XCTAssertEqual(Polynomial(string: "0.5x^2 + 3x + 1").differentiate("x"), Polynomial(string: "x + 3"), "Differentiation")
-        XCTFail("Integration")
-    }
-
-    func testIntegrationOverRange() {
-        XCTFail("Integration Over Range")
-    }
-
-    func testFindRoots() {
-        XCTFail("Find Roots")
     }
 }

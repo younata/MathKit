@@ -12,14 +12,14 @@ public func cont<T: Equatable>(arr: [T], obj: T) -> Bool {
 internal func reducePolynomialTerms(terms: [PolynomialTerm]) -> [PolynomialTerm] {
     return terms.reduce([PolynomialTerm]()) {
         for (idx, term) in $0.enumerate() {
-            if term.degree == $1.degree {
+            if term.degree == $1.degree && term.variables == $1.variables {
                 var array = $0
                 array[idx] = term + $1
                 return array
             }
         }
         return $0 + [$1]
-    }
+    }.sort()
 }
 
 public func condenseTerms(terms: [PolynomialTerm]?, at: [String: Double]) -> Double? {

@@ -24,6 +24,10 @@
 		89AF014E1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */; settings = {ASSET_TAGS = (); }; };
 		89AF01541BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */; settings = {ASSET_TAGS = (); }; };
 		89AF01551BDB391D00F0BF4F /* LatexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF01571BDFD0CD00F0BF4F /* NSScanner+MathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01561BDFD0CD00F0BF4F /* NSScanner+MathKit.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF01581BDFD0CD00F0BF4F /* NSScanner+MathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01561BDFD0CD00F0BF4F /* NSScanner+MathKit.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF015A1BDFD16200F0BF4F /* NSScanner+MathKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01591BDFD16200F0BF4F /* NSScanner+MathKitTests.swift */; settings = {ASSET_TAGS = (); }; };
+		89AF015B1BDFD16200F0BF4F /* NSScanner+MathKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AF01591BDFD16200F0BF4F /* NSScanner+MathKitTests.swift */; settings = {ASSET_TAGS = (); }; };
 		89CCD8AC19F801A700C65A6C /* MathKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D5556219F601F500D987D7 /* MathKit.framework */; };
 		89CCD8BB19F8037800C65A6C /* PolynomialTermPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CCD8BA19F8037800C65A6C /* PolynomialTermPerformance.swift */; };
 		89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933E8E719E9AF8100ECFF3F /* VectorTests.swift */; };
@@ -74,7 +78,6 @@
 		8933E8A119E9A71300ECFF3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8933E8AC19E9A73500ECFF3F /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTerm.swift; sourceTree = "<group>"; };
-		8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomial.swift; sourceTree = "<group>"; };
 		8933E8AF19E9A73500ECFF3F /* Polynomial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polynomial.swift; sourceTree = "<group>"; };
 		8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolynomialTests.swift; sourceTree = "<group>"; };
 		8933E8E719E9AF8100ECFF3F /* VectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorTests.swift; sourceTree = "<group>"; };
@@ -83,6 +86,8 @@
 		89635FDB1A1516230052C248 /* Algebra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algebra.swift; sourceTree = "<group>"; };
 		89AF014C1BD8823300F0BF4F /* ArithmeticTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArithmeticTests.swift; sourceTree = "<group>"; };
 		89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatexStringConvertible.swift; sourceTree = "<group>"; };
+		89AF01561BDFD0CD00F0BF4F /* NSScanner+MathKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+MathKit.swift"; sourceTree = "<group>"; };
+		89AF01591BDFD16200F0BF4F /* NSScanner+MathKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+MathKitTests.swift"; sourceTree = "<group>"; };
 		89CCD8A619F801A700C65A6C /* MathKitOSX Performance.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MathKitOSX Performance.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89CCD8A919F801A700C65A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89CCD8B219F801C200C65A6C /* SimplePolynomialPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePolynomialPerformance.swift; sourceTree = "<group>"; };
@@ -167,10 +172,10 @@
 			children = (
 				8933E89819E9A71200ECFF3F /* MathKit.h */,
 				89DBC0BB19F9E331003AC251 /* Utils.swift */,
+				89AF01561BDFD0CD00F0BF4F /* NSScanner+MathKit.swift */,
 				89AF01531BDB391D00F0BF4F /* LatexStringConvertible.swift */,
 				8933E8AC19E9A73500ECFF3F /* Vector.swift */,
 				8933E8AD19E9A73500ECFF3F /* PolynomialTerm.swift */,
-				8933E8AE19E9A73500ECFF3F /* SimplePolynomial.swift */,
 				8933E8AF19E9A73500ECFF3F /* Polynomial.swift */,
 				8924D8D41A06E458003B7529 /* Arithmetic.swift */,
 				8924D8E21A086B58003B7529 /* Trigonometry.swift */,
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				8933E8EB19E9BBAE00ECFF3F /* SimplePolynomialTests.swift */,
+				89AF01591BDFD16200F0BF4F /* NSScanner+MathKitTests.swift */,
 				8933E8E919E9AF9100ECFF3F /* PolynomialTermTests.swift */,
 				8933E8E719E9AF8100ECFF3F /* VectorTests.swift */,
 				8933E8E519E9AF6400ECFF3F /* PolynomialTests.swift */,
@@ -470,6 +476,7 @@
 				89D06A1519FD5F26003909A3 /* Polynomial.swift in Sources */,
 				8933E8B119E9A73500ECFF3F /* PolynomialTerm.swift in Sources */,
 				8924D8E31A086B58003B7529 /* Trigonometry.swift in Sources */,
+				89AF01571BDFD0CD00F0BF4F /* NSScanner+MathKit.swift in Sources */,
 				8924D8D51A06E458003B7529 /* Arithmetic.swift in Sources */,
 				89635FDC1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BC19F9E331003AC251 /* Utils.swift in Sources */,
@@ -481,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8933E8EA19E9AF9100ECFF3F /* PolynomialTermTests.swift in Sources */,
+				89AF015A1BDFD16200F0BF4F /* NSScanner+MathKitTests.swift in Sources */,
 				89AF014D1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */,
 				893448D21A069AE500F5D528 /* PolynomialTests.swift in Sources */,
 				89CCD8BC19F8139A00C65A6C /* VectorTests.swift in Sources */,
@@ -505,6 +513,7 @@
 				89D06A1719FD5F28003909A3 /* Polynomial.swift in Sources */,
 				89D5557C19F6023200D987D7 /* PolynomialTerm.swift in Sources */,
 				8924D8E51A086B58003B7529 /* Trigonometry.swift in Sources */,
+				89AF01581BDFD0CD00F0BF4F /* NSScanner+MathKit.swift in Sources */,
 				8924D8D71A06E458003B7529 /* Arithmetic.swift in Sources */,
 				89635FDE1A1516230052C248 /* Algebra.swift in Sources */,
 				89DBC0BE19F9E332003AC251 /* Utils.swift in Sources */,
@@ -516,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				893448D31A069AE600F5D528 /* PolynomialTests.swift in Sources */,
+				89AF015B1BDFD16200F0BF4F /* NSScanner+MathKitTests.swift in Sources */,
 				89AF014E1BD8823300F0BF4F /* ArithmeticTests.swift in Sources */,
 				89CCD8BD19F8139C00C65A6C /* VectorTests.swift in Sources */,
 				89D5558219F6023C00D987D7 /* PolynomialTermTests.swift in Sources */,

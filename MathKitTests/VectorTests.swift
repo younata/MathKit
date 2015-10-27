@@ -15,13 +15,13 @@ class VectorTests: XCTestCase {
     
     func testInitScalars() {
         let v = Vector(scalars: ["x": 1.0])
-        XCTAssertEqual(v.variables, ["x": Polynomial(scalar: 1.0)], "init scalars")
+        XCTAssertEqual(v.variables, ["x": Polynomial.one()], "init scalars")
     }
     
     func testInitPolynomials() {
         let p = Polynomial(scalar: 1.0)
         let v = Vector(polynomials: ["x": p])
-        XCTAssertEqual(v.variables, ["x": Polynomial(scalar: 1.0)], "init polynomials")
+        XCTAssertEqual(v.variables, ["x": Polynomial.one()], "init polynomials")
         XCTAssertEqual(v.variables, ["x": p], "init polynomials")
     }
     
@@ -54,7 +54,7 @@ class VectorTests: XCTestCase {
         XCTAssertEqual(v1 - p, v1.scalarSubtraction(p), "overloading")
         XCTAssertEqual(v1 - p, Vector(polynomials: ["x": Polynomial(string: "1 - y")]), "scalar subtraction")
         
-        XCTAssertEqual(v4 - p, Vector(polynomials: ["x": Polynomial(string: "1 - y"), "y": Polynomial()]), "scalar subtraction")
+        XCTAssertEqual(v4 - p, Vector(polynomials: ["x": Polynomial(string: "1 - y"), "y": Polynomial.zero()]))
     }
     
     func testScalarMultiplication() {

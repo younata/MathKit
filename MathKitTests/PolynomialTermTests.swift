@@ -2,21 +2,6 @@ import Foundation
 import XCTest
 import MathKit
 
-class NSScannerPolynomialTermTests: XCTestCase {
-
-    let p = PolynomialTerm(coefficient: 2.0, variables: ["x": 2.0, "y": 1.0])
-
-    func testScanString() {
-        let scanner = NSScanner(string: "2x^2y + 3")
-        let res = scanner.scanPolynomialTerm()
-        XCTAssert(res != nil, "scanning polynomialTerm")
-        if let r = res {
-            XCTAssertEqual(p, r, "scanning polynomialTerm")
-        }
-        XCTAssertEqual(scanner.scanLocation, 5, "scanning polynomialTerm")
-    }
-}
-
 class PolynomialTermTests: XCTestCase {
     
     let p1 = PolynomialTerm(coefficient: 1.0, variables: ["x": 1.0])
@@ -65,6 +50,8 @@ class PolynomialTermTests: XCTestCase {
         XCTAssertEqual(p2, PolynomialTerm(string: " 2x"), "initialize from string")
         XCTAssertEqual(p3, PolynomialTerm(string: " 3x^2"), "initialize from string")
         XCTAssertEqual(p4, PolynomialTerm(string: " 4x^2y"), "initialize from string")
+
+        XCTAssertEqual(PolynomialTerm(coefficient: -1.0, variables: ["x": 1.0]), PolynomialTerm(string: "-x"))
     }
     
     func testPrint() {

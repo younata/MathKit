@@ -18,7 +18,7 @@ public struct Addition: Function, Equatable {
     }
 
     public func simplify() -> Polynomial? {
-        guard let a = self.terms.first?.terms, b = self.terms.last?.terms else { return nil }
+        guard let a = self.terms.first?.simplify().terms, b = self.terms.last?.simplify().terms else { return nil }
 
         let terms = reducePolynomialTerms(a + b).sort()
 
@@ -32,11 +32,12 @@ public struct Addition: Function, Equatable {
     
     public func differentiate(respectTo: String) -> Polynomial? {
         guard let a = self.terms.first?.differentiate(respectTo), b = self.terms.last?.differentiate(respectTo) else { return nil }
-        return Polynomial(function: Addition(terms: [a, b]))
+        return Polynomial(function: Addition(terms: [a, b])).simplify()
     }
     
     public func integrate(respectTo: String) -> Polynomial? {
-        return nil
+        guard let a = self.terms.first?.integrate(respectTo), b = self.terms.last?.integrate(respectTo) else { return nil }
+        return Polynomial(function: Addition(terms: [a, b])).simplify()
     }
 }
 
@@ -62,7 +63,7 @@ public struct Subtraction: Function, Equatable {
     }
 
     public func simplify() -> Polynomial? {
-        guard let a = self.terms.first?.terms, b = self.terms.last?.terms else { return nil }
+        guard let a = self.terms.first?.simplify().terms, b = self.terms.last?.simplify().terms else { return nil }
 
         let bTerms = b.map { $0 * -1 }
         let terms = reducePolynomialTerms(a + bTerms).sort()
@@ -77,11 +78,13 @@ public struct Subtraction: Function, Equatable {
     
     public func differentiate(respectTo: String) -> Polynomial? {
         guard let a = self.terms.first?.differentiate(respectTo), b = self.terms.last?.differentiate(respectTo) else { return nil }
-        return Polynomial(function: Subtraction(terms: [a, b]))
+        return Polynomial(function: Subtraction(terms: [a, b])).simplify()
     }
     
     public func integrate(respectTo: String) -> Polynomial? {
-        return nil
+        guard let a = self.terms.first?.integrate(respectTo), b = self.terms.last?.integrate(respectTo) else { return nil }
+        print("\(Subtraction(terms: [a, b]).simplify()!)")
+        return Polynomial(function: Subtraction(terms: [a, b])).simplify()
     }
 }
 
@@ -107,7 +110,7 @@ public struct Multiplication: Function, Equatable {
     }
 
     public func simplify() -> Polynomial? {
-        guard let a = self.terms.first?.terms, b = self.terms.last?.terms else { return nil }
+        guard let a = self.terms.first?.simplify().terms, b = self.terms.last?.simplify().terms else { return nil }
 
         var ret = [PolynomialTerm]()
         for termA in a {
@@ -181,7 +184,15 @@ public struct Division: Function, Equatable {
     
     public func differentiate(respectTo: String) -> Polynomial? {
         guard let a = self.terms.first, da = a.differentiate(respectTo), b = self.terms.last, db = b.differentiate(respectTo) else { return nil }
-        return (((b * da).simplify() - (a * db).simplify()).simplify() / (b * b).simplify()).simplify()
+
+        let numerator = ((b * da).simplify() - (a * db).simplify()).simplify()
+        if numerator == Polynomial.zero() {
+            return Polynomial.zero()
+        }
+
+        let denominator = (b ** 2).simplify()
+
+        return (numerator / denominator).simplify()
     }
     
     public func integrate(respectTo: String) -> Polynomial? {

@@ -19,7 +19,9 @@ public struct Polynomial: Equatable, Comparable, CustomStringConvertible, LatexS
     internal var function: Function? = nil
     internal var terms: [PolynomialTerm]? = nil
 
-    public init() {}
+    public init() {
+        self = Polynomial.zero()
+    }
 
     public init(term: PolynomialTerm) {
         self.init(terms: [term])
@@ -43,7 +45,18 @@ public struct Polynomial: Equatable, Comparable, CustomStringConvertible, LatexS
     }
 
     public init(string: String) {
+        let scanner = NSScanner(string: string)
+        if let poly = scanner.scanPolynomial() {
+            self = poly
+        }
+    }
 
+    public static func zero() -> Polynomial {
+        return Polynomial(scalar: 0)
+    }
+
+    public static func one() -> Polynomial {
+        return Polynomial(scalar: 1)
     }
 
     public static func interpolate(input: [[Double]], output: [Double]) -> Polynomial? {
@@ -200,37 +213,18 @@ public struct Polynomial: Equatable, Comparable, CustomStringConvertible, LatexS
             return Polynomial(terms: newTerms)
         }
         return nil
-//        var stack = self.stack
-//        var ret : [Polynomial] = []
-//        while (stack.count > 0) {
-//            var polys : [[PolynomialTerm]] = []
-//            var theFunction : Function? = nil
-//            while true {
-//                if stack.count == 0 {
-//                    break
-//                }
-//                let a = stack.removeAtIndex(0)
-//                if let p = a.polynomial {
-//                    polys.append(p)
-//                } else if let o = a.op {
-//                    theFunction = o
-//                    break
-//                } else {
-//                    return nil
-//                }
-//            }
-//            if let function = theFunction {
-//                assert(function.numberOfInputs == polys.count, "")
-//                if let res = function.differentiate(polys, respectTo: respectTo) {
-//                    ret.append(res)
-//                } else {
-//                    return nil
-//                }
-//            } else {
-//                return nil
-//            }
-//        }
-        // FIXME: do stuff with ret to create a polynomial
+    }
+
+    public func integrate(respectTo: String) -> Polynomial? {
+        if let function = self.function {
+            return function.integrate(respectTo)
+        } else if let terms = self.terms {
+            let newTerms = terms.reduce([PolynomialTerm]()) {
+                return $0 + [$1.integrate(respectTo)]
+            }
+            return Polynomial(terms: newTerms)
+        }
+        return nil
     }
     
     public func gradient() -> Vector? {
