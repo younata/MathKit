@@ -1,14 +1,15 @@
 import Cocoa
 import XCTest
+import MathKit
 
 class VectorPerformance: XCTestCase {
     
-    let p = SimplePolynomial(string: "2x + y")
-    let v = Vector(polynomials: ["x": SimplePolynomial(string: "2x + 1"), "y": SimplePolynomial(string: "2x + y")])
+    let p = Polynomial(string: "2x + y")
+    let v = Vector(polynomials: ["x": Polynomial(string: "2x + 1"), "y": Polynomial(string: "2x + y")])
     
     func testScalarAdditionPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v + self.p
             }
         }
@@ -16,7 +17,7 @@ class VectorPerformance: XCTestCase {
     
     func testScalarSubtractionPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v - self.p
             }
         }
@@ -24,7 +25,7 @@ class VectorPerformance: XCTestCase {
     
     func testScalarMultiplicationPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v * self.p
             }
         }
@@ -32,7 +33,7 @@ class VectorPerformance: XCTestCase {
     
     func testAddVarByScalarPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v.addScalar(self.p, to: "x")
             }
         }
@@ -40,7 +41,7 @@ class VectorPerformance: XCTestCase {
     
     func testSubtractVarByScalarPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v.subtractScalar(self.p, from: "x")
             }
         }
@@ -48,7 +49,7 @@ class VectorPerformance: XCTestCase {
     
     func testMultiplyVarByScalarPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v.multiplyScalar(self.p, on: "x")
             }
         }
@@ -56,7 +57,7 @@ class VectorPerformance: XCTestCase {
     
     func testVectorAdditionPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v + self.v
             }
         }
@@ -64,7 +65,7 @@ class VectorPerformance: XCTestCase {
     
     func testVectorSubtractionPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v - self.v
             }
         }
@@ -72,7 +73,7 @@ class VectorPerformance: XCTestCase {
     
     func testVectorMultiplicationPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v * self.v
             }
         }
@@ -80,7 +81,7 @@ class VectorPerformance: XCTestCase {
     
     func testDotProductPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.v.dotProduct(self.v)
             }
         }
@@ -90,21 +91,21 @@ class VectorPerformance: XCTestCase {
     
     func testGradientPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
             }
         }
     }
     
     func testDivergencePerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
             }
         }
     }
     
     func testCurlPerformance() {
         self.measureBlock() {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
             }
         }
     }*/

@@ -240,8 +240,7 @@ class DivisionTests: XCTestCase {
     }
 
     func testIntegrate() {
-        XCTAssertNil(subject.integrate("a"))
-        XCTAssertNil(subject.integrate("x"))
+        XCTFail("Integration")
     }
 }
 

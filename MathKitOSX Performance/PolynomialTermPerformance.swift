@@ -1,5 +1,6 @@
 import Cocoa
 import XCTest
+import MathKit
 
 class PolynomialTermPerformance: XCTestCase {
     
@@ -11,8 +12,8 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testInitStringPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
-                PolynomialTerm(string: "4x^2y")
+            for _ in 0..<1000 {
+                let _ = PolynomialTerm(string: "4x^2y")
             }
         }
     }
@@ -20,7 +21,7 @@ class PolynomialTermPerformance: XCTestCase {
     func testValueAtPerformance() {
         let p5 = PolynomialTerm(coefficient: 2.4, variables: ["x": 3.5])
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 p5.valueAt(["x": 2.45])
             }
         }
@@ -28,7 +29,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testAddPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p1 + self.p2
             }
         }
@@ -36,7 +37,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testSubtractPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p2 - self.p1
             }
         }
@@ -44,7 +45,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testMultiplyTermsPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4 * self.p2
             }
         }
@@ -52,7 +53,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testMultiplyScalarPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4 * 30.0
             }
         }
@@ -60,7 +61,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testDivideTermsPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4 / self.p1
             }
         }
@@ -68,7 +69,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testDivideScalarPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4 / 30.0
             }
         }
@@ -76,7 +77,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testInvertPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4.invert()
             }
         }
@@ -84,7 +85,7 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testDifferentiationPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4.differentiate("x")
             }
         }
@@ -92,17 +93,17 @@ class PolynomialTermPerformance: XCTestCase {
     
     func testIntegrationPerformance() {
         self.measureBlock {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 self.p4.integrate("x")
             }
         }
     }
 
-    func testIntegrationOverRangePerformance() {
-        self.measureBlock {
-            for i in 0..<1000 {
-                self.p4.integrate("x", over: (1.0, 2.0), spacing: 0.01)
-            }
-        }
-    }
+//    func testIntegrationOverRangePerformance() {
+//        self.measureBlock {
+//            for _ in 0..<1000 {
+//                self.p4.integrate("x", over: (1.0, 2.0), spacing: 0.01)
+//            }
+//        }
+//    }
 }
